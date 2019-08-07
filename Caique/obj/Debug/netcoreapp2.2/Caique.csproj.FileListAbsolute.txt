@@ -1,0 +1,11 @@
+/home/paddi/projects/C#/Caique/Caique/obj/Debug/netcoreapp2.2/Caique.csprojAssemblyReference.cache
+/home/paddi/projects/C#/Caique/Caique/obj/Debug/netcoreapp2.2/Caique.csproj.CoreCompileInputs.cache
+/home/paddi/projects/C#/Caique/Caique/obj/Debug/netcoreapp2.2/Caique.AssemblyInfoInputs.cache
+/home/paddi/projects/C#/Caique/Caique/obj/Debug/netcoreapp2.2/Caique.AssemblyInfo.cs
+/home/paddi/projects/C#/Caique/Caique/bin/Debug/netcoreapp2.2/Caique.deps.json
+/home/paddi/projects/C#/Caique/Caique/bin/Debug/netcoreapp2.2/Caique.runtimeconfig.json
+/home/paddi/projects/C#/Caique/Caique/bin/Debug/netcoreapp2.2/Caique.runtimeconfig.dev.json
+/home/paddi/projects/C#/Caique/Caique/bin/Debug/netcoreapp2.2/Caique.dll
+/home/paddi/projects/C#/Caique/Caique/bin/Debug/netcoreapp2.2/Caique.pdb
+/home/paddi/projects/C#/Caique/Caique/obj/Debug/netcoreapp2.2/Caique.dll
+/home/paddi/projects/C#/Caique/Caique/obj/Debug/netcoreapp2.2/Caique.pdb
