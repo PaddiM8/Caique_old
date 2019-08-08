@@ -89,7 +89,7 @@ namespace Caique.Scanner
                 case '%': AddToken(TokenType.Modulus);    break;
 
                 // Longer tokens
-                case '!': AddToken(Match('=') ? TokenType.BangEqual    : TokenType.Bang);    break;
+                case '!': AddToken(Match('=') ? TokenType.NotEqual     : TokenType.Bang);    break;
                 case '=': AddToken(Match('=') ? TokenType.EqualEqual   : TokenType.Equal);   break;
                 case '<': AddToken(Match('=') ? TokenType.LessEqual    : TokenType.Less);    break;
                 case '>': AddToken(Match('=') ? TokenType.GreaterEqual : TokenType.Greater); break;

@@ -25,7 +25,21 @@ namespace Caique.Parsing
 
         public IExpression Expression()
         {
-            return Addition();
+            return Equality();
+        }
+
+        public IExpression Equality()
+        {
+            return GetBinaryExpression(Comparison, TokenType.EqualEqual, TokenType.NotEqual);
+        }
+
+        public IExpression Comparison()
+        {
+            return GetBinaryExpression(Addition,
+                                       TokenType.Greater,
+                                       TokenType.GreaterEqual,
+                                       TokenType.Less,
+                                       TokenType.LessEqual);
         }
 
         public IExpression Addition()
@@ -40,7 +54,7 @@ namespace Caique.Parsing
 
         public IExpression Primary()
         {
-            if (Match(TokenType.Number))
+            if (Match(TokenType.Number, TokenType.True, TokenType.False))
             {
                 return new LiteralExpr(Previous());
             }
@@ -54,6 +68,9 @@ namespace Caique.Parsing
             throw Error("Unexpected token.");
         }
 
+        /// <summary>
+        /// Parse binary expression.
+        /// </summary>
         private IExpression GetBinaryExpression(ArithmeticFunction func, params TokenType[] tokenTypes)
         {
             IExpression expr = func();
@@ -69,8 +86,14 @@ namespace Caique.Parsing
             return expr;
         }
 
+        /// <summary>
+        /// Get the current token.
+        /// </summary>
         private Token Peek() => _tokens[_current];
 
+        /// <summary>
+        /// If the current token is of any of the provided types, advance and return true. Otherwise return false.
+        /// </summary>
         private bool Match(params TokenType[] tokenTypes)
         {
             foreach (var tokenType in tokenTypes)
@@ -85,11 +108,17 @@ namespace Caique.Parsing
             return false;
         }
 
+        /// <summary>
+        /// Return the previous token.
+        /// </summary>
         private Token Previous()
         {
             return _tokens[_current - 1];
         }
 
+        /// <summary>
+        /// Check if the current token is of the provided type.
+        /// </summary>
         private bool Check(TokenType type)
         {
             if (IsAtEnd()) return false;
@@ -97,12 +126,18 @@ namespace Caique.Parsing
             return Peek().Type == type;
         }
 
+        /// <summary>
+        /// Log error and throw parsing exception. The exception will be caught, after that the parser will synchronize.
+        /// </summary>
         private ParsingException Error(string errorMessage)
         {
             Reporter.Error(Peek().Position, errorMessage); // Show error separately, since the exception will be caught
             throw new ParsingException();
         }
 
+        /// <summary>
+        /// Check if the current token is the same type as the provided type, if so, advance. Otherwise, log error
+        /// </summary>
         private Token Consume(TokenType type, string errorMessage)
         {
             if (IsAtEnd()) throw Error(errorMessage);
@@ -118,11 +153,17 @@ namespace Caique.Parsing
             }
         }
 
+        /// <summary>
+        /// Go to the next token
+        /// </summary>
         private void Advance()
         {
             _current++;
         }
 
+        /// <summary>
+        /// If the current token is the last one
+        /// </summary>
         private bool IsAtEnd()
         {
             return Peek().Type == TokenType.EOF;

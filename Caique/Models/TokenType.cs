@@ -11,7 +11,7 @@ namespace Caique
         Modulus,
 
         // One or two character tokens
-        Bang, BangEqual,
+        Bang, NotEqual,
         Equal, EqualEqual,
         Greater, GreaterEqual,
         Less, LessEqual,
