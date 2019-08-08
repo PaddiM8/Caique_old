@@ -464,27 +464,47 @@
 98	Caique/obj/project.assets.json	/^        "ref\/netcoreapp2.2\/System.Linq.Parallel.xml",$/;"	s	array:libraries.Microsoft.NETCore.App/2.2.0.files
 99	Caique/obj/project.assets.json	/^        "build\/netstandard2.0\/ref\/System.Threading.ThreadPool.dll",$/;"	s	array:libraries.NETStandard.Library/2.0.3.files
 99	Caique/obj/project.assets.json	/^        "ref\/netcoreapp2.2\/System.Linq.Queryable.dll",$/;"	s	array:libraries.Microsoft.NETCore.App/2.2.0.files
+Accept	Caique/Expressions/BinaryExpr.cs	/^        public T Accept<T>(IExpressionVisitor<T> expr)$/;"	m	class:Caique.Expressions.BinaryExpr
+Accept	Caique/Expressions/GroupExpression.cs	/^        public T Accept<T>(IExpressionVisitor<T> expr)$/;"	m	class:Caique.Expressions.GroupExpr
+Accept	Caique/Expressions/IExpression.cs	/^        T Accept<T>(IExpressionVisitor<T> expr);$/;"	m	interface:Caique.Expressions.IExpression
+Accept	Caique/Expressions/LiteralExpr.cs	/^        public T Accept<T>(IExpressionVisitor<T> expr)$/;"	m	class:Caique.Expressions.LiteralExpr
 AddToken	Caique/Scanner/Lexer.cs	/^        private void AddToken(TokenType type)$/;"	m	class:Caique.Scanner.Lexer	file:
 AddToken	Caique/Scanner/Lexer.cs	/^        private void AddToken(TokenType type, dynamic literal)$/;"	m	class:Caique.Scanner.Lexer	file:
+Addition	Caique/Parsing/Parser.cs	/^        public IExpression Addition()$/;"	m	class:Caique.Parsing.Parser
+Advance	Caique/Parsing/Parser.cs	/^        private void Advance()$/;"	m	class:Caique.Parsing.Parser	file:
 Advance	Caique/Scanner/Lexer.cs	/^        private char Advance()$/;"	m	class:Caique.Scanner.Lexer	file:
 And	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
+ArithmeticFunction	Caique/Parsing/Parser.cs	/^        public delegate IExpression ArithmeticFunction();$/;"	m	class:Caique.Parsing.Parser
+AstPrinter	Caique/Logging/AstPrinter.cs	/^    class AstPrinter : IExpressionVisitor<string>$/;"	c	namespace:Caique.Logging
 Bang	Caique/Models/TokenType.cs	/^        Bang, BangEqual,$/;"	e	enum:Caique.TokenType	file:
 BangEqual	Caique/Models/TokenType.cs	/^        Bang, BangEqual,$/;"	e	enum:Caique.TokenType	file:
+BinaryExpr	Caique/Expressions/BinaryExpr.cs	/^        public BinaryExpr(IExpression left, Token op, IExpression right)$/;"	m	class:Caique.Expressions.BinaryExpr
+BinaryExpr	Caique/Expressions/BinaryExpr.cs	/^    class BinaryExpr : IExpression$/;"	c	namespace:Caique.Expressions
 Break	Caique/Models/TokenType.cs	/^        Break, Continue,$/;"	e	enum:Caique.TokenType	file:
 Caique	Caique/Models/TokenType.cs	/^namespace Caique$/;"	n
 Caique	Caique/Program.cs	/^namespace Caique$/;"	n
 Caique	README.md	/^# Caique$/;"	c
+Caique.Expressions	Caique/Expressions/BinaryExpr.cs	/^namespace Caique.Expressions$/;"	n
+Caique.Expressions	Caique/Expressions/GroupExpression.cs	/^namespace Caique.Expressions$/;"	n
+Caique.Expressions	Caique/Expressions/IExpression.cs	/^namespace Caique.Expressions$/;"	n
+Caique.Expressions	Caique/Expressions/IExpressionVisitor.cs	/^namespace Caique.Expressions$/;"	n
+Caique.Expressions	Caique/Expressions/LiteralExpr.cs	/^namespace Caique.Expressions$/;"	n
+Caique.Logging	Caique/Logging/AstPrinter.cs	/^namespace Caique.Logging$/;"	n
+Caique.Logging	Caique/Logging/ParsingException.cs	/^namespace Caique.Logging$/;"	n
 Caique.Logging	Caique/Logging/Reporter.cs	/^namespace Caique.Logging$/;"	n
 Caique.Models	Caique/Models/Pos.cs	/^namespace Caique.Models$/;"	n
 Caique.Models	Caique/Models/Token.cs	/^namespace Caique.Models$/;"	n
 Caique.Models	Caique/Models/TokenValue.cs	/^namespace Caique.Models$/;"	n
+Caique.Parsing	Caique/Parsing/Parser.cs	/^namespace Caique.Parsing$/;"	n
 Caique.Scanner	Caique/Scanner/Lexer.cs	/^namespace Caique.Scanner$/;"	n
 Caique.dll	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^          "Caique.dll": {}$/;"	o	object:targets..NETCoreApp,Version=v2.2.Caique/1.0.0.runtime
 Caique/1.0.0	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "Caique\/1.0.0": {$/;"	o	object:targets..NETCoreApp,Version=v2.2
 Caique/1.0.0	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^    "Caique\/1.0.0": {$/;"	o	object:libraries
+Check	Caique/Parsing/Parser.cs	/^        private bool Check(TokenType type)$/;"	m	class:Caique.Parsing.Parser	file:
 Class	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
 Column	Caique/Models/Pos.cs	/^        public int Column { get; set; }$/;"	p	struct:Caique.Models.Pos
 Comma	Caique/Models/TokenType.cs	/^        Comma, Dot, Minus, Plus, Semicolon, Slash, Star,$/;"	e	enum:Caique.TokenType	file:
+Consume	Caique/Parsing/Parser.cs	/^        private Token Consume(TokenType type, string errorMessage)$/;"	m	class:Caique.Parsing.Parser	file:
 Continue	Caique/Models/TokenType.cs	/^        Break, Continue,$/;"	e	enum:Caique.TokenType	file:
 Count	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, Var, While, Count,$/;"	e	enum:Caique.TokenType	file:
 Dot	Caique/Models/TokenType.cs	/^        Comma, Dot, Minus, Plus, Semicolon, Slash, Star,$/;"	e	enum:Caique.TokenType	file:
@@ -493,22 +513,32 @@ Else	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If,
 Equal	Caique/Models/TokenType.cs	/^        Equal, EqualEqual,$/;"	e	enum:Caique.TokenType	file:
 EqualEqual	Caique/Models/TokenType.cs	/^        Equal, EqualEqual,$/;"	e	enum:Caique.TokenType	file:
 Error	Caique/Logging/Reporter.cs	/^        public static void Error(Pos pos, string message)$/;"	m	class:Caique.Logging.Reporter
+Error	Caique/Parsing/Parser.cs	/^        private ParsingException Error(string errorMessage)$/;"	m	class:Caique.Parsing.Parser	file:
+Expression	Caique/Expressions/GroupExpression.cs	/^        public IExpression Expression { get; }$/;"	p	class:Caique.Expressions.GroupExpr
+Expression	Caique/Parsing/Parser.cs	/^        public IExpression Expression()$/;"	m	class:Caique.Parsing.Parser
 False	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
 For	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
 Fun	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
+GetBinaryExpression	Caique/Parsing/Parser.cs	/^        private IExpression GetBinaryExpression(ArithmeticFunction func, params TokenType[] toke/;"	m	class:Caique.Parsing.Parser	file:
 GetIdentifier	Caique/Scanner/Lexer.cs	/^        private TokenType GetIdentifier()$/;"	m	class:Caique.Scanner.Lexer	file:
 GetNumberLiteral	Caique/Scanner/Lexer.cs	/^        private object GetNumberLiteral()$/;"	m	class:Caique.Scanner.Lexer	file:
 GetStringLiteral	Caique/Scanner/Lexer.cs	/^        private string GetStringLiteral()$/;"	m	class:Caique.Scanner.Lexer	file:
 Greater	Caique/Models/TokenType.cs	/^        Greater, GreaterEqual,$/;"	e	enum:Caique.TokenType	file:
 GreaterEqual	Caique/Models/TokenType.cs	/^        Greater, GreaterEqual,$/;"	e	enum:Caique.TokenType	file:
+GroupExpr	Caique/Expressions/GroupExpression.cs	/^        public GroupExpr(IExpression expression)$/;"	m	class:Caique.Expressions.GroupExpr
+GroupExpr	Caique/Expressions/GroupExpression.cs	/^    class GroupExpr : IExpression$/;"	c	namespace:Caique.Expressions
+IExpression	Caique/Expressions/IExpression.cs	/^    interface IExpression$/;"	i	namespace:Caique.Expressions
+IExpressionVisitor	Caique/Expressions/IExpressionVisitor.cs	/^    interface IExpressionVisitor<T>$/;"	i	namespace:Caique.Expressions
 Identifier	Caique/Models/TokenType.cs	/^        Identifier, String, Number,$/;"	e	enum:Caique.TokenType	file:
 If	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
 IsAlpha	Caique/Scanner/Lexer.cs	/^        private bool IsAlpha(char c) => (c >= 'a' && c <= 'z') ||$/;"	m	class:Caique.Scanner.Lexer	file:
 IsAlphaNumeric	Caique/Scanner/Lexer.cs	/^        private bool IsAlphaNumeric(char c) => IsAlpha(c) || IsDigit(c);$/;"	m	class:Caique.Scanner.Lexer	file:
 IsArithmeticOperator	Caique/Models/TokenType.cs	/^        public static bool IsArithmeticOperator(this TokenType tokenType)$/;"	m	class:Caique.TokenTypeMethods
+IsAtEnd	Caique/Parsing/Parser.cs	/^        private bool IsAtEnd()$/;"	m	class:Caique.Parsing.Parser	file:
 IsAtEnd	Caique/Scanner/Lexer.cs	/^        private bool IsAtEnd() => _current >= _source.Length;$/;"	m	class:Caique.Scanner.Lexer	file:
 IsComparisonOperator	Caique/Models/TokenType.cs	/^        public static bool IsComparisonOperator(this TokenType tokenType)$/;"	m	class:Caique.TokenTypeMethods
 IsDigit	Caique/Scanner/Lexer.cs	/^        private bool IsDigit(char c) => c >= '0' && c <= '9';$/;"	m	class:Caique.Scanner.Lexer	file:
+Left	Caique/Expressions/BinaryExpr.cs	/^        public IExpression Left { get; }$/;"	p	class:Caique.Expressions.BinaryExpr
 LeftBrace	Caique/Models/TokenType.cs	/^        LeftParen, RightParen, LeftBrace, RightBrace,$/;"	e	enum:Caique.TokenType	file:
 LeftParen	Caique/Models/TokenType.cs	/^        LeftParen, RightParen, LeftBrace, RightBrace,$/;"	e	enum:Caique.TokenType	file:
 Less	Caique/Models/TokenType.cs	/^        Less, LessEqual,$/;"	e	enum:Caique.TokenType	file:
@@ -518,7 +548,10 @@ Lexer	Caique/Scanner/Lexer.cs	/^        public Lexer(string source)$/;"	m	class:
 Lexer	Caique/Scanner/Lexer.cs	/^    class Lexer$/;"	c	namespace:Caique.Scanner
 Line	Caique/Models/Pos.cs	/^        public int Line { get; set; }$/;"	p	struct:Caique.Models.Pos
 Literal	Caique/Models/Token.cs	/^        public object     Literal     { get; set; }$/;"	p	class:Caique.Models.Token
+LiteralExpr	Caique/Expressions/LiteralExpr.cs	/^        public LiteralExpr(Token value)$/;"	m	class:Caique.Expressions.LiteralExpr
+LiteralExpr	Caique/Expressions/LiteralExpr.cs	/^    class LiteralExpr : IExpression$/;"	c	namespace:Caique.Expressions
 Main	Caique/Program.cs	/^        static void Main(string[] args)$/;"	m	class:Caique.Program	file:
+Match	Caique/Parsing/Parser.cs	/^        private bool Match(params TokenType[] tokenTypes)$/;"	m	class:Caique.Parsing.Parser	file:
 Match	Caique/Scanner/Lexer.cs	/^        private bool Match(char expected)$/;"	m	class:Caique.Scanner.Lexer	file:
 Microsoft.NETCore.App	Caique/obj/project.assets.json	/^          "Microsoft.NETCore.App": {$/;"	o	object:project.frameworks.netcoreapp2.2.dependencies
 Microsoft.NETCore.App/2.2.0	Caique/obj/project.assets.json	/^      "Microsoft.NETCore.App\/2.2.0": {$/;"	o	object:targets..NETCoreApp,Version=v2.2
@@ -541,6 +574,7 @@ Microsoft.NETCore.Targets/2.0.0	Caique/obj/project.assets.json	/^      "Microsof
 Microsoft.NETCore.Targets/2.0.0	Caique/obj/project.assets.json	/^    "Microsoft.NETCore.Targets\/2.0.0": {$/;"	o	object:libraries
 Minus	Caique/Models/TokenType.cs	/^        Comma, Dot, Minus, Plus, Semicolon, Slash, Star,$/;"	e	enum:Caique.TokenType	file:
 Modulus	Caique/Models/TokenType.cs	/^        Modulus,$/;"	e	enum:Caique.TokenType	file:
+Multiplication	Caique/Parsing/Parser.cs	/^        public IExpression Multiplication()$/;"	m	class:Caique.Parsing.Parser
 NETStandard.Library	Caique/obj/project.assets.json	/^          "NETStandard.Library": "2.0.3"$/;"	s	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.App/2.2.0.dependencies
 NETStandard.Library/2.0.3	Caique/obj/project.assets.json	/^      "NETStandard.Library\/2.0.3": {$/;"	o	object:targets..NETCoreApp,Version=v2.2
 NETStandard.Library/2.0.3	Caique/obj/project.assets.json	/^    "NETStandard.Library\/2.0.3": {$/;"	o	object:libraries
@@ -552,17 +586,28 @@ Newtonsoft.Json/12.0.2	Caique/obj/project.assets.json	/^      "Newtonsoft.Json\/
 Newtonsoft.Json/12.0.2	Caique/obj/project.assets.json	/^    "Newtonsoft.Json\/12.0.2": {$/;"	o	object:libraries
 Null	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
 Number	Caique/Models/TokenType.cs	/^        Identifier, String, Number,$/;"	e	enum:Caique.TokenType	file:
+Operator	Caique/Expressions/BinaryExpr.cs	/^        public Token Operator { get; }$/;"	p	class:Caique.Expressions.BinaryExpr
 Or	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
+Parse	Caique/Parsing/Parser.cs	/^        public IExpression Parse()$/;"	m	class:Caique.Parsing.Parser
+Parser	Caique/Parsing/Parser.cs	/^        public Parser(List<Token> tokens)$/;"	m	class:Caique.Parsing.Parser
+Parser	Caique/Parsing/Parser.cs	/^    class Parser$/;"	c	namespace:Caique.Parsing
+ParsingException	Caique/Logging/ParsingException.cs	/^        public ParsingException()$/;"	m	class:Caique.Logging.ParsingException
+ParsingException	Caique/Logging/ParsingException.cs	/^    class ParsingException : Exception$/;"	c	namespace:Caique.Logging
+Peek	Caique/Parsing/Parser.cs	/^        private Token Peek() => _tokens[_current];$/;"	m	class:Caique.Parsing.Parser	file:
 Peek	Caique/Scanner/Lexer.cs	/^        private char Peek()$/;"	m	class:Caique.Scanner.Lexer	file:
 PeekNext	Caique/Scanner/Lexer.cs	/^        private char PeekNext()$/;"	m	class:Caique.Scanner.Lexer	file:
 Plus	Caique/Models/TokenType.cs	/^        Comma, Dot, Minus, Plus, Semicolon, Slash, Star,$/;"	e	enum:Caique.TokenType	file:
 Pos	Caique/Models/Pos.cs	/^        public Pos(int line, int column)$/;"	m	struct:Caique.Models.Pos
 Pos	Caique/Models/Pos.cs	/^    public struct Pos$/;"	s	namespace:Caique.Models
 Position	Caique/Models/Token.cs	/^        public Pos        Position    { get; }$/;"	p	class:Caique.Models.Token
+Previous	Caique/Parsing/Parser.cs	/^        private Token Previous()$/;"	m	class:Caique.Parsing.Parser	file:
+Primary	Caique/Parsing/Parser.cs	/^        public IExpression Primary()$/;"	m	class:Caique.Parsing.Parser
+Print	Caique/Logging/AstPrinter.cs	/^        public string Print(IExpression expr)$/;"	m	class:Caique.Logging.AstPrinter
 Print	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, Var, While, Count,$/;"	e	enum:Caique.TokenType	file:
 Program	Caique/Program.cs	/^    class Program$/;"	c	namespace:Caique
 Reporter	Caique/Logging/Reporter.cs	/^    static class Reporter$/;"	c	namespace:Caique.Logging
 Return	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, Var, While, Count,$/;"	e	enum:Caique.TokenType	file:
+Right	Caique/Expressions/BinaryExpr.cs	/^        public IExpression Right { get; }$/;"	p	class:Caique.Expressions.BinaryExpr
 RightBrace	Caique/Models/TokenType.cs	/^        LeftParen, RightParen, LeftBrace, RightBrace,$/;"	e	enum:Caique.TokenType	file:
 RightParen	Caique/Models/TokenType.cs	/^        LeftParen, RightParen, LeftBrace, RightBrace,$/;"	e	enum:Caique.TokenType	file:
 ScanToken	Caique/Scanner/Lexer.cs	/^        private void ScanToken()$/;"	m	class:Caique.Scanner.Lexer	file:
@@ -581,14 +626,23 @@ TokenValue	Caique/Models/TokenValue.cs	/^        public TokenValue(T value)$/;"	
 TokenValue	Caique/Models/TokenValue.cs	/^    struct TokenValue<T>$/;"	s	namespace:Caique.Models
 True	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, Var, While, Count,$/;"	e	enum:Caique.TokenType	file:
 Type	Caique/Models/Token.cs	/^        public TokenType  Type        { get; }$/;"	p	class:Caique.Models.Token
+Value	Caique/Expressions/LiteralExpr.cs	/^        public Token Value { get; }$/;"	p	class:Caique.Expressions.LiteralExpr
 Value	Caique/Models/TokenValue.cs	/^        public T Value;$/;"	f	struct:Caique.Models.TokenValue
 Var	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, Var, While, Count,$/;"	e	enum:Caique.TokenType	file:
+Visit	Caique/Expressions/IExpressionVisitor.cs	/^        T Visit(BinaryExpr expr);$/;"	m	interface:Caique.Expressions.IExpressionVisitor
+Visit	Caique/Expressions/IExpressionVisitor.cs	/^        T Visit(GroupExpr expr);$/;"	m	interface:Caique.Expressions.IExpressionVisitor
+Visit	Caique/Expressions/IExpressionVisitor.cs	/^        T Visit(LiteralExpr expr);$/;"	m	interface:Caique.Expressions.IExpressionVisitor
+Visit	Caique/Logging/AstPrinter.cs	/^        public string Visit(BinaryExpr expr)$/;"	m	class:Caique.Logging.AstPrinter
+Visit	Caique/Logging/AstPrinter.cs	/^        public string Visit(GroupExpr expr)$/;"	m	class:Caique.Logging.AstPrinter
+Visit	Caique/Logging/AstPrinter.cs	/^        public string Visit(LiteralExpr expr)$/;"	m	class:Caique.Logging.AstPrinter
 While	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, Var, While, Count,$/;"	e	enum:Caique.TokenType	file:
+_current	Caique/Parsing/Parser.cs	/^        private int _current = 0;$/;"	f	class:Caique.Parsing.Parser	file:
 _current	Caique/Scanner/Lexer.cs	/^        private int _current = 0;$/;"	f	class:Caique.Scanner.Lexer	file:
 _keywords	Caique/Scanner/Lexer.cs	/^        private static Dictionary<string, TokenType> _keywords =$/;"	f	class:Caique.Scanner.Lexer	file:
 _position	Caique/Scanner/Lexer.cs	/^        private Pos _position = new Pos(1, 1);$/;"	f	class:Caique.Scanner.Lexer	file:
 _source	Caique/Scanner/Lexer.cs	/^        private string _source;$/;"	f	class:Caique.Scanner.Lexer	file:
 _start	Caique/Scanner/Lexer.cs	/^        private int _start = 0;$/;"	f	class:Caique.Scanner.Lexer	file:
+_tokens	Caique/Parsing/Parser.cs	/^        private List<Token> _tokens { get; }$/;"	p	class:Caique.Parsing.Parser
 _tokens	Caique/Scanner/Lexer.cs	/^        private List<Token> _tokens = new List<Token>();$/;"	f	class:Caique.Scanner.Lexer	file:
 additionalProbingPaths	Caique/bin/Debug/netcoreapp2.2/Caique.runtimeconfig.dev.json	/^    "additionalProbingPaths": [$/;"	a	object:runtimeOptions
 assemblyVersion	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^            "assemblyVersion": "12.0.0.0",$/;"	s	object:targets..NETCoreApp,Version=v2.2.Newtonsoft.Json/12.0.2.runtime.lib/netstandard2.0/Newtonsoft.Json.dll

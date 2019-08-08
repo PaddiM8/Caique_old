@@ -1,6 +1,8 @@
 ﻿using System;
-using Caique.Scanner;
 using Newtonsoft.Json;
+using Caique.Scanner;
+using Caique.Parsing;
+using Caique.Logging;
 
 namespace Caique
 {
@@ -9,8 +11,10 @@ namespace Caique
         static void Main(string[] args)
         {
             var tokens = new Lexer(string.Join(" ", args)).ScanTokens();
-            foreach (var token in tokens)
-                Console.WriteLine(JsonConvert.SerializeObject(token));
+            var expr = new Parser(tokens).Parse();
+            //Console.WriteLine(JsonConvert.SerializeObject(expr));
+            string tree = new AstPrinter().Print(expr);
+            Console.WriteLine(tree);
         }
     }
 }

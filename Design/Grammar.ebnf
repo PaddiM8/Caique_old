@@ -2,4 +2,4 @@ expression -> addition
 
 addition -> multiplication ( ( "+" | "-" ) multiplication )* ;
 multiplication -> primary ( ( "*" | "/" ) primary )* ;
-primary -> NUMBER ;
+primary -> NUMBER | "(" expression ")" ;
