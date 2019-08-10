@@ -2,11 +2,17 @@ program -> statement* ;
 
 statement      -> expressionStmt
                 | varDeclarationStmt
-                | assignmentStmt ;
+                | assignmentStmt
+                | functionStmt
+                | blockStmt ;
 
 varDeclarationStmt -> TYPE IDENTIFIER ( "=" expression )? ";" ;
 expressionStmt     -> expression ";" ;
 assignmentStmt     -> IDENTIFIER "=" expression ";" ;
+functionStmt       -> "fn" TYPE IDENTIFIER "(" ( argument "," )* argument ")" blockStmt ;
+blockStmt          -> "{" statement* "}" ;
+
+argumentStmt -> TYPE IDENTIFIER ;
 
 expression -> equality
 

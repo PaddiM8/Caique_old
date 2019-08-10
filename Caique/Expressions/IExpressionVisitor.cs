@@ -8,5 +8,6 @@ namespace Caique.Expressions
         T Visit(BinaryExpr expr);
         T Visit(LiteralExpr expr);
         T Visit(GroupExpr expr);
+        T Visit(VariableExpr expr);
     }
 }

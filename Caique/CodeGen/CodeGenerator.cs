@@ -87,6 +87,23 @@ namespace Caique.CodeGen
             return null;
         }
 
+        public object Visit(FunctionStmt stmt)
+        {
+            Console.WriteLine("function");
+
+            return null;
+        }
+
+        public object Visit(BlockStmt stmt)
+        {
+            foreach (IStatement subStmt in stmt.Statements)
+            {
+                subStmt.Accept(this);
+            }
+
+            return null;
+        }
+
         public object Visit(ExpressionStmt stmt)
         {
             stmt.Expression.Accept(this);
@@ -155,6 +172,11 @@ namespace Caique.CodeGen
 
             _valueStack.Push(llvmValue);
 
+            return expr;
+        }
+
+        public IExpression Visit(VariableExpr expr)
+        {
             return expr;
         }
 

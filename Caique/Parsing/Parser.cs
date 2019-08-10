@@ -34,8 +34,15 @@ namespace Caique.Parsing
         public IStatement Statement()
         {
             if (Match(TokenType.VariableType)) return VarDeclaration();
-            if (Match(TokenType.Identifier))   return Assignment();
-            else return ExpressionStatement();
+            if (Match(TokenType.Fun))          return Function();
+            if (Match(TokenType.LeftBrace))    return Block();
+
+            if (Check(TokenType.Identifier) && CheckNext(TokenType.Equal))
+            {
+                return Assignment();
+            }
+
+            return ExpressionStatement();
         }
 
         public IStatement VarDeclaration()
@@ -64,6 +71,45 @@ namespace Caique.Parsing
             Consume(TokenType.Semicolon, "Expected ';' after expression.");
 
             return new AssignmentStmt(identifier, expr);
+        }
+
+        public IStatement Function()
+        {
+            DataType returnType = Consume(TokenType.VariableType, "Expected type after 'fn'").DataType;
+            Token name = Consume(TokenType.Identifier, "Expected function name.");
+            Consume(TokenType.LeftParen, "Expected '(' after function name");
+
+            var arguments = new List<Argument>();
+            while(!Match(TokenType.RightParen))
+            {
+                arguments.Add(Argument());
+
+                if (Match(TokenType.RightParen)) break;
+                Consume(TokenType.Comma, "Expected ',' after argument name.");
+            }
+
+            Consume(TokenType.LeftBrace, "Expected block after function declaration.");
+            BlockStmt block = (BlockStmt)Block();
+            return new FunctionStmt(returnType, name, arguments, block);
+        }
+
+        public Argument Argument()
+        {
+            DataType type = Consume(TokenType.VariableType, "Expected type.").DataType;
+            Token name = Consume(TokenType.Identifier, "Expected argument name.");
+
+            return new Argument(type, name);
+        }
+
+        public IStatement Block()
+        {
+            var statements = new List<IStatement>();
+            while(!Match(TokenType.RightBrace))
+            {
+                statements.Add(Statement());
+            }
+
+            return new BlockStmt(statements);
         }
 
         public IStatement ExpressionStatement()
@@ -151,8 +197,12 @@ namespace Caique.Parsing
                 Consume(TokenType.RightParen, "Expected ')' after expression.");
                 return new GroupExpr(expr);
             }
+            else if (Match(TokenType.Identifier))
+            {
+                return new VariableExpr(Previous());
+            }
 
-            throw Error("Unexpected token.");
+            throw Error($"Unexpected token '{Peek().Type}'.");
         }
 
         /// <summary>
@@ -177,6 +227,11 @@ namespace Caique.Parsing
         /// Get the current token.
         /// </summary>
         private Token Peek() => _tokens[_current];
+
+        /// <summary>
+        /// Get the next token.
+        /// </summary>
+        private Token PeekNext() => _tokens[_current + 1];
 
         /// <summary>
         /// If the current token is of any of the provided types, advance and return true. Otherwise return false.
@@ -211,6 +266,16 @@ namespace Caique.Parsing
             if (IsAtEnd()) return false;
 
             return Peek().Type == type;
+        }
+
+        // Check if the next token is of the provided type.
+        private bool CheckNext(TokenType type)
+        {
+            TokenType nextType = PeekNext().Type;
+            if (IsAtEnd()) return false;
+            if (nextType == TokenType.EOF) return false;
+
+            return nextType == type;
         }
 
         /// <summary>
