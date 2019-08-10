@@ -1,5 +1,21 @@
-expression -> addition
+program -> statement* ;
 
-addition -> multiplication ( ( "+" | "-" ) multiplication )* ;
+statement      -> expressionStmt
+                | varDeclarationStmt
+                | assignmentStmt ;
+
+varDeclarationStmt -> TYPE IDENTIFIER ( "=" expression )? ";" ;
+expressionStmt     -> expression ";" ;
+assignmentStmt     -> IDENTIFIER "=" expression ";" ;
+
+expression -> equality
+
+equality       -> comparison ( "==" | "!=" comparison )* ;
+comparison     -> addition ( ">" | ">=" | "<" | "<=") addition )* ;
+addition       -> multiplication ( ( "+" | "-" ) multiplication )* ;
 multiplication -> primary ( ( "*" | "/" ) primary )* ;
-primary -> NUMBER | "(" expression ")" ;
+primary        -> NUMBER | "(" expression ")" ;
+
+NUMBER
+IDENTIFIER
+TYPE -> ( "string" | "int" | "double" | "bool" ) ;

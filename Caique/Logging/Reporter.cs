@@ -8,7 +8,9 @@ namespace Caique.Logging
     {
         public static void Error(Pos pos, string message)
         {
-            Console.WriteLine($"[{pos.Line}, {pos.Column}] {message}");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"[{pos.Line}, {pos.Column}] Error: {message}");
+            Console.ResetColor();
         }
     }
 }

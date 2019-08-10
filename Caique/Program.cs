@@ -5,6 +5,7 @@ using Caique.Scanner;
 using Caique.Parsing;
 using Caique.Logging;
 using Caique.Expressions;
+using Caique.CodeGen;
 
 namespace Caique
 {
@@ -13,8 +14,9 @@ namespace Caique
         static void Main(string[] args)
         {
             var tokens = new Lexer(string.Join(" ", args)).ScanTokens();
-            var expr = new Parser(tokens).Parse();
-            PrintJson(expr);
+            var statements = new Parser(tokens).Parse();
+            new CodeGenerator(statements);
+            //PrintJson(expr);
         }
 
         static void PrintJson(IExpression expr)

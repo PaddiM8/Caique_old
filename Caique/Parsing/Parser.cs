@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Caique.Models;
 using Caique.Expressions;
+using Caique.Statements;
 using Caique.Logging;
 
 namespace Caique.Parsing
@@ -18,9 +19,59 @@ namespace Caique.Parsing
             this._tokens = tokens;
         }
 
-        public IExpression Parse()
+        public List<IStatement> Parse()
         {
-            return Expression();
+            var statements = new List<IStatement>();
+            while (!IsAtEnd())
+            {
+                statements.Add(Statement());
+            }
+
+            return statements;
+            //return Expression();
+        }
+
+        public IStatement Statement()
+        {
+            if (Match(TokenType.VariableType)) return VarDeclaration();
+            if (Match(TokenType.Identifier))   return Assignment();
+            else return ExpressionStatement();
+        }
+
+        public IStatement VarDeclaration()
+        {
+            DataType dataType = Previous().DataType;
+            Token identifier = Consume(TokenType.Identifier, "Expected identifier after variable type keyword.");
+
+            if (Match(TokenType.Equal))
+            {
+                IExpression expr = Expression();
+                Consume(TokenType.Semicolon, "Expected ';' after expression.");
+
+                return new VarDeclarationStmt(dataType, identifier, expr);
+            }
+
+            Consume(TokenType.Semicolon, "Expected ';' after expression.");
+
+            return new VarDeclarationStmt(dataType, identifier);
+        }
+
+        public IStatement Assignment()
+        {
+            Token identifier = Previous();
+            Consume(TokenType.Equal, "Expected '=' after identifier.");
+            IExpression expr = Expression();
+            Consume(TokenType.Semicolon, "Expected ';' after expression.");
+
+            return new AssignmentStmt(identifier, expr);
+        }
+
+        public IStatement ExpressionStatement()
+        {
+            IExpression expr = Expression();
+            Consume(TokenType.Semicolon, "Expected ';' after expression.");
+
+            return new ExpressionStmt(expr);
         }
 
         public IExpression Expression()
@@ -30,35 +81,71 @@ namespace Caique.Parsing
 
         public IExpression Equality()
         {
-            return GetBinaryExpression(Comparison, TokenType.EqualEqual, TokenType.NotEqual);
+            IExpression expr = Comparison();
+
+            while (Match(TokenType.EqualEqual, TokenType.NotEqual))
+            {
+                Token op = Previous();
+                IExpression right = Comparison();
+
+                expr = new BinaryExpr(expr, op, right);
+            }
+
+            return expr;
         }
 
         public IExpression Comparison()
         {
-            return GetBinaryExpression(Addition,
-                                       TokenType.Greater,
-                                       TokenType.GreaterEqual,
-                                       TokenType.Less,
-                                       TokenType.LessEqual);
+            IExpression expr = Addition();
+
+            while (Match(TokenType.Greater, TokenType.GreaterEqual, TokenType.Less, TokenType.LessEqual))
+            {
+                Token op = Previous();
+                IExpression right = Addition();
+
+                expr = new BinaryExpr(expr, op, right);
+            }
+
+            return expr;
         }
 
         public IExpression Addition()
         {
-            return GetBinaryExpression(Multiplication, TokenType.Plus, TokenType.Minus);
+            IExpression expr = Multiplication();
+
+            while (Match(TokenType.Plus, TokenType.Minus))
+            {
+                Token op = Previous();
+                IExpression right = Multiplication();
+
+                expr = new BinaryExpr(expr, op, right);
+            }
+
+            return expr;
         }
 
         public IExpression Multiplication()
         {
-            return GetBinaryExpression(Primary, TokenType.Star, TokenType.Slash);
+            IExpression expr = Primary();
+
+            while (Match(TokenType.Star, TokenType.Slash))
+            {
+                Token op = Previous();
+                IExpression right = Primary();
+
+                expr = new BinaryExpr(expr, op, right);
+            }
+
+            return expr;
         }
 
         public IExpression Primary()
         {
-            if (Match(TokenType.Number, TokenType.True, TokenType.False))
+            if (Match(TokenType.Number, TokenType.True, TokenType.False, TokenType.String)) // Literal
             {
                 return new LiteralExpr(Previous());
             }
-            else if (Match(TokenType.LeftParen))
+            else if (Match(TokenType.LeftParen)) // Group
             {
                 IExpression expr = Expression();
                 Consume(TokenType.RightParen, "Expected ')' after expression.");

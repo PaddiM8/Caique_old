@@ -13,6 +13,7 @@
 0	Caique/bin/Debug/netcoreapp2.2/Caique.runtimeconfig.dev.json	/^      "\/home\/paddi\/.dotnet\/store\/|arch|\/|tfm|",$/;"	s	array:runtimeOptions.additionalProbingPaths
 0	Caique/obj/project.assets.json	/^          "NU1605"$/;"	s	array:project.restore.warningProperties.warnAsError
 0	Caique/obj/project.assets.json	/^          "net461"$/;"	s	array:project.frameworks.netcoreapp2.2.imports
+0	Caique/obj/project.assets.json	/^        ".nupkg.metadata",$/;"	s	array:libraries.LLVMSharp/5.0.0.files
 0	Caique/obj/project.assets.json	/^        ".nupkg.metadata",$/;"	s	array:libraries.Microsoft.NETCore.App/2.2.0.files
 0	Caique/obj/project.assets.json	/^        ".nupkg.metadata",$/;"	s	array:libraries.Microsoft.NETCore.DotNetAppHost/2.2.0.files
 0	Caique/obj/project.assets.json	/^        ".nupkg.metadata",$/;"	s	array:libraries.Microsoft.NETCore.DotNetHostPolicy/2.2.0.files
@@ -21,11 +22,13 @@
 0	Caique/obj/project.assets.json	/^        ".nupkg.metadata",$/;"	s	array:libraries.Microsoft.NETCore.Targets/2.0.0.files
 0	Caique/obj/project.assets.json	/^        ".nupkg.metadata",$/;"	s	array:libraries.NETStandard.Library/2.0.3.files
 0	Caique/obj/project.assets.json	/^        ".nupkg.metadata",$/;"	s	array:libraries.Newtonsoft.Json/12.0.2.files
+0	Caique/obj/project.assets.json	/^        ".nupkg.metadata",$/;"	s	array:libraries.libLLVM/8.0.0.files
 0	Caique/obj/project.assets.json	/^        "\/home\/paddi\/.nuget\/NuGet\/NuGet.Config"$/;"	s	array:project.restore.configFilePaths
 0	Caique/obj/project.assets.json	/^        "\/opt\/dotnet\/sdk\/NuGetFallbackFolder"$/;"	s	array:project.restore.fallbackFolders
 0	Caique/obj/project.assets.json	/^        "netcoreapp2.2"$/;"	s	array:project.restore.originalTargetFrameworks
-0	Caique/obj/project.assets.json	/^      "Microsoft.NETCore.App >= 2.2.0",$/;"	s	array:projectFileDependencyGroups..NETCoreApp,Version=v2.2
+0	Caique/obj/project.assets.json	/^      "LLVMSharp >= 5.0.0",$/;"	s	array:projectFileDependencyGroups..NETCoreApp,Version=v2.2
 1	Caique/bin/Debug/netcoreapp2.2/Caique.runtimeconfig.dev.json	/^      "\/home\/paddi\/.nuget\/packages",$/;"	s	array:runtimeOptions.additionalProbingPaths
+1	Caique/obj/project.assets.json	/^        ".signature.p7s",$/;"	s	array:libraries.LLVMSharp/5.0.0.files
 1	Caique/obj/project.assets.json	/^        ".signature.p7s",$/;"	s	array:libraries.Microsoft.NETCore.App/2.2.0.files
 1	Caique/obj/project.assets.json	/^        ".signature.p7s",$/;"	s	array:libraries.Microsoft.NETCore.DotNetAppHost/2.2.0.files
 1	Caique/obj/project.assets.json	/^        ".signature.p7s",$/;"	s	array:libraries.Microsoft.NETCore.DotNetHostPolicy/2.2.0.files
@@ -34,7 +37,8 @@
 1	Caique/obj/project.assets.json	/^        ".signature.p7s",$/;"	s	array:libraries.Microsoft.NETCore.Targets/2.0.0.files
 1	Caique/obj/project.assets.json	/^        ".signature.p7s",$/;"	s	array:libraries.NETStandard.Library/2.0.3.files
 1	Caique/obj/project.assets.json	/^        ".signature.p7s",$/;"	s	array:libraries.Newtonsoft.Json/12.0.2.files
-1	Caique/obj/project.assets.json	/^      "Newtonsoft.Json >= 12.0.2"$/;"	s	array:projectFileDependencyGroups..NETCoreApp,Version=v2.2
+1	Caique/obj/project.assets.json	/^        ".signature.p7s",$/;"	s	array:libraries.libLLVM/8.0.0.files
+1	Caique/obj/project.assets.json	/^      "Microsoft.NETCore.App >= 2.2.0",$/;"	s	array:projectFileDependencyGroups..NETCoreApp,Version=v2.2
 10	Caique/obj/project.assets.json	/^        "build\/netstandard2.0\/ref\/System.Collections.dll",$/;"	s	array:libraries.NETStandard.Library/2.0.3.files
 10	Caique/obj/project.assets.json	/^        "lib\/net45\/Newtonsoft.Json.xml",$/;"	s	array:libraries.Newtonsoft.Json/12.0.2.files
 10	Caique/obj/project.assets.json	/^        "ref\/netcoreapp2.2\/Microsoft.CSharp.dll",$/;"	s	array:libraries.Microsoft.NETCore.App/2.2.0.files
@@ -195,7 +199,10 @@
 2	Caique/obj/project.assets.json	/^        "LICENSE.TXT",$/;"	s	array:libraries.Microsoft.NETCore.Platforms/2.2.0.files
 2	Caique/obj/project.assets.json	/^        "LICENSE.TXT",$/;"	s	array:libraries.Microsoft.NETCore.Targets/2.0.0.files
 2	Caique/obj/project.assets.json	/^        "LICENSE.TXT",$/;"	s	array:libraries.NETStandard.Library/2.0.3.files
+2	Caique/obj/project.assets.json	/^        "LICENSE.TXT",$/;"	s	array:libraries.libLLVM/8.0.0.files
 2	Caique/obj/project.assets.json	/^        "LICENSE.md",$/;"	s	array:libraries.Newtonsoft.Json/12.0.2.files
+2	Caique/obj/project.assets.json	/^        "lib\/netstandard1.1\/LLVMSharp.dll",$/;"	s	array:libraries.LLVMSharp/5.0.0.files
+2	Caique/obj/project.assets.json	/^      "Newtonsoft.Json >= 12.0.2",$/;"	s	array:projectFileDependencyGroups..NETCoreApp,Version=v2.2
 20	Caique/obj/project.assets.json	/^        "build\/netstandard2.0\/ref\/System.Diagnostics.Contracts.dll",$/;"	s	array:libraries.NETStandard.Library/2.0.3.files
 20	Caique/obj/project.assets.json	/^        "lib\/portable-net45+win8+wp8+wpa81\/Newtonsoft.Json.xml",$/;"	s	array:libraries.Newtonsoft.Json/12.0.2.files
 20	Caique/obj/project.assets.json	/^        "ref\/netcoreapp2.2\/System.Collections.Concurrent.xml",$/;"	s	array:libraries.Microsoft.NETCore.App/2.2.0.files
@@ -285,6 +292,9 @@
 3	Caique/obj/project.assets.json	/^        "THIRD-PARTY-NOTICES.TXT",$/;"	s	array:libraries.Microsoft.NETCore.Targets/2.0.0.files
 3	Caique/obj/project.assets.json	/^        "THIRD-PARTY-NOTICES.TXT",$/;"	s	array:libraries.NETStandard.Library/2.0.3.files
 3	Caique/obj/project.assets.json	/^        "lib\/net20\/Newtonsoft.Json.dll",$/;"	s	array:libraries.Newtonsoft.Json/12.0.2.files
+3	Caique/obj/project.assets.json	/^        "libllvm.8.0.0.nupkg.sha512",$/;"	s	array:libraries.libLLVM/8.0.0.files
+3	Caique/obj/project.assets.json	/^        "llvmsharp.5.0.0.nupkg.sha512",$/;"	s	array:libraries.LLVMSharp/5.0.0.files
+3	Caique/obj/project.assets.json	/^      "libLLVM >= 8.0.0"$/;"	s	array:projectFileDependencyGroups..NETCoreApp,Version=v2.2
 30	Caique/obj/project.assets.json	/^        "build\/netstandard2.0\/ref\/System.Drawing.dll",$/;"	s	array:libraries.NETStandard.Library/2.0.3.files
 30	Caique/obj/project.assets.json	/^        "ref\/netcoreapp2.2\/System.ComponentModel.Annotations.xml",$/;"	s	array:libraries.Microsoft.NETCore.App/2.2.0.files
 31	Caique/obj/project.assets.json	/^        "build\/netstandard2.0\/ref\/System.Dynamic.Runtime.dll",$/;"	s	array:libraries.NETStandard.Library/2.0.3.files
@@ -310,6 +320,8 @@
 4	Caique/obj/project.assets.json	/^        "lib\/net20\/Newtonsoft.Json.xml",$/;"	s	array:libraries.Newtonsoft.Json/12.0.2.files
 4	Caique/obj/project.assets.json	/^        "lib\/netstandard1.0\/_._",$/;"	s	array:libraries.Microsoft.NETCore.Platforms/2.2.0.files
 4	Caique/obj/project.assets.json	/^        "lib\/netstandard1.0\/_._",$/;"	s	array:libraries.Microsoft.NETCore.Targets/2.0.0.files
+4	Caique/obj/project.assets.json	/^        "libllvm.nuspec",$/;"	s	array:libraries.libLLVM/8.0.0.files
+4	Caique/obj/project.assets.json	/^        "llvmsharp.nuspec"$/;"	s	array:libraries.LLVMSharp/5.0.0.files
 4	Caique/obj/project.assets.json	/^        "microsoft.netcore.dotnetapphost.2.2.0.nupkg.sha512",$/;"	s	array:libraries.Microsoft.NETCore.DotNetAppHost/2.2.0.files
 4	Caique/obj/project.assets.json	/^        "microsoft.netcore.dotnethostpolicy.2.2.0.nupkg.sha512",$/;"	s	array:libraries.Microsoft.NETCore.DotNetHostPolicy/2.2.0.files
 4	Caique/obj/project.assets.json	/^        "microsoft.netcore.dotnethostresolver.2.2.0.nupkg.sha512",$/;"	s	array:libraries.Microsoft.NETCore.DotNetHostResolver/2.2.0.files
@@ -341,6 +353,7 @@
 5	Caique/obj/project.assets.json	/^        "microsoft.netcore.dotnethostresolver.nuspec",$/;"	s	array:libraries.Microsoft.NETCore.DotNetHostResolver/2.2.0.files
 5	Caique/obj/project.assets.json	/^        "microsoft.netcore.platforms.2.2.0.nupkg.sha512",$/;"	s	array:libraries.Microsoft.NETCore.Platforms/2.2.0.files
 5	Caique/obj/project.assets.json	/^        "microsoft.netcore.targets.2.0.0.nupkg.sha512",$/;"	s	array:libraries.Microsoft.NETCore.Targets/2.0.0.files
+5	Caique/obj/project.assets.json	/^        "runtime.json"$/;"	s	array:libraries.libLLVM/8.0.0.files
 50	Caique/obj/project.assets.json	/^        "build\/netstandard2.0\/ref\/System.Linq.dll",$/;"	s	array:libraries.NETStandard.Library/2.0.3.files
 50	Caique/obj/project.assets.json	/^        "ref\/netcoreapp2.2\/System.Diagnostics.Debug.xml",$/;"	s	array:libraries.Microsoft.NETCore.App/2.2.0.files
 51	Caique/obj/project.assets.json	/^        "build\/netstandard2.0\/ref\/System.Net.Http.dll",$/;"	s	array:libraries.NETStandard.Library/2.0.3.files
@@ -468,60 +481,85 @@ Accept	Caique/Expressions/BinaryExpr.cs	/^        public T Accept<T>(IExpression
 Accept	Caique/Expressions/GroupExpression.cs	/^        public T Accept<T>(IExpressionVisitor<T> expr)$/;"	m	class:Caique.Expressions.GroupExpr
 Accept	Caique/Expressions/IExpression.cs	/^        T Accept<T>(IExpressionVisitor<T> expr);$/;"	m	interface:Caique.Expressions.IExpression
 Accept	Caique/Expressions/LiteralExpr.cs	/^        public T Accept<T>(IExpressionVisitor<T> expr)$/;"	m	class:Caique.Expressions.LiteralExpr
+Accept	Caique/Statements/AssignmentStmt.cs	/^        public T Accept<T>(IStatementVisitor<T> stmt)$/;"	m	class:Caique.Statements.AssignmentStmt
+Accept	Caique/Statements/ExpressionStmt.cs	/^        public T Accept<T>(IStatementVisitor<T> stmt)$/;"	m	class:Caique.Statements.ExpressionStmt
+Accept	Caique/Statements/IStatement.cs	/^        T Accept<T>(IStatementVisitor<T> stmt);$/;"	m	interface:Caique.Statements.IStatement
+Accept	Caique/Statements/VarDeclarationStmt.cs	/^        public T Accept<T>(IStatementVisitor<T> stmt)$/;"	m	class:Caique.Statements.VarDeclarationStmt
 AddToken	Caique/Scanner/Lexer.cs	/^        private void AddToken(TokenType type)$/;"	m	class:Caique.Scanner.Lexer	file:
-AddToken	Caique/Scanner/Lexer.cs	/^        private void AddToken(TokenType type, dynamic literal)$/;"	m	class:Caique.Scanner.Lexer	file:
+AddToken	Caique/Scanner/Lexer.cs	/^        private void AddToken(TokenType type, dynamic literal, DataType? dataType = null)$/;"	m	class:Caique.Scanner.Lexer	file:
 Addition	Caique/Parsing/Parser.cs	/^        public IExpression Addition()$/;"	m	class:Caique.Parsing.Parser
 Advance	Caique/Parsing/Parser.cs	/^        private void Advance()$/;"	m	class:Caique.Parsing.Parser	file:
 Advance	Caique/Scanner/Lexer.cs	/^        private char Advance()$/;"	m	class:Caique.Scanner.Lexer	file:
 And	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
 ArithmeticFunction	Caique/Parsing/Parser.cs	/^        public delegate IExpression ArithmeticFunction();$/;"	m	class:Caique.Parsing.Parser
-AstPrinter	Caique/Logging/AstPrinter.cs	/^    class AstPrinter : IExpressionVisitor<string>$/;"	c	namespace:Caique.Logging
-Bang	Caique/Models/TokenType.cs	/^        Bang, BangEqual,$/;"	e	enum:Caique.TokenType	file:
-BangEqual	Caique/Models/TokenType.cs	/^        Bang, BangEqual,$/;"	e	enum:Caique.TokenType	file:
+Assignment	Caique/Parsing/Parser.cs	/^        public IStatement Assignment()$/;"	m	class:Caique.Parsing.Parser
+AssignmentStmt	Caique/Statements/AssignmentStmt.cs	/^        public AssignmentStmt(Token identifier, IExpression value)$/;"	m	class:Caique.Statements.AssignmentStmt
+AssignmentStmt	Caique/Statements/AssignmentStmt.cs	/^    class AssignmentStmt : IStatement$/;"	c	namespace:Caique.Statements
+Bang	Caique/Models/TokenType.cs	/^        Bang, NotEqual,$/;"	e	enum:Caique.TokenType	file:
 BinaryExpr	Caique/Expressions/BinaryExpr.cs	/^        public BinaryExpr(IExpression left, Token op, IExpression right)$/;"	m	class:Caique.Expressions.BinaryExpr
 BinaryExpr	Caique/Expressions/BinaryExpr.cs	/^    class BinaryExpr : IExpression$/;"	c	namespace:Caique.Expressions
+Boolean	Caique/Models/VariableType.cs	/^        String, Int, Double, Boolean$/;"	e	enum:Caique.Models.DataType	file:
 Break	Caique/Models/TokenType.cs	/^        Break, Continue,$/;"	e	enum:Caique.TokenType	file:
 Caique	Caique/Models/TokenType.cs	/^namespace Caique$/;"	n
 Caique	Caique/Program.cs	/^namespace Caique$/;"	n
 Caique	README.md	/^# Caique$/;"	c
+Caique.CodeGen	Caique/CodeGen/CodeGenerator.cs	/^namespace Caique.CodeGen$/;"	n
 Caique.Expressions	Caique/Expressions/BinaryExpr.cs	/^namespace Caique.Expressions$/;"	n
 Caique.Expressions	Caique/Expressions/GroupExpression.cs	/^namespace Caique.Expressions$/;"	n
 Caique.Expressions	Caique/Expressions/IExpression.cs	/^namespace Caique.Expressions$/;"	n
 Caique.Expressions	Caique/Expressions/IExpressionVisitor.cs	/^namespace Caique.Expressions$/;"	n
 Caique.Expressions	Caique/Expressions/LiteralExpr.cs	/^namespace Caique.Expressions$/;"	n
-Caique.Logging	Caique/Logging/AstPrinter.cs	/^namespace Caique.Logging$/;"	n
 Caique.Logging	Caique/Logging/ParsingException.cs	/^namespace Caique.Logging$/;"	n
 Caique.Logging	Caique/Logging/Reporter.cs	/^namespace Caique.Logging$/;"	n
 Caique.Models	Caique/Models/Pos.cs	/^namespace Caique.Models$/;"	n
 Caique.Models	Caique/Models/Token.cs	/^namespace Caique.Models$/;"	n
 Caique.Models	Caique/Models/TokenValue.cs	/^namespace Caique.Models$/;"	n
+Caique.Models	Caique/Models/VariableType.cs	/^namespace Caique.Models$/;"	n
 Caique.Parsing	Caique/Parsing/Parser.cs	/^namespace Caique.Parsing$/;"	n
 Caique.Scanner	Caique/Scanner/Lexer.cs	/^namespace Caique.Scanner$/;"	n
+Caique.Statements	Caique/Statements/AssignmentStmt.cs	/^namespace Caique.Statements$/;"	n
+Caique.Statements	Caique/Statements/ExpressionStmt.cs	/^namespace Caique.Statements$/;"	n
+Caique.Statements	Caique/Statements/IStatement.cs	/^namespace Caique.Statements$/;"	n
+Caique.Statements	Caique/Statements/IStatementVisitor.cs	/^namespace Caique.Statements$/;"	n
+Caique.Statements	Caique/Statements/VarDeclarationStmt.cs	/^namespace Caique.Statements$/;"	n
 Caique.dll	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^          "Caique.dll": {}$/;"	o	object:targets..NETCoreApp,Version=v2.2.Caique/1.0.0.runtime
 Caique/1.0.0	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "Caique\/1.0.0": {$/;"	o	object:targets..NETCoreApp,Version=v2.2
 Caique/1.0.0	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^    "Caique\/1.0.0": {$/;"	o	object:libraries
 Check	Caique/Parsing/Parser.cs	/^        private bool Check(TokenType type)$/;"	m	class:Caique.Parsing.Parser	file:
 Class	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
+CodeGenerator	Caique/CodeGen/CodeGenerator.cs	/^        public CodeGenerator(List<IStatement> statements)$/;"	m	class:Caique.CodeGen.CodeGenerator
+CodeGenerator	Caique/CodeGen/CodeGenerator.cs	/^    class CodeGenerator : IExpressionVisitor<IExpression>, IStatementVisitor<object>$/;"	c	namespace:Caique.CodeGen
 Column	Caique/Models/Pos.cs	/^        public int Column { get; set; }$/;"	p	struct:Caique.Models.Pos
 Comma	Caique/Models/TokenType.cs	/^        Comma, Dot, Minus, Plus, Semicolon, Slash, Star,$/;"	e	enum:Caique.TokenType	file:
+Comparison	Caique/Parsing/Parser.cs	/^        public IExpression Comparison()$/;"	m	class:Caique.Parsing.Parser
 Consume	Caique/Parsing/Parser.cs	/^        private Token Consume(TokenType type, string errorMessage)$/;"	m	class:Caique.Parsing.Parser	file:
 Continue	Caique/Models/TokenType.cs	/^        Break, Continue,$/;"	e	enum:Caique.TokenType	file:
-Count	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, Var, While, Count,$/;"	e	enum:Caique.TokenType	file:
+Count	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, While, Count,$/;"	e	enum:Caique.TokenType	file:
+DataType	Caique/Models/Token.cs	/^        public DataType     DataType    { get; }$/;"	p	class:Caique.Models.Token
+DataType	Caique/Models/VariableType.cs	/^    public enum DataType$/;"	g	namespace:Caique.Models
+DataType	Caique/Statements/VarDeclarationStmt.cs	/^        public DataType    DataType   { get; }$/;"	p	class:Caique.Statements.VarDeclarationStmt
+DataTypeMethods	Caique/Models/VariableType.cs	/^    public static class DataTypeMethods$/;"	c	namespace:Caique.Models
 Dot	Caique/Models/TokenType.cs	/^        Comma, Dot, Minus, Plus, Semicolon, Slash, Star,$/;"	e	enum:Caique.TokenType	file:
+Double	Caique/Models/VariableType.cs	/^        String, Int, Double, Boolean$/;"	e	enum:Caique.Models.DataType	file:
 EOF	Caique/Models/TokenType.cs	/^        EOF$/;"	e	enum:Caique.TokenType	file:
 Else	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
 Equal	Caique/Models/TokenType.cs	/^        Equal, EqualEqual,$/;"	e	enum:Caique.TokenType	file:
 EqualEqual	Caique/Models/TokenType.cs	/^        Equal, EqualEqual,$/;"	e	enum:Caique.TokenType	file:
+Equality	Caique/Parsing/Parser.cs	/^        public IExpression Equality()$/;"	m	class:Caique.Parsing.Parser
 Error	Caique/Logging/Reporter.cs	/^        public static void Error(Pos pos, string message)$/;"	m	class:Caique.Logging.Reporter
 Error	Caique/Parsing/Parser.cs	/^        private ParsingException Error(string errorMessage)$/;"	m	class:Caique.Parsing.Parser	file:
 Expression	Caique/Expressions/GroupExpression.cs	/^        public IExpression Expression { get; }$/;"	p	class:Caique.Expressions.GroupExpr
 Expression	Caique/Parsing/Parser.cs	/^        public IExpression Expression()$/;"	m	class:Caique.Parsing.Parser
+Expression	Caique/Statements/ExpressionStmt.cs	/^        public IExpression Expression { get; }$/;"	p	class:Caique.Statements.ExpressionStmt
+ExpressionStatement	Caique/Parsing/Parser.cs	/^        public IStatement ExpressionStatement()$/;"	m	class:Caique.Parsing.Parser
+ExpressionStmt	Caique/Statements/ExpressionStmt.cs	/^        public ExpressionStmt(IExpression expr)$/;"	m	class:Caique.Statements.ExpressionStmt
+ExpressionStmt	Caique/Statements/ExpressionStmt.cs	/^    class ExpressionStmt : IStatement$/;"	c	namespace:Caique.Statements
 False	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
 For	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
 Fun	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
 GetBinaryExpression	Caique/Parsing/Parser.cs	/^        private IExpression GetBinaryExpression(ArithmeticFunction func, params TokenType[] toke/;"	m	class:Caique.Parsing.Parser	file:
 GetIdentifier	Caique/Scanner/Lexer.cs	/^        private TokenType GetIdentifier()$/;"	m	class:Caique.Scanner.Lexer	file:
-GetNumberLiteral	Caique/Scanner/Lexer.cs	/^        private object GetNumberLiteral()$/;"	m	class:Caique.Scanner.Lexer	file:
+GetNumberLiteral	Caique/Scanner/Lexer.cs	/^        private void GetNumberLiteral()$/;"	m	class:Caique.Scanner.Lexer	file:
 GetStringLiteral	Caique/Scanner/Lexer.cs	/^        private string GetStringLiteral()$/;"	m	class:Caique.Scanner.Lexer	file:
 Greater	Caique/Models/TokenType.cs	/^        Greater, GreaterEqual,$/;"	e	enum:Caique.TokenType	file:
 GreaterEqual	Caique/Models/TokenType.cs	/^        Greater, GreaterEqual,$/;"	e	enum:Caique.TokenType	file:
@@ -529,8 +567,13 @@ GroupExpr	Caique/Expressions/GroupExpression.cs	/^        public GroupExpr(IExpr
 GroupExpr	Caique/Expressions/GroupExpression.cs	/^    class GroupExpr : IExpression$/;"	c	namespace:Caique.Expressions
 IExpression	Caique/Expressions/IExpression.cs	/^    interface IExpression$/;"	i	namespace:Caique.Expressions
 IExpressionVisitor	Caique/Expressions/IExpressionVisitor.cs	/^    interface IExpressionVisitor<T>$/;"	i	namespace:Caique.Expressions
+IStatement	Caique/Statements/IStatement.cs	/^    interface IStatement$/;"	i	namespace:Caique.Statements
+IStatementVisitor	Caique/Statements/IStatementVisitor.cs	/^    interface IStatementVisitor<T>$/;"	i	namespace:Caique.Statements
 Identifier	Caique/Models/TokenType.cs	/^        Identifier, String, Number,$/;"	e	enum:Caique.TokenType	file:
+Identifier	Caique/Statements/AssignmentStmt.cs	/^        public Token       Identifier { get; }$/;"	p	class:Caique.Statements.AssignmentStmt
+Identifier	Caique/Statements/VarDeclarationStmt.cs	/^        public Token       Identifier { get; }$/;"	p	class:Caique.Statements.VarDeclarationStmt
 If	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
+Int	Caique/Models/VariableType.cs	/^        String, Int, Double, Boolean$/;"	e	enum:Caique.Models.DataType	file:
 IsAlpha	Caique/Scanner/Lexer.cs	/^        private bool IsAlpha(char c) => (c >= 'a' && c <= 'z') ||$/;"	m	class:Caique.Scanner.Lexer	file:
 IsAlphaNumeric	Caique/Scanner/Lexer.cs	/^        private bool IsAlphaNumeric(char c) => IsAlpha(c) || IsDigit(c);$/;"	m	class:Caique.Scanner.Lexer	file:
 IsArithmeticOperator	Caique/Models/TokenType.cs	/^        public static bool IsArithmeticOperator(this TokenType tokenType)$/;"	m	class:Caique.TokenTypeMethods
@@ -538,16 +581,26 @@ IsAtEnd	Caique/Parsing/Parser.cs	/^        private bool IsAtEnd()$/;"	m	class:Ca
 IsAtEnd	Caique/Scanner/Lexer.cs	/^        private bool IsAtEnd() => _current >= _source.Length;$/;"	m	class:Caique.Scanner.Lexer	file:
 IsComparisonOperator	Caique/Models/TokenType.cs	/^        public static bool IsComparisonOperator(this TokenType tokenType)$/;"	m	class:Caique.TokenTypeMethods
 IsDigit	Caique/Scanner/Lexer.cs	/^        private bool IsDigit(char c) => c >= '0' && c <= '9';$/;"	m	class:Caique.Scanner.Lexer	file:
+LCPI0_0	Caique/test.s	/^.LCPI0_0:$/;"	l
+LLVMBoolFalse	Caique/CodeGen/CodeGenerator.cs	/^        private static readonly LLVMBool LLVMBoolFalse = new LLVMBool(0);$/;"	f	class:Caique.CodeGen.CodeGenerator	file:
+LLVMBoolTrue	Caique/CodeGen/CodeGenerator.cs	/^        private static readonly LLVMBool LLVMBoolTrue = new LLVMBool(1);$/;"	f	class:Caique.CodeGen.CodeGenerator	file:
+LLVMSharp	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^          "LLVMSharp": "5.0.0",$/;"	s	object:targets..NETCoreApp,Version=v2.2.Caique/1.0.0.dependencies
+LLVMSharp	Caique/obj/project.assets.json	/^          "LLVMSharp": {$/;"	o	object:project.frameworks.netcoreapp2.2.dependencies
+LLVMSharp/5.0.0	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "LLVMSharp\/5.0.0": {$/;"	o	object:targets..NETCoreApp,Version=v2.2
+LLVMSharp/5.0.0	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^    "LLVMSharp\/5.0.0": {$/;"	o	object:libraries
+LLVMSharp/5.0.0	Caique/obj/project.assets.json	/^      "LLVMSharp\/5.0.0": {$/;"	o	object:targets..NETCoreApp,Version=v2.2
+LLVMSharp/5.0.0	Caique/obj/project.assets.json	/^    "LLVMSharp\/5.0.0": {$/;"	o	object:libraries
 Left	Caique/Expressions/BinaryExpr.cs	/^        public IExpression Left { get; }$/;"	p	class:Caique.Expressions.BinaryExpr
 LeftBrace	Caique/Models/TokenType.cs	/^        LeftParen, RightParen, LeftBrace, RightBrace,$/;"	e	enum:Caique.TokenType	file:
 LeftParen	Caique/Models/TokenType.cs	/^        LeftParen, RightParen, LeftBrace, RightBrace,$/;"	e	enum:Caique.TokenType	file:
 Less	Caique/Models/TokenType.cs	/^        Less, LessEqual,$/;"	e	enum:Caique.TokenType	file:
 LessEqual	Caique/Models/TokenType.cs	/^        Less, LessEqual,$/;"	e	enum:Caique.TokenType	file:
-Lexeme	Caique/Models/Token.cs	/^        public string     Lexeme      { get; }$/;"	p	class:Caique.Models.Token
+Lexeme	Caique/Models/Token.cs	/^        public string       Lexeme      { get; }$/;"	p	class:Caique.Models.Token
 Lexer	Caique/Scanner/Lexer.cs	/^        public Lexer(string source)$/;"	m	class:Caique.Scanner.Lexer
 Lexer	Caique/Scanner/Lexer.cs	/^    class Lexer$/;"	c	namespace:Caique.Scanner
+Lfunc_end0	Caique/test.s	/^.Lfunc_end0:$/;"	l
 Line	Caique/Models/Pos.cs	/^        public int Line { get; set; }$/;"	p	struct:Caique.Models.Pos
-Literal	Caique/Models/Token.cs	/^        public object     Literal     { get; set; }$/;"	p	class:Caique.Models.Token
+Literal	Caique/Models/Token.cs	/^        public object       Literal     { get; set; }$/;"	p	class:Caique.Models.Token
 LiteralExpr	Caique/Expressions/LiteralExpr.cs	/^        public LiteralExpr(Token value)$/;"	m	class:Caique.Expressions.LiteralExpr
 LiteralExpr	Caique/Expressions/LiteralExpr.cs	/^    class LiteralExpr : IExpression$/;"	c	namespace:Caique.Expressions
 Main	Caique/Program.cs	/^        static void Main(string[] args)$/;"	m	class:Caique.Program	file:
@@ -575,20 +628,22 @@ Microsoft.NETCore.Targets/2.0.0	Caique/obj/project.assets.json	/^    "Microsoft.
 Minus	Caique/Models/TokenType.cs	/^        Comma, Dot, Minus, Plus, Semicolon, Slash, Star,$/;"	e	enum:Caique.TokenType	file:
 Modulus	Caique/Models/TokenType.cs	/^        Modulus,$/;"	e	enum:Caique.TokenType	file:
 Multiplication	Caique/Parsing/Parser.cs	/^        public IExpression Multiplication()$/;"	m	class:Caique.Parsing.Parser
+NETStandard.Library	Caique/obj/project.assets.json	/^          "NETStandard.Library": "1.6.1",$/;"	s	object:targets..NETCoreApp,Version=v2.2.LLVMSharp/5.0.0.dependencies
 NETStandard.Library	Caique/obj/project.assets.json	/^          "NETStandard.Library": "2.0.3"$/;"	s	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.App/2.2.0.dependencies
 NETStandard.Library/2.0.3	Caique/obj/project.assets.json	/^      "NETStandard.Library\/2.0.3": {$/;"	o	object:targets..NETCoreApp,Version=v2.2
 NETStandard.Library/2.0.3	Caique/obj/project.assets.json	/^    "NETStandard.Library\/2.0.3": {$/;"	o	object:libraries
-Newtonsoft.Json	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^          "Newtonsoft.Json": "12.0.2"$/;"	s	object:targets..NETCoreApp,Version=v2.2.Caique/1.0.0.dependencies
+Newtonsoft.Json	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^          "Newtonsoft.Json": "12.0.2",$/;"	s	object:targets..NETCoreApp,Version=v2.2.Caique/1.0.0.dependencies
 Newtonsoft.Json	Caique/obj/project.assets.json	/^          "Newtonsoft.Json": {$/;"	o	object:project.frameworks.netcoreapp2.2.dependencies
 Newtonsoft.Json/12.0.2	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "Newtonsoft.Json\/12.0.2": {$/;"	o	object:targets..NETCoreApp,Version=v2.2
 Newtonsoft.Json/12.0.2	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^    "Newtonsoft.Json\/12.0.2": {$/;"	o	object:libraries
 Newtonsoft.Json/12.0.2	Caique/obj/project.assets.json	/^      "Newtonsoft.Json\/12.0.2": {$/;"	o	object:targets..NETCoreApp,Version=v2.2
 Newtonsoft.Json/12.0.2	Caique/obj/project.assets.json	/^    "Newtonsoft.Json\/12.0.2": {$/;"	o	object:libraries
+NotEqual	Caique/Models/TokenType.cs	/^        Bang, NotEqual,$/;"	e	enum:Caique.TokenType	file:
 Null	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
 Number	Caique/Models/TokenType.cs	/^        Identifier, String, Number,$/;"	e	enum:Caique.TokenType	file:
 Operator	Caique/Expressions/BinaryExpr.cs	/^        public Token Operator { get; }$/;"	p	class:Caique.Expressions.BinaryExpr
 Or	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
-Parse	Caique/Parsing/Parser.cs	/^        public IExpression Parse()$/;"	m	class:Caique.Parsing.Parser
+Parse	Caique/Parsing/Parser.cs	/^        public List<IStatement> Parse()$/;"	m	class:Caique.Parsing.Parser
 Parser	Caique/Parsing/Parser.cs	/^        public Parser(List<Token> tokens)$/;"	m	class:Caique.Parsing.Parser
 Parser	Caique/Parsing/Parser.cs	/^    class Parser$/;"	c	namespace:Caique.Parsing
 ParsingException	Caique/Logging/ParsingException.cs	/^        public ParsingException()$/;"	m	class:Caique.Logging.ParsingException
@@ -599,14 +654,14 @@ PeekNext	Caique/Scanner/Lexer.cs	/^        private char PeekNext()$/;"	m	class:C
 Plus	Caique/Models/TokenType.cs	/^        Comma, Dot, Minus, Plus, Semicolon, Slash, Star,$/;"	e	enum:Caique.TokenType	file:
 Pos	Caique/Models/Pos.cs	/^        public Pos(int line, int column)$/;"	m	struct:Caique.Models.Pos
 Pos	Caique/Models/Pos.cs	/^    public struct Pos$/;"	s	namespace:Caique.Models
-Position	Caique/Models/Token.cs	/^        public Pos        Position    { get; }$/;"	p	class:Caique.Models.Token
+Position	Caique/Models/Token.cs	/^        public Pos          Position    { get; }$/;"	p	class:Caique.Models.Token
 Previous	Caique/Parsing/Parser.cs	/^        private Token Previous()$/;"	m	class:Caique.Parsing.Parser	file:
 Primary	Caique/Parsing/Parser.cs	/^        public IExpression Primary()$/;"	m	class:Caique.Parsing.Parser
-Print	Caique/Logging/AstPrinter.cs	/^        public string Print(IExpression expr)$/;"	m	class:Caique.Logging.AstPrinter
-Print	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, Var, While, Count,$/;"	e	enum:Caique.TokenType	file:
+Print	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, While, Count,$/;"	e	enum:Caique.TokenType	file:
+PrintJson	Caique/Program.cs	/^        static void PrintJson(IExpression expr)$/;"	m	class:Caique.Program	file:
 Program	Caique/Program.cs	/^    class Program$/;"	c	namespace:Caique
 Reporter	Caique/Logging/Reporter.cs	/^    static class Reporter$/;"	c	namespace:Caique.Logging
-Return	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, Var, While, Count,$/;"	e	enum:Caique.TokenType	file:
+Return	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, While, Count,$/;"	e	enum:Caique.TokenType	file:
 Right	Caique/Expressions/BinaryExpr.cs	/^        public IExpression Right { get; }$/;"	p	class:Caique.Expressions.BinaryExpr
 RightBrace	Caique/Models/TokenType.cs	/^        LeftParen, RightParen, LeftBrace, RightBrace,$/;"	e	enum:Caique.TokenType	file:
 RightParen	Caique/Models/TokenType.cs	/^        LeftParen, RightParen, LeftBrace, RightBrace,$/;"	e	enum:Caique.TokenType	file:
@@ -615,36 +670,57 @@ ScanTokens	Caique/Scanner/Lexer.cs	/^        public List<Token> ScanTokens()$/;"
 Semicolon	Caique/Models/TokenType.cs	/^        Comma, Dot, Minus, Plus, Semicolon, Slash, Star,$/;"	e	enum:Caique.TokenType	file:
 Slash	Caique/Models/TokenType.cs	/^        Comma, Dot, Minus, Plus, Semicolon, Slash, Star,$/;"	e	enum:Caique.TokenType	file:
 Star	Caique/Models/TokenType.cs	/^        Comma, Dot, Minus, Plus, Semicolon, Slash, Star,$/;"	e	enum:Caique.TokenType	file:
+Statement	Caique/Parsing/Parser.cs	/^        public IStatement Statement()$/;"	m	class:Caique.Parsing.Parser
 String	Caique/Models/TokenType.cs	/^        Identifier, String, Number,$/;"	e	enum:Caique.TokenType	file:
-Super	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, Var, While, Count,$/;"	e	enum:Caique.TokenType	file:
-This	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, Var, While, Count,$/;"	e	enum:Caique.TokenType	file:
-Token	Caique/Models/Token.cs	/^        public Token(TokenType type, string lexeme, Pos? position = null, object literal = null)$/;"	m	class:Caique.Models.Token
+String	Caique/Models/VariableType.cs	/^        String, Int, Double, Boolean$/;"	e	enum:Caique.Models.DataType	file:
+Super	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, While, Count,$/;"	e	enum:Caique.TokenType	file:
+This	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, While, Count,$/;"	e	enum:Caique.TokenType	file:
+ToLLVMType	Caique/Models/VariableType.cs	/^        public static LLVMTypeRef ToLLVMType(this DataType dataType)$/;"	m	class:Caique.Models.DataTypeMethods
+Token	Caique/Models/Token.cs	/^        public Token(TokenType type, string lexeme, Pos? position = null, object literal = null,/;"	m	class:Caique.Models.Token
 Token	Caique/Models/Token.cs	/^    class Token$/;"	c	namespace:Caique.Models
 TokenType	Caique/Models/TokenType.cs	/^    public enum TokenType$/;"	g	namespace:Caique
 TokenTypeMethods	Caique/Models/TokenType.cs	/^    static class TokenTypeMethods$/;"	c	namespace:Caique
 TokenValue	Caique/Models/TokenValue.cs	/^        public TokenValue(T value)$/;"	m	struct:Caique.Models.TokenValue
 TokenValue	Caique/Models/TokenValue.cs	/^    struct TokenValue<T>$/;"	s	namespace:Caique.Models
-True	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, Var, While, Count,$/;"	e	enum:Caique.TokenType	file:
-Type	Caique/Models/Token.cs	/^        public TokenType  Type        { get; }$/;"	p	class:Caique.Models.Token
+True	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, While, Count,$/;"	e	enum:Caique.TokenType	file:
+Type	Caique/Models/Token.cs	/^        public TokenType    Type        { get; }$/;"	p	class:Caique.Models.Token
 Value	Caique/Expressions/LiteralExpr.cs	/^        public Token Value { get; }$/;"	p	class:Caique.Expressions.LiteralExpr
 Value	Caique/Models/TokenValue.cs	/^        public T Value;$/;"	f	struct:Caique.Models.TokenValue
-Var	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, Var, While, Count,$/;"	e	enum:Caique.TokenType	file:
+Value	Caique/Statements/AssignmentStmt.cs	/^        public IExpression Value      { get; }$/;"	p	class:Caique.Statements.AssignmentStmt
+Value	Caique/Statements/VarDeclarationStmt.cs	/^        public IExpression Value      { get; }$/;"	p	class:Caique.Statements.VarDeclarationStmt
+VarDeclaration	Caique/Parsing/Parser.cs	/^        public IStatement VarDeclaration()$/;"	m	class:Caique.Parsing.Parser
+VarDeclarationStmt	Caique/Statements/VarDeclarationStmt.cs	/^        public VarDeclarationStmt(DataType dataType, Token identifier, IExpression value = null)$/;"	m	class:Caique.Statements.VarDeclarationStmt
+VarDeclarationStmt	Caique/Statements/VarDeclarationStmt.cs	/^    class VarDeclarationStmt : IStatement$/;"	c	namespace:Caique.Statements
+VariableType	Caique/Models/TokenType.cs	/^        VariableType,$/;"	e	enum:Caique.TokenType	file:
+Visit	Caique/CodeGen/CodeGenerator.cs	/^        public IExpression Visit(BinaryExpr expr)$/;"	m	class:Caique.CodeGen.CodeGenerator
+Visit	Caique/CodeGen/CodeGenerator.cs	/^        public IExpression Visit(GroupExpr expr)$/;"	m	class:Caique.CodeGen.CodeGenerator
+Visit	Caique/CodeGen/CodeGenerator.cs	/^        public IExpression Visit(LiteralExpr expr)$/;"	m	class:Caique.CodeGen.CodeGenerator
+Visit	Caique/CodeGen/CodeGenerator.cs	/^        public object Visit(AssignmentStmt stmt)$/;"	m	class:Caique.CodeGen.CodeGenerator
+Visit	Caique/CodeGen/CodeGenerator.cs	/^        public object Visit(ExpressionStmt stmt)$/;"	m	class:Caique.CodeGen.CodeGenerator
+Visit	Caique/CodeGen/CodeGenerator.cs	/^        public object Visit(VarDeclarationStmt stmt)$/;"	m	class:Caique.CodeGen.CodeGenerator
 Visit	Caique/Expressions/IExpressionVisitor.cs	/^        T Visit(BinaryExpr expr);$/;"	m	interface:Caique.Expressions.IExpressionVisitor
 Visit	Caique/Expressions/IExpressionVisitor.cs	/^        T Visit(GroupExpr expr);$/;"	m	interface:Caique.Expressions.IExpressionVisitor
 Visit	Caique/Expressions/IExpressionVisitor.cs	/^        T Visit(LiteralExpr expr);$/;"	m	interface:Caique.Expressions.IExpressionVisitor
-Visit	Caique/Logging/AstPrinter.cs	/^        public string Visit(BinaryExpr expr)$/;"	m	class:Caique.Logging.AstPrinter
-Visit	Caique/Logging/AstPrinter.cs	/^        public string Visit(GroupExpr expr)$/;"	m	class:Caique.Logging.AstPrinter
-Visit	Caique/Logging/AstPrinter.cs	/^        public string Visit(LiteralExpr expr)$/;"	m	class:Caique.Logging.AstPrinter
-While	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, Var, While, Count,$/;"	e	enum:Caique.TokenType	file:
+Visit	Caique/Statements/IStatementVisitor.cs	/^        T Visit(AssignmentStmt stmt);$/;"	m	interface:Caique.Statements.IStatementVisitor
+Visit	Caique/Statements/IStatementVisitor.cs	/^        T Visit(ExpressionStmt stmt);$/;"	m	interface:Caique.Statements.IStatementVisitor
+Visit	Caique/Statements/IStatementVisitor.cs	/^        T Visit(VarDeclarationStmt stmt);$/;"	m	interface:Caique.Statements.IStatementVisitor
+While	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, While, Count,$/;"	e	enum:Caique.TokenType	file:
+_builder	Caique/CodeGen/CodeGenerator.cs	/^        private readonly LLVMBuilderRef _builder;$/;"	f	class:Caique.CodeGen.CodeGenerator	file:
 _current	Caique/Parsing/Parser.cs	/^        private int _current = 0;$/;"	f	class:Caique.Parsing.Parser	file:
 _current	Caique/Scanner/Lexer.cs	/^        private int _current = 0;$/;"	f	class:Caique.Scanner.Lexer	file:
+_dataTypes	Caique/Scanner/Lexer.cs	/^        private static Dictionary<string, DataType> _dataTypes =$/;"	f	class:Caique.Scanner.Lexer	file:
 _keywords	Caique/Scanner/Lexer.cs	/^        private static Dictionary<string, TokenType> _keywords =$/;"	f	class:Caique.Scanner.Lexer	file:
+_module	Caique/CodeGen/CodeGenerator.cs	/^        private readonly LLVMModuleRef _module;$/;"	f	class:Caique.CodeGen.CodeGenerator	file:
+_namedValues	Caique/CodeGen/CodeGenerator.cs	/^        private readonly Dictionary<string, LLVMValueRef> _namedValues = new Dictionary<string, /;"	f	class:Caique.CodeGen.CodeGenerator	file:
 _position	Caique/Scanner/Lexer.cs	/^        private Pos _position = new Pos(1, 1);$/;"	f	class:Caique.Scanner.Lexer	file:
 _source	Caique/Scanner/Lexer.cs	/^        private string _source;$/;"	f	class:Caique.Scanner.Lexer	file:
 _start	Caique/Scanner/Lexer.cs	/^        private int _start = 0;$/;"	f	class:Caique.Scanner.Lexer	file:
+_statements	Caique/CodeGen/CodeGenerator.cs	/^        private readonly List<IStatement> _statements;$/;"	f	class:Caique.CodeGen.CodeGenerator	file:
 _tokens	Caique/Parsing/Parser.cs	/^        private List<Token> _tokens { get; }$/;"	p	class:Caique.Parsing.Parser
 _tokens	Caique/Scanner/Lexer.cs	/^        private List<Token> _tokens = new List<Token>();$/;"	f	class:Caique.Scanner.Lexer	file:
+_valueStack	Caique/CodeGen/CodeGenerator.cs	/^        private readonly Stack<LLVMValueRef> _valueStack = new Stack<LLVMValueRef>();$/;"	f	class:Caique.CodeGen.CodeGenerator	file:
 additionalProbingPaths	Caique/bin/Debug/netcoreapp2.2/Caique.runtimeconfig.dev.json	/^    "additionalProbingPaths": [$/;"	a	object:runtimeOptions
+assemblyVersion	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^            "assemblyVersion": "1.0.0.0",$/;"	s	object:targets..NETCoreApp,Version=v2.2.LLVMSharp/5.0.0.runtime.lib/netstandard1.1/LLVMSharp.dll
 assemblyVersion	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^            "assemblyVersion": "12.0.0.0",$/;"	s	object:targets..NETCoreApp,Version=v2.2.Newtonsoft.Json/12.0.2.runtime.lib/netstandard2.0/Newtonsoft.Json.dll
 assetTargetFallback	Caique/obj/project.assets.json	/^        "assetTargetFallback": true,$/;"	b	object:project.frameworks.netcoreapp2.2
 autoReferenced	Caique/obj/project.assets.json	/^            "autoReferenced": true$/;"	b	object:project.frameworks.netcoreapp2.2.dependencies.Microsoft.NETCore.App
@@ -654,6 +730,7 @@ build/netcoreapp2.2/Microsoft.NETCore.App.props	Caique/obj/project.assets.json	/
 build/netcoreapp2.2/Microsoft.NETCore.App.targets	Caique/obj/project.assets.json	/^          "build\/netcoreapp2.2\/Microsoft.NETCore.App.targets": {}$/;"	o	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.App/2.2.0.build
 build/netstandard2.0/NETStandard.Library.targets	Caique/obj/project.assets.json	/^          "build\/netstandard2.0\/NETStandard.Library.targets": {}$/;"	o	object:targets..NETCoreApp,Version=v2.2.NETStandard.Library/2.0.3.build
 compilationOptions	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^  "compilationOptions": {},$/;"	o
+compile	Caique/obj/project.assets.json	/^        "compile": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.LLVMSharp/5.0.0
 compile	Caique/obj/project.assets.json	/^        "compile": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.App/2.2.0
 compile	Caique/obj/project.assets.json	/^        "compile": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.Platforms/2.2.0
 compile	Caique/obj/project.assets.json	/^        "compile": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.Targets/2.0.0
@@ -661,13 +738,17 @@ compile	Caique/obj/project.assets.json	/^        "compile": {$/;"	o	object:targe
 compile	Caique/obj/project.assets.json	/^        "compile": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.Newtonsoft.Json/12.0.2
 configFilePaths	Caique/obj/project.assets.json	/^      "configFilePaths": [$/;"	a	object:project.restore
 dependencies	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^        "dependencies": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.Caique/1.0.0
+dependencies	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^        "dependencies": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.LLVMSharp/5.0.0
 dependencies	Caique/obj/project.assets.json	/^        "dependencies": {$/;"	o	object:project.frameworks.netcoreapp2.2
+dependencies	Caique/obj/project.assets.json	/^        "dependencies": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.LLVMSharp/5.0.0
 dependencies	Caique/obj/project.assets.json	/^        "dependencies": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.App/2.2.0
 dependencies	Caique/obj/project.assets.json	/^        "dependencies": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.DotNetHostPolicy/2.2.0
 dependencies	Caique/obj/project.assets.json	/^        "dependencies": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.DotNetHostResolver/2.2.0
 dependencies	Caique/obj/project.assets.json	/^        "dependencies": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.NETStandard.Library/2.0.3
 fallbackFolders	Caique/obj/project.assets.json	/^      "fallbackFolders": [$/;"	a	object:project.restore
+fileVersion	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^            "fileVersion": "1.0.0.0"$/;"	s	object:targets..NETCoreApp,Version=v2.2.LLVMSharp/5.0.0.runtime.lib/netstandard1.1/LLVMSharp.dll
 fileVersion	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^            "fileVersion": "12.0.2.23222"$/;"	s	object:targets..NETCoreApp,Version=v2.2.Newtonsoft.Json/12.0.2.runtime.lib/netstandard2.0/Newtonsoft.Json.dll
+files	Caique/obj/project.assets.json	/^      "files": [$/;"	a	object:libraries.LLVMSharp/5.0.0
 files	Caique/obj/project.assets.json	/^      "files": [$/;"	a	object:libraries.Microsoft.NETCore.App/2.2.0
 files	Caique/obj/project.assets.json	/^      "files": [$/;"	a	object:libraries.Microsoft.NETCore.DotNetAppHost/2.2.0
 files	Caique/obj/project.assets.json	/^      "files": [$/;"	a	object:libraries.Microsoft.NETCore.DotNetHostPolicy/2.2.0
@@ -676,9 +757,12 @@ files	Caique/obj/project.assets.json	/^      "files": [$/;"	a	object:libraries.M
 files	Caique/obj/project.assets.json	/^      "files": [$/;"	a	object:libraries.Microsoft.NETCore.Targets/2.0.0
 files	Caique/obj/project.assets.json	/^      "files": [$/;"	a	object:libraries.NETStandard.Library/2.0.3
 files	Caique/obj/project.assets.json	/^      "files": [$/;"	a	object:libraries.Newtonsoft.Json/12.0.2
+files	Caique/obj/project.assets.json	/^      "files": [$/;"	a	object:libraries.libLLVM/8.0.0
 framework	Caique/bin/Debug/netcoreapp2.2/Caique.runtimeconfig.json	/^    "framework": {$/;"	o	object:runtimeOptions
 frameworks	Caique/obj/project.assets.json	/^      "frameworks": {$/;"	o	object:project.restore
 frameworks	Caique/obj/project.assets.json	/^    "frameworks": {$/;"	o	object:project
+hashPath	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "hashPath": "libllvm.8.0.0.nupkg.sha512"$/;"	s	object:libraries.libLLVM/8.0.0
+hashPath	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "hashPath": "llvmsharp.5.0.0.nupkg.sha512"$/;"	s	object:libraries.LLVMSharp/5.0.0
 hashPath	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "hashPath": "newtonsoft.json.12.0.2.nupkg.sha512"$/;"	s	object:libraries.Newtonsoft.Json/12.0.2
 https://api.nuget.org/v3/index.json	Caique/obj/project.assets.json	/^        "https:\/\/api.nuget.org\/v3\/index.json": {}$/;"	o	object:project.restore.sources
 imports	Caique/obj/project.assets.json	/^        "imports": [$/;"	a	object:project.frameworks.netcoreapp2.2
@@ -688,11 +772,23 @@ lib/netstandard1.0/_._	Caique/obj/project.assets.json	/^          "lib\/netstand
 lib/netstandard1.0/_._	Caique/obj/project.assets.json	/^          "lib\/netstandard1.0\/_._": {}$/;"	o	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.Targets/2.0.0.runtime
 lib/netstandard1.0/_._	Caique/obj/project.assets.json	/^          "lib\/netstandard1.0\/_._": {}$/;"	o	object:targets..NETCoreApp,Version=v2.2.NETStandard.Library/2.0.3.compile
 lib/netstandard1.0/_._	Caique/obj/project.assets.json	/^          "lib\/netstandard1.0\/_._": {}$/;"	o	object:targets..NETCoreApp,Version=v2.2.NETStandard.Library/2.0.3.runtime
+lib/netstandard1.1/LLVMSharp.dll	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^          "lib\/netstandard1.1\/LLVMSharp.dll": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.LLVMSharp/5.0.0.runtime
+lib/netstandard1.1/LLVMSharp.dll	Caique/obj/project.assets.json	/^          "lib\/netstandard1.1\/LLVMSharp.dll": {}$/;"	o	object:targets..NETCoreApp,Version=v2.2.LLVMSharp/5.0.0.compile
+lib/netstandard1.1/LLVMSharp.dll	Caique/obj/project.assets.json	/^          "lib\/netstandard1.1\/LLVMSharp.dll": {}$/;"	o	object:targets..NETCoreApp,Version=v2.2.LLVMSharp/5.0.0.runtime
 lib/netstandard2.0/Newtonsoft.Json.dll	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^          "lib\/netstandard2.0\/Newtonsoft.Json.dll": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.Newtonsoft.Json/12.0.2.runtime
 lib/netstandard2.0/Newtonsoft.Json.dll	Caique/obj/project.assets.json	/^          "lib\/netstandard2.0\/Newtonsoft.Json.dll": {}$/;"	o	object:targets..NETCoreApp,Version=v2.2.Newtonsoft.Json/12.0.2.compile
 lib/netstandard2.0/Newtonsoft.Json.dll	Caique/obj/project.assets.json	/^          "lib\/netstandard2.0\/Newtonsoft.Json.dll": {}$/;"	o	object:targets..NETCoreApp,Version=v2.2.Newtonsoft.Json/12.0.2.runtime
+libLLVM	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^          "libLLVM": "8.0.0"$/;"	s	object:targets..NETCoreApp,Version=v2.2.Caique/1.0.0.dependencies
+libLLVM	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^          "libLLVM": "8.0.0"$/;"	s	object:targets..NETCoreApp,Version=v2.2.LLVMSharp/5.0.0.dependencies
+libLLVM	Caique/obj/project.assets.json	/^          "libLLVM": "5.0.1"$/;"	s	object:targets..NETCoreApp,Version=v2.2.LLVMSharp/5.0.0.dependencies
+libLLVM	Caique/obj/project.assets.json	/^          "libLLVM": {$/;"	o	object:project.frameworks.netcoreapp2.2.dependencies
+libLLVM/8.0.0	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "libLLVM\/8.0.0": {},$/;"	o	object:targets..NETCoreApp,Version=v2.2
+libLLVM/8.0.0	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^    "libLLVM\/8.0.0": {$/;"	o	object:libraries
+libLLVM/8.0.0	Caique/obj/project.assets.json	/^      "libLLVM\/8.0.0": {$/;"	o	object:targets..NETCoreApp,Version=v2.2
+libLLVM/8.0.0	Caique/obj/project.assets.json	/^    "libLLVM\/8.0.0": {$/;"	o	object:libraries
 libraries	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^  "libraries": {$/;"	o
 libraries	Caique/obj/project.assets.json	/^  "libraries": {$/;"	o
+main	Caique/test.s	/^main:                                   # @main$/;"	l
 name	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^    "name": ".NETCoreApp,Version=v2.2",$/;"	s	object:runtimeTarget
 name	Caique/bin/Debug/netcoreapp2.2/Caique.runtimeconfig.json	/^      "name": "Microsoft.NETCore.App",$/;"	s	object:runtimeOptions.framework
 netcoreapp2.2	Caique/obj/project.assets.json	/^        "netcoreapp2.2": {$/;"	o	object:project.restore.frameworks
@@ -701,7 +797,11 @@ originalTargetFrameworks	Caique/obj/project.assets.json	/^      "originalTargetF
 outputPath	Caique/obj/project.assets.json	/^      "outputPath": "\/home\/paddi\/projects\/C#\/Caique\/Caique\/obj\/",$/;"	s	object:project.restore
 packageFolders	Caique/obj/project.assets.json	/^  "packageFolders": {$/;"	o
 packagesPath	Caique/obj/project.assets.json	/^      "packagesPath": "\/home\/paddi\/.nuget\/packages\/",$/;"	s	object:project.restore
+path	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "path": "libllvm\/8.0.0",$/;"	s	object:libraries.libLLVM/8.0.0
+path	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "path": "llvmsharp\/5.0.0",$/;"	s	object:libraries.LLVMSharp/5.0.0
 path	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "path": "newtonsoft.json\/12.0.2",$/;"	s	object:libraries.Newtonsoft.Json/12.0.2
+path	Caique/obj/project.assets.json	/^      "path": "libllvm\/8.0.0",$/;"	s	object:libraries.libLLVM/8.0.0
+path	Caique/obj/project.assets.json	/^      "path": "llvmsharp\/5.0.0",$/;"	s	object:libraries.LLVMSharp/5.0.0
 path	Caique/obj/project.assets.json	/^      "path": "microsoft.netcore.app\/2.2.0",$/;"	s	object:libraries.Microsoft.NETCore.App/2.2.0
 path	Caique/obj/project.assets.json	/^      "path": "microsoft.netcore.dotnetapphost\/2.2.0",$/;"	s	object:libraries.Microsoft.NETCore.DotNetAppHost/2.2.0
 path	Caique/obj/project.assets.json	/^      "path": "microsoft.netcore.dotnethostpolicy\/2.2.0",$/;"	s	object:libraries.Microsoft.NETCore.DotNetHostPolicy/2.2.0
@@ -862,7 +962,9 @@ ref/netcoreapp2.2/mscorlib.dll	Caique/obj/project.assets.json	/^          "ref\/
 ref/netcoreapp2.2/netstandard.dll	Caique/obj/project.assets.json	/^          "ref\/netcoreapp2.2\/netstandard.dll": {}$/;"	o	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.App/2.2.0.compile
 restore	Caique/obj/project.assets.json	/^    "restore": {$/;"	o	object:project
 runtime	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^        "runtime": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.Caique/1.0.0
+runtime	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^        "runtime": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.LLVMSharp/5.0.0
 runtime	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^        "runtime": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.Newtonsoft.Json/12.0.2
+runtime	Caique/obj/project.assets.json	/^        "runtime": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.LLVMSharp/5.0.0
 runtime	Caique/obj/project.assets.json	/^        "runtime": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.Platforms/2.2.0
 runtime	Caique/obj/project.assets.json	/^        "runtime": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.Targets/2.0.0
 runtime	Caique/obj/project.assets.json	/^        "runtime": {$/;"	o	object:targets..NETCoreApp,Version=v2.2.NETStandard.Library/2.0.3
@@ -871,28 +973,41 @@ runtimeOptions	Caique/bin/Debug/netcoreapp2.2/Caique.runtimeconfig.dev.json	/^  
 runtimeOptions	Caique/bin/Debug/netcoreapp2.2/Caique.runtimeconfig.json	/^  "runtimeOptions": {$/;"	o
 runtimeTarget	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^  "runtimeTarget": {$/;"	o
 serviceable	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "serviceable": false,$/;"	b	object:libraries.Caique/1.0.0
+serviceable	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "serviceable": true,$/;"	b	object:libraries.LLVMSharp/5.0.0
 serviceable	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "serviceable": true,$/;"	b	object:libraries.Newtonsoft.Json/12.0.2
+serviceable	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "serviceable": true,$/;"	b	object:libraries.libLLVM/8.0.0
 sha512	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "sha512": ""$/;"	s	object:libraries.Caique/1.0.0
+sha512	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "sha512": "sha512-NGBFqibEV\/PJiTf5i0ggf6dcPVNL0oXVXZvmmNwkZH8B9TWngoS7VVJ6LgEmyA3Lev18tUb/;"	s	object:libraries.libLLVM/8.0.0
+sha512	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "sha512": "sha512-cmMzCgd0RWQzRGS0RLaSoZvaqnaSSXW7uxDV8Z+04AT2yzCZLeeuTpve8gWhfVOqYU14Vefn/;"	s	object:libraries.LLVMSharp/5.0.0
 sha512	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "sha512": "sha512-rTK0s2EKlfHsQsH6Yx2smvcTCeyoDNgCW7FEYyV01drPlh2T243PR2DiDXqtC5N4GDm4Ma\//;"	s	object:libraries.Newtonsoft.Json/12.0.2
 sha512	Caique/obj/project.assets.json	/^      "sha512": "548M6mnBSJWxsIlkQHfbzoYxpiYFXZZSL00p4GHYv8PkiqFBnnT68mW5mGEsA\/ch9fDO9GkPgkFQpW/;"	s	object:libraries.NETStandard.Library/2.0.3
+sha512	Caique/obj/project.assets.json	/^      "sha512": "NGBFqibEV\/PJiTf5i0ggf6dcPVNL0oXVXZvmmNwkZH8B9TWngoS7VVJ6LgEmyA3Lev18tUbg13OtAD/;"	s	object:libraries.libLLVM/8.0.0
 sha512	Caique/obj/project.assets.json	/^      "sha512": "OK\/H8p9Ig6mLMITjXJ4VOewrJg\/TU+dAPHE4BdMWMv+8COzBehf7XF1+DofKkmqdHpO2cJoS5Sc9P/;"	s	object:libraries.Microsoft.NETCore.DotNetAppHost/2.2.0
+sha512	Caique/obj/project.assets.json	/^      "sha512": "cmMzCgd0RWQzRGS0RLaSoZvaqnaSSXW7uxDV8Z+04AT2yzCZLeeuTpve8gWhfVOqYU14VefncreotUI/;"	s	object:libraries.LLVMSharp/5.0.0
 sha512	Caique/obj/project.assets.json	/^      "sha512": "mJnCMoBfWL0lxxlBFJ\/8cZKTfPpI82TekZkUqvSCBtunUaaqr2LVeWl1zQYdanAdk4Ddf1HCwb8+DN/;"	s	object:libraries.Microsoft.NETCore.Targets/2.0.0
 sha512	Caique/obj/project.assets.json	/^      "sha512": "oAN5xJhulhZ41AljFUfX9X+BlXQvYekh9IjLbWe10KVFOAnAv0LVbJB+lY1OUsq9TXBi2A2gdEKLqPw/;"	s	object:libraries.Microsoft.NETCore.DotNetHostResolver/2.2.0
 sha512	Caique/obj/project.assets.json	/^      "sha512": "rTK0s2EKlfHsQsH6Yx2smvcTCeyoDNgCW7FEYyV01drPlh2T243PR2DiDXqtC5N4GDm4Ma\/lkxfW5a/;"	s	object:libraries.Newtonsoft.Json/12.0.2
 sha512	Caique/obj/project.assets.json	/^      "sha512": "scu9EtZfMBXAeyTPgiP5l\/18xTU6QKDK+UfYWMFM7m5ZuBOPLhqjm+QyX8T6PI5y8exgcNiVd50Tfl/;"	s	object:libraries.Microsoft.NETCore.App/2.2.0
 sha512	Caique/obj/project.assets.json	/^      "sha512": "usINorQD\/B8jsNo9V1+MvAkzFj2QE1yNmAuh4vG5Wsd71EjBAVxFTDAb6mmJQI6wO4j11L1VJuOGMV/;"	s	object:libraries.Microsoft.NETCore.DotNetHostPolicy/2.2.0
 sha512	Caique/obj/project.assets.json	/^      "sha512": "whK\/5p0sLtQiDbcTphVRjmN3tmV+YMYf8vuaKU05y1iZw9KWiG\/iLY5Pd3ok+vFBJ+FZnmp7NqF7o/;"	s	object:libraries.Microsoft.NETCore.Platforms/2.2.0
-signature	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^    "signature": "4bf20b3f4b187ddd01af96ea47dda577c5263775"$/;"	s	object:runtimeTarget
+signature	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^    "signature": "8c24d4196de881d830953b16b285ee34f2327b5e"$/;"	s	object:runtimeTarget
 sources	Caique/obj/project.assets.json	/^      "sources": {$/;"	o	object:project.restore
+str	Caique/test.s	/^.str:$/;"	l
 suppressParent	Caique/obj/project.assets.json	/^            "suppressParent": "All",$/;"	s	object:project.frameworks.netcoreapp2.2.dependencies.Microsoft.NETCore.App
+target	Caique/obj/project.assets.json	/^            "target": "Package",$/;"	s	object:project.frameworks.netcoreapp2.2.dependencies.LLVMSharp
 target	Caique/obj/project.assets.json	/^            "target": "Package",$/;"	s	object:project.frameworks.netcoreapp2.2.dependencies.Microsoft.NETCore.App
 target	Caique/obj/project.assets.json	/^            "target": "Package",$/;"	s	object:project.frameworks.netcoreapp2.2.dependencies.Newtonsoft.Json
+target	Caique/obj/project.assets.json	/^            "target": "Package",$/;"	s	object:project.frameworks.netcoreapp2.2.dependencies.libLLVM
 targets	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^  "targets": {$/;"	o
 targets	Caique/obj/project.assets.json	/^  "targets": {$/;"	o
 tfm	Caique/bin/Debug/netcoreapp2.2/Caique.runtimeconfig.json	/^    "tfm": "netcoreapp2.2",$/;"	s	object:runtimeOptions
+type	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "type": "package",$/;"	s	object:libraries.LLVMSharp/5.0.0
 type	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "type": "package",$/;"	s	object:libraries.Newtonsoft.Json/12.0.2
+type	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "type": "package",$/;"	s	object:libraries.libLLVM/8.0.0
 type	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^      "type": "project",$/;"	s	object:libraries.Caique/1.0.0
 type	Caique/obj/project.assets.json	/^        "type": "package"$/;"	s	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.DotNetAppHost/2.2.0
+type	Caique/obj/project.assets.json	/^        "type": "package"$/;"	s	object:targets..NETCoreApp,Version=v2.2.libLLVM/8.0.0
+type	Caique/obj/project.assets.json	/^        "type": "package",$/;"	s	object:targets..NETCoreApp,Version=v2.2.LLVMSharp/5.0.0
 type	Caique/obj/project.assets.json	/^        "type": "package",$/;"	s	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.App/2.2.0
 type	Caique/obj/project.assets.json	/^        "type": "package",$/;"	s	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.DotNetHostPolicy/2.2.0
 type	Caique/obj/project.assets.json	/^        "type": "package",$/;"	s	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.DotNetHostResolver/2.2.0
@@ -900,6 +1015,7 @@ type	Caique/obj/project.assets.json	/^        "type": "package",$/;"	s	object:ta
 type	Caique/obj/project.assets.json	/^        "type": "package",$/;"	s	object:targets..NETCoreApp,Version=v2.2.Microsoft.NETCore.Targets/2.0.0
 type	Caique/obj/project.assets.json	/^        "type": "package",$/;"	s	object:targets..NETCoreApp,Version=v2.2.NETStandard.Library/2.0.3
 type	Caique/obj/project.assets.json	/^        "type": "package",$/;"	s	object:targets..NETCoreApp,Version=v2.2.Newtonsoft.Json/12.0.2
+type	Caique/obj/project.assets.json	/^      "type": "package",$/;"	s	object:libraries.LLVMSharp/5.0.0
 type	Caique/obj/project.assets.json	/^      "type": "package",$/;"	s	object:libraries.Microsoft.NETCore.App/2.2.0
 type	Caique/obj/project.assets.json	/^      "type": "package",$/;"	s	object:libraries.Microsoft.NETCore.DotNetAppHost/2.2.0
 type	Caique/obj/project.assets.json	/^      "type": "package",$/;"	s	object:libraries.Microsoft.NETCore.DotNetHostPolicy/2.2.0
@@ -908,9 +1024,12 @@ type	Caique/obj/project.assets.json	/^      "type": "package",$/;"	s	object:libr
 type	Caique/obj/project.assets.json	/^      "type": "package",$/;"	s	object:libraries.Microsoft.NETCore.Targets/2.0.0
 type	Caique/obj/project.assets.json	/^      "type": "package",$/;"	s	object:libraries.NETStandard.Library/2.0.3
 type	Caique/obj/project.assets.json	/^      "type": "package",$/;"	s	object:libraries.Newtonsoft.Json/12.0.2
+type	Caique/obj/project.assets.json	/^      "type": "package",$/;"	s	object:libraries.libLLVM/8.0.0
 version	Caique/bin/Debug/netcoreapp2.2/Caique.runtimeconfig.json	/^      "version": "2.2.0"$/;"	s	object:runtimeOptions.framework
 version	Caique/obj/project.assets.json	/^            "version": "[12.0.2, )"$/;"	s	object:project.frameworks.netcoreapp2.2.dependencies.Newtonsoft.Json
 version	Caique/obj/project.assets.json	/^            "version": "[2.2.0, )",$/;"	s	object:project.frameworks.netcoreapp2.2.dependencies.Microsoft.NETCore.App
+version	Caique/obj/project.assets.json	/^            "version": "[5.0.0, )"$/;"	s	object:project.frameworks.netcoreapp2.2.dependencies.LLVMSharp
+version	Caique/obj/project.assets.json	/^            "version": "[8.0.0, )"$/;"	s	object:project.frameworks.netcoreapp2.2.dependencies.libLLVM
 version	Caique/obj/project.assets.json	/^    "version": "1.0.0",$/;"	s	object:project
 version	Caique/obj/project.assets.json	/^  "version": 3,$/;"	n
 warn	Caique/obj/project.assets.json	/^        "warn": true$/;"	b	object:project.frameworks.netcoreapp2.2

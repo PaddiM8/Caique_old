@@ -6,8 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LLVMSHarp" Version="5.0.0" />
+    <PackageReference Include="libLLVM" Version="8.0.0" />
+    <PackageReference Include="LLVMSharp" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
+  <!--  <ItemGroup>
+      <Reference Include="LLVMSharp">
+          <HintPath>LLVMSharp.dll</HintPath>
+      </Reference>
+  </ItemGroup>-->
+  
 </Project>

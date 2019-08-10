@@ -19,9 +19,11 @@ namespace Caique
         // Literals
         Identifier, String, Number,
 
+        VariableType,
+
         // Keywords
         And, Class, Else, False, Fun, For, If, Null, Or,
-        Print, Return, Super, This, True, Var, While, Count,
+        Print, Return, Super, This, True, While, Count,
         Break, Continue,
 
         EOF

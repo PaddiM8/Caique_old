@@ -15,25 +15,37 @@ namespace Caique.Scanner
         private static Dictionary<string, TokenType> _keywords =
             new Dictionary<string, TokenType>()
         {
-            { "and",       TokenType.And      },
-            { "class",     TokenType.Class    },
-            { "else",      TokenType.Else     },
-            { "false",     TokenType.False    },
-            { "for",       TokenType.For      },
-            { "fn",        TokenType.Fun      },
-            { "break",     TokenType.Break    },
-            { "continue",  TokenType.Continue },
-            { "if",        TokenType.If       },
-            { "null",      TokenType.Null     },
-            { "or",        TokenType.Or       },
-            { "print",     TokenType.Print    },
-            { "return",    TokenType.Return   },
-            { "super",     TokenType.Super    },
-            { "this",      TokenType.This     },
-            { "true",      TokenType.True     },
-            { "let",       TokenType.Var      },
-            { "while",     TokenType.While    },
-            { "count",     TokenType.Count    },
+            { "and",       TokenType.And          },
+            { "class",     TokenType.Class        },
+            { "else",      TokenType.Else         },
+            { "false",     TokenType.False        },
+            { "for",       TokenType.For          },
+            { "fn",        TokenType.Fun          },
+            { "break",     TokenType.Break        },
+            { "continue",  TokenType.Continue     },
+            { "if",        TokenType.If           },
+            { "null",      TokenType.Null         },
+            { "or",        TokenType.Or           },
+            { "print",     TokenType.Print        },
+            { "return",    TokenType.Return       },
+            { "super",     TokenType.Super        },
+            { "this",      TokenType.This         },
+            { "true",      TokenType.True         },
+            { "string",    TokenType.VariableType },
+            { "int",       TokenType.VariableType },
+            { "double",    TokenType.VariableType },
+            { "bool",      TokenType.VariableType },
+            { "while",     TokenType.While        },
+            { "count",     TokenType.Count        },
+        };
+
+        private static Dictionary<string, DataType> _dataTypes =
+            new Dictionary<string, DataType>()
+        {
+            { "string", DataType.String  },
+            { "int",    DataType.Int     },
+            { "double", DataType.Double  },
+            { "bool",   DataType.Boolean },
         };
 
         public Lexer(string source)
@@ -117,7 +129,7 @@ namespace Caique.Scanner
                 default:
                     if (IsDigit(c))
                     {
-                        AddToken(TokenType.Number, GetNumberLiteral());
+                        GetNumberLiteral();
                     }
                     else if (IsAlpha(c))
                     {
@@ -159,7 +171,7 @@ namespace Caique.Scanner
         /// <summary>
         /// Get number
         /// </summary>
-        private object GetNumberLiteral()
+        private void GetNumberLiteral()
         {
             bool hasDot = false;
 
@@ -179,15 +191,15 @@ namespace Caique.Scanner
             if (Peek() == 'f')
             {
                 Advance();
-                return float.Parse(numberString);
+                AddToken(TokenType.Number, double.Parse(numberString), DataType.Double); // Temporary, not floats yet
             }
             else if (hasDot)
             {
-                return double.Parse(numberString);
+                AddToken(TokenType.Number, double.Parse(numberString), DataType.Double);
             }
             else
             {
-                return int.Parse(numberString);
+                AddToken(TokenType.Number, int.Parse(numberString), DataType.Int);
             }
         }
 
@@ -263,10 +275,15 @@ namespace Caique.Scanner
         /// <summary>
         /// Add a new token to the token list (with value)
         /// </summary>
-        private void AddToken(TokenType type, dynamic literal)
+        private void AddToken(TokenType type, dynamic literal, DataType? dataType = null)
         {
             string text = _source.Substring(_start, _current - _start);
-            _tokens.Add(new Token(type, text, _position, literal));
+            if (type == TokenType.VariableType)
+            {
+                dataType = _dataTypes[text];
+            }
+
+            _tokens.Add(new Token(type, text, _position, literal, dataType));
         }
 
         /// <summary>
