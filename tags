@@ -581,7 +581,6 @@ IsAtEnd	Caique/Parsing/Parser.cs	/^        private bool IsAtEnd()$/;"	m	class:Ca
 IsAtEnd	Caique/Scanner/Lexer.cs	/^        private bool IsAtEnd() => _current >= _source.Length;$/;"	m	class:Caique.Scanner.Lexer	file:
 IsComparisonOperator	Caique/Models/TokenType.cs	/^        public static bool IsComparisonOperator(this TokenType tokenType)$/;"	m	class:Caique.TokenTypeMethods
 IsDigit	Caique/Scanner/Lexer.cs	/^        private bool IsDigit(char c) => c >= '0' && c <= '9';$/;"	m	class:Caique.Scanner.Lexer	file:
-LCPI0_0	Caique/test.s	/^.LCPI0_0:$/;"	l
 LLVMBoolFalse	Caique/CodeGen/CodeGenerator.cs	/^        private static readonly LLVMBool LLVMBoolFalse = new LLVMBool(0);$/;"	f	class:Caique.CodeGen.CodeGenerator	file:
 LLVMBoolTrue	Caique/CodeGen/CodeGenerator.cs	/^        private static readonly LLVMBool LLVMBoolTrue = new LLVMBool(1);$/;"	f	class:Caique.CodeGen.CodeGenerator	file:
 LLVMSharp	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^          "LLVMSharp": "5.0.0",$/;"	s	object:targets..NETCoreApp,Version=v2.2.Caique/1.0.0.dependencies
@@ -598,7 +597,6 @@ LessEqual	Caique/Models/TokenType.cs	/^        Less, LessEqual,$/;"	e	enum:Caiqu
 Lexeme	Caique/Models/Token.cs	/^        public string       Lexeme      { get; }$/;"	p	class:Caique.Models.Token
 Lexer	Caique/Scanner/Lexer.cs	/^        public Lexer(string source)$/;"	m	class:Caique.Scanner.Lexer
 Lexer	Caique/Scanner/Lexer.cs	/^    class Lexer$/;"	c	namespace:Caique.Scanner
-Lfunc_end0	Caique/test.s	/^.Lfunc_end0:$/;"	l
 Line	Caique/Models/Pos.cs	/^        public int Line { get; set; }$/;"	p	struct:Caique.Models.Pos
 Literal	Caique/Models/Token.cs	/^        public object       Literal     { get; set; }$/;"	p	class:Caique.Models.Token
 LiteralExpr	Caique/Expressions/LiteralExpr.cs	/^        public LiteralExpr(Token value)$/;"	m	class:Caique.Expressions.LiteralExpr
@@ -788,7 +786,6 @@ libLLVM/8.0.0	Caique/obj/project.assets.json	/^      "libLLVM\/8.0.0": {$/;"	o	o
 libLLVM/8.0.0	Caique/obj/project.assets.json	/^    "libLLVM\/8.0.0": {$/;"	o	object:libraries
 libraries	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^  "libraries": {$/;"	o
 libraries	Caique/obj/project.assets.json	/^  "libraries": {$/;"	o
-main	Caique/test.s	/^main:                                   # @main$/;"	l
 name	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^    "name": ".NETCoreApp,Version=v2.2",$/;"	s	object:runtimeTarget
 name	Caique/bin/Debug/netcoreapp2.2/Caique.runtimeconfig.json	/^      "name": "Microsoft.NETCore.App",$/;"	s	object:runtimeOptions.framework
 netcoreapp2.2	Caique/obj/project.assets.json	/^        "netcoreapp2.2": {$/;"	o	object:project.restore.frameworks
@@ -992,7 +989,6 @@ sha512	Caique/obj/project.assets.json	/^      "sha512": "usINorQD\/B8jsNo9V1+MvA
 sha512	Caique/obj/project.assets.json	/^      "sha512": "whK\/5p0sLtQiDbcTphVRjmN3tmV+YMYf8vuaKU05y1iZw9KWiG\/iLY5Pd3ok+vFBJ+FZnmp7NqF7o/;"	s	object:libraries.Microsoft.NETCore.Platforms/2.2.0
 signature	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^    "signature": "8c24d4196de881d830953b16b285ee34f2327b5e"$/;"	s	object:runtimeTarget
 sources	Caique/obj/project.assets.json	/^      "sources": {$/;"	o	object:project.restore
-str	Caique/test.s	/^.str:$/;"	l
 suppressParent	Caique/obj/project.assets.json	/^            "suppressParent": "All",$/;"	s	object:project.frameworks.netcoreapp2.2.dependencies.Microsoft.NETCore.App
 target	Caique/obj/project.assets.json	/^            "target": "Package",$/;"	s	object:project.frameworks.netcoreapp2.2.dependencies.LLVMSharp
 target	Caique/obj/project.assets.json	/^            "target": "Package",$/;"	s	object:project.frameworks.netcoreapp2.2.dependencies.Microsoft.NETCore.App
