@@ -36,6 +36,7 @@ namespace Caique.Parsing
             if (Match(TokenType.VariableType)) return VarDeclaration();
             if (Match(TokenType.Fun))          return Function();
             if (Match(TokenType.LeftBrace))    return Block();
+            if (Match(TokenType.Return))       return Return();
 
             if (Check(TokenType.Identifier) && CheckNext(TokenType.Equal))
             {
@@ -110,6 +111,14 @@ namespace Caique.Parsing
             }
 
             return new BlockStmt(statements);
+        }
+
+        public IStatement Return()
+        {
+            IExpression expr = Expression();
+            Consume(TokenType.Semicolon, "Expected ';' after expression.");
+
+            return new ReturnStmt(expr);
         }
 
         public IStatement ExpressionStatement()

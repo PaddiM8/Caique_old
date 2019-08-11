@@ -8,7 +8,7 @@ using Caique.Logging;
 
 namespace Caique.CodeGen
 {
-    class CodeGenerator : IExpressionVisitor<IExpression>, IStatementVisitor<object>
+    class CodeGenerator : IExpressionVisitor<LLVMValueRef>, IStatementVisitor<object>
     {
 
         private readonly LLVMModuleRef _module;
@@ -18,6 +18,7 @@ namespace Caique.CodeGen
         private readonly Dictionary<string, LLVMValueRef> _namedValues = new Dictionary<string, LLVMValueRef>();
         private readonly Stack<LLVMValueRef> _valueStack = new Stack<LLVMValueRef>();
         private readonly List<IStatement> _statements;
+        //private readonly ScopeEnv _environment = new ScopeEnv();
 
         public CodeGenerator(List<IStatement> statements)
         {
@@ -27,10 +28,10 @@ namespace Caique.CodeGen
             _builder = LLVM.CreateBuilder();
 
             LLVMTypeRef stringType = LLVMTypeRef.PointerType(LLVMTypeRef.Int8Type(), 0);
-            var functype = LLVM.FunctionType(LLVM.Int32Type(), new LLVMTypeRef[] { }, false);
-            var main = LLVM.AddFunction(_module, "main", functype);
-            var entrypoint = LLVM.AppendBasicBlock(main, "entrypoint");
-            LLVM.PositionBuilderAtEnd(_builder, entrypoint);
+            //var functype = LLVM.FunctionType(LLVM.Int32Type(), new LLVMTypeRef[] { }, false);
+            //var main = LLVM.AddFunction(_module, "main", functype);
+            //var entrypoint = LLVM.AppendBasicBlock(main, "entrypoint");
+            //LLVM.PositionBuilderAtEnd(_builder, entrypoint);
 
             // String
             //LLVMValueRef output = LLVM.AddGlobal(_module, LLVMTypeRef.ArrayType(LLVMTypeRef.Int8Type(), 4), ".str");
@@ -50,7 +51,7 @@ namespace Caique.CodeGen
 
             //LLVM.BuildCall(_builder, printf, new LLVMValueRef[] { cast, _valueStack.Pop() }, "calltmp");
 
-            LLVM.BuildRet(_builder, LLVM.ConstInt(LLVM.Int32Type(), 0, false));
+            //LLVM.BuildRet(_builder, LLVM.ConstInt(LLVM.Int32Type(), 0, false));
             string error;
             LLVM.DumpModule(_module);
             LLVM.PrintModuleToFile(_module, "test.ll", out error);
@@ -71,12 +72,12 @@ namespace Caique.CodeGen
 
         public object Visit(AssignmentStmt stmt)
         {
-            stmt.Value.Accept(this);
+            LLVMValueRef value = stmt.Value.Accept(this);
 
-            LLVMValueRef value;
-            if (_namedValues.TryGetValue(stmt.Identifier.Lexeme, out value))
+            LLVMValueRef varRef;
+            if (_namedValues.TryGetValue(stmt.Identifier.Lexeme, out varRef))
             {
-                LLVM.BuildStore(_builder, _valueStack.Pop(), value);
+                LLVM.BuildStore(_builder, value, varRef);
             }
             else
             {
@@ -89,17 +90,46 @@ namespace Caique.CodeGen
 
         public object Visit(FunctionStmt stmt)
         {
-            Console.WriteLine("function");
+            var arguments = new LLVMTypeRef[Math.Max(stmt.Arguments.Count, 1)];
+
+            for (int i = 0; i < stmt.Arguments.Count; i++)
+            {
+                arguments[i] = stmt.Arguments[i].Type.ToLLVMType();
+            }
+
+            LLVMTypeRef functionType = LLVM.FunctionType(stmt.ReturnType.ToLLVMType(), arguments, LLVMBoolFalse);
+            LLVMValueRef function = LLVM.AddFunction(_module, stmt.Name.Lexeme, functionType);
+
+            for (int k = 0; k < arguments.Length; k++)
+            {
+                string argumentName = stmt.Arguments[k].Name.Lexeme;
+                LLVMValueRef param = LLVM.GetParam(function, (uint)k);
+                LLVM.SetValueName(param, argumentName);
+
+                _namedValues[argumentName] = param;
+            }
+
+            _valueStack.Push(function);
+            stmt.Block.Accept(this);
 
             return null;
         }
 
         public object Visit(BlockStmt stmt)
         {
+            LLVM.PositionBuilderAtEnd(_builder, LLVM.AppendBasicBlock(_valueStack.Pop(), "entry"));
             foreach (IStatement subStmt in stmt.Statements)
             {
                 subStmt.Accept(this);
             }
+
+            return null;
+        }
+
+        public object Visit(ReturnStmt stmt)
+        {
+            LLVMValueRef exprValue = stmt.Expression.Accept(this);
+            LLVM.BuildRet(_builder, exprValue);
 
             return null;
         }
@@ -111,39 +141,39 @@ namespace Caique.CodeGen
             return null;
         }
 
-        public IExpression Visit(BinaryExpr expr)
+        public LLVMValueRef Visit(BinaryExpr expr)
         {
-            expr.Left.Accept(this);
-            expr.Right.Accept(this);
+            LLVMValueRef left = expr.Left.Accept(this);
+            LLVMValueRef right = expr.Right.Accept(this);
 
-            LLVMValueRef right = _valueStack.Pop();
-            LLVMValueRef left = _valueStack.Pop();
+            //LLVMValueRef right = _valueStack.Pop();
+            //LLVMValueRef left = _valueStack.Pop();
 
-            LLVMValueRef node;
+            LLVMValueRef result;
 
             switch (expr.Operator.Type)
             {
                 case TokenType.Plus:
-                    node = LLVM.BuildFAdd(_builder, left, right, "addtmp");
+                    result = LLVM.BuildFAdd(_builder, left, right, "addtmp");
                     break;
                 case TokenType.Minus:
-                    node = LLVM.BuildFSub(_builder, left, right, "subtmp");
+                    result = LLVM.BuildFSub(_builder, left, right, "subtmp");
                     break;
                 case TokenType.Star:
-                    node = LLVM.BuildFMul(_builder, left, right, "multmp");
+                    result = LLVM.BuildFMul(_builder, left, right, "multmp");
                     break;
                 case TokenType.Slash:
-                    node = LLVM.BuildFDiv(_builder, left, right, "divtmp");
+                    result = LLVM.BuildFDiv(_builder, left, right, "divtmp");
                     break;
                 default: throw new Exception("Invalid binary operator."); // Invalid code should not have come here in the first place.
             }
 
-            _valueStack.Push(node);
+            //_valueStack.Push(node);
 
-            return expr;
+            return result;
         }
 
-        public IExpression Visit(LiteralExpr expr)
+        public LLVMValueRef Visit(LiteralExpr expr)
         {
             object literal = expr.Value.Literal;
             LLVMTypeRef llvmType = expr.Value.DataType.ToLLVMType();
@@ -170,21 +200,19 @@ namespace Caique.CodeGen
                     throw new Exception("Unknown datatype.");
             }
 
-            _valueStack.Push(llvmValue);
+            //_valueStack.Push(llvmValue);
 
-            return expr;
+            return llvmValue;
         }
 
-        public IExpression Visit(VariableExpr expr)
+        public LLVMValueRef Visit(VariableExpr expr)
         {
-            return expr;
+            return _namedValues[expr.Name.Lexeme];
         }
 
-        public IExpression Visit(GroupExpr expr)
+        public LLVMValueRef Visit(GroupExpr expr)
         {
-            expr.Expression.Accept(this);
-
-            return expr;
+            return expr.Expression.Accept(this);
         }
     }
 }

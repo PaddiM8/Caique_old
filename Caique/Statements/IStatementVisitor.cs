@@ -10,5 +10,6 @@ namespace Caique.Statements
         T Visit(AssignmentStmt stmt);
         T Visit(FunctionStmt stmt);
         T Visit(BlockStmt stmt);
+        T Visit(ReturnStmt stmt);
     }
 }
