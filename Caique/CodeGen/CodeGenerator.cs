@@ -40,9 +40,9 @@ namespace Caique.CodeGen
 
             // printf
             //var cast = LLVM.BuildIntCast(_builder, output, LLVM.PointerType(LLVMTypeRef.Int8Type(), 0), "tmpcast");
-            //var printfArguments = new LLVMTypeRef[] { LLVMTypeRef.PointerType(LLVMTypeRef.Int8Type(), 0) };
-            //var printf = LLVM.AddFunction(_module, "printf", LLVM.FunctionType(LLVMTypeRef.Int32Type(), printfArguments, LLVMBoolTrue));
-            //LLVM.SetLinkage(printf, LLVMLinkage.LLVMExternalLinkage);
+            var printfArguments = new LLVMTypeRef[] { LLVMTypeRef.PointerType(LLVMTypeRef.Int8Type(), 0) };
+            var printf = LLVM.AddFunction(_module, "printf", LLVM.FunctionType(LLVMTypeRef.Int32Type(), printfArguments, LLVMBoolTrue));
+            LLVM.SetLinkage(printf, LLVMLinkage.LLVMExternalLinkage);
 
             for (int i = 0; i < _statements.Count; i++)
             {
@@ -60,24 +60,25 @@ namespace Caique.CodeGen
 
         public object Visit(VarDeclarationStmt stmt)
         {
-            stmt.Value.Accept(this);
-
+            LLVMValueRef initializer = stmt.Value.Accept(this);
             LLVMTypeRef type = stmt.DataType.ToLLVMType();
-            var variable = LLVM.BuildAlloca(_builder, type, stmt.Identifier.Lexeme);
-            variable.SetInitializer(_valueStack.Pop());
-            _namedValues.Add(stmt.Identifier.Lexeme, variable);
+
+            var variable = LLVM.BuildAlloca(_builder, type, stmt.Identifier.Lexeme); // Allocate variable
+            variable.SetInitializer(initializer); // Set initial value
+
+            _namedValues.Add(stmt.Identifier.Lexeme, variable); // Add to dictionary
 
             return null;
         }
 
         public object Visit(AssignmentStmt stmt)
         {
-            LLVMValueRef value = stmt.Value.Accept(this);
+            LLVMValueRef value = stmt.Value.Accept(this); // Get value after '='
 
             LLVMValueRef varRef;
-            if (_namedValues.TryGetValue(stmt.Identifier.Lexeme, out varRef))
+            if (_namedValues.TryGetValue(stmt.Identifier.Lexeme, out varRef)) // Get variable reference
             {
-                LLVM.BuildStore(_builder, value, varRef);
+                LLVM.BuildStore(_builder, value, varRef); // Build assignment
             }
             else
             {
@@ -90,8 +91,9 @@ namespace Caique.CodeGen
 
         public object Visit(FunctionStmt stmt)
         {
-            var arguments = new LLVMTypeRef[Math.Max(stmt.Arguments.Count, 1)];
+            var arguments = new LLVMTypeRef[stmt.Arguments.Count];
 
+            // Add argument types
             for (int i = 0; i < stmt.Arguments.Count; i++)
             {
                 arguments[i] = stmt.Arguments[i].Type.ToLLVMType();
@@ -100,6 +102,7 @@ namespace Caique.CodeGen
             LLVMTypeRef functionType = LLVM.FunctionType(stmt.ReturnType.ToLLVMType(), arguments, LLVMBoolFalse);
             LLVMValueRef function = LLVM.AddFunction(_module, stmt.Name.Lexeme, functionType);
 
+            // Add names to arguments
             for (int k = 0; k < arguments.Length; k++)
             {
                 string argumentName = stmt.Arguments[k].Name.Lexeme;
@@ -110,7 +113,7 @@ namespace Caique.CodeGen
             }
 
             _valueStack.Push(function);
-            stmt.Block.Accept(this);
+            stmt.Block.Accept(this); // Code block after function
 
             return null;
         }
@@ -146,9 +149,6 @@ namespace Caique.CodeGen
             LLVMValueRef left = expr.Left.Accept(this);
             LLVMValueRef right = expr.Right.Accept(this);
 
-            //LLVMValueRef right = _valueStack.Pop();
-            //LLVMValueRef left = _valueStack.Pop();
-
             LLVMValueRef result;
 
             switch (expr.Operator.Type)
@@ -168,8 +168,6 @@ namespace Caique.CodeGen
                 default: throw new Exception("Invalid binary operator."); // Invalid code should not have come here in the first place.
             }
 
-            //_valueStack.Push(node);
-
             return result;
         }
 
@@ -184,7 +182,8 @@ namespace Caique.CodeGen
             {
                 case DataType.String:
                     string val = (string)literal;
-                    llvmValue = LLVM.ConstString(val, (uint)val.Length, LLVMBoolTrue);
+                    var stringConst = LLVM.ConstString(val, (uint)val.Length, LLVMBoolTrue);
+                    llvmValue = LLVM.BuildGlobalString(_builder, val, ".str");
                     break;
                 case DataType.Double:
                     llvmValue = LLVM.ConstReal(llvmType, (double)literal);
@@ -200,8 +199,6 @@ namespace Caique.CodeGen
                     throw new Exception("Unknown datatype.");
             }
 
-            //_valueStack.Push(llvmValue);
-
             return llvmValue;
         }
 
@@ -213,6 +210,46 @@ namespace Caique.CodeGen
         public LLVMValueRef Visit(GroupExpr expr)
         {
             return expr.Expression.Accept(this);
+        }
+
+        public LLVMValueRef Visit(CallExpr expr)
+        {
+            var callee = LLVM.GetNamedFunction(_module, expr.Name.Lexeme);
+            int paramCount = expr.Parameters.Count;
+
+            if (callee.Pointer == IntPtr.Zero)
+            {
+                Reporter.Error(expr.Name.Position, "Unkown function.");
+            }
+
+            if (LLVM.CountParams(callee) != paramCount)
+            {
+                Reporter.Error(expr.Name.Position, "Incorrect number of parameters passed.");
+            }
+
+            var callParams = new LLVMValueRef[expr.Parameters.Count];
+            for (int i = 0; i < paramCount; i++)
+            {
+                IExpression paramExpr = expr.Parameters[i];
+                LLVMValueRef paramValue = paramExpr.Accept(this);
+
+                // Cast constant to i8* if needed
+                if (paramExpr is LiteralExpr)
+                {
+                    if (((LiteralExpr)paramExpr).Value.DataType == DataType.String)
+                    {
+                        var cast = LLVM.BuildIntCast(_builder, paramValue,
+                                LLVM.PointerType(LLVMTypeRef.Int8Type(), 0), "tmpcast");
+                        callParams[i] = cast;
+                    }
+                }
+                else
+                {
+                    callParams[i] = paramValue;
+                }
+            }
+
+            return LLVM.BuildCall(_builder, callee, callParams, "calltmp");
         }
     }
 }

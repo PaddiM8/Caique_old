@@ -208,7 +208,26 @@ namespace Caique.Parsing
             }
             else if (Match(TokenType.Identifier))
             {
-                return new VariableExpr(Previous());
+                Token identifier = Previous();
+
+                if (Match(TokenType.LeftParen)) // Function call
+                {
+                    Token name = identifier;
+                    var parameters = new List<IExpression>();
+
+                    while (!Match(TokenType.RightParen))
+                    {
+                        parameters.Add(Expression());
+                        if (Match(TokenType.RightParen)) break; // Don't expect comma if it's the last parameter
+                        Consume(TokenType.Comma, "Expected ',' after expression.");
+                    }
+
+                    return new CallExpr(name, parameters);
+                }
+                else // Variable expression
+                {
+                    return new VariableExpr(identifier);
+                }
             }
 
             throw Error($"Unexpected token '{Peek().Type}'.");

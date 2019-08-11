@@ -4,13 +4,15 @@ statement      -> expressionStmt
                 | varDeclarationStmt
                 | assignmentStmt
                 | functionStmt
-                | blockStmt ;
+                | blockStmt
+                | returnStmt ;
 
 varDeclarationStmt -> TYPE IDENTIFIER ( "=" expression )? ";" ;
 expressionStmt     -> expression ";" ;
 assignmentStmt     -> IDENTIFIER "=" expression ";" ;
-functionStmt       -> "fn" TYPE IDENTIFIER "(" ( argument "," )* argument ")" blockStmt ;
+functionStmt       -> "fn" TYPE IDENTIFIER "(" ( ( argument "," )* argument )* ")" blockStmt ;
 blockStmt          -> "{" statement* "}" ;
+returnStmt         -> "return" expression ";" ;
 
 argumentStmt -> TYPE IDENTIFIER ;
 
@@ -20,8 +22,14 @@ equality       -> comparison ( "==" | "!=" comparison )* ;
 comparison     -> addition ( ">" | ">=" | "<" | "<=") addition )* ;
 addition       -> multiplication ( ( "+" | "-" ) multiplication )* ;
 multiplication -> primary ( ( "*" | "/" ) primary )* ;
-primary        -> NUMBER | "(" expression ")" ;
+primary        -> NUMBER | STRING | "true" | "false"
+                | "(" expression ")"
+                | variableExpr | callExpr ;
+
+variableExpr -> IDENTIFIER;
+callExpr     -> IDENTIFIER "(" ( ( expression "," )* expression )* ")" ;
 
 NUMBER
+STRING
 IDENTIFIER
 TYPE -> ( "string" | "int" | "double" | "bool" ) ;

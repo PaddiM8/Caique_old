@@ -9,5 +9,6 @@ namespace Caique.Expressions
         T Visit(LiteralExpr expr);
         T Visit(GroupExpr expr);
         T Visit(VariableExpr expr);
+        T Visit(CallExpr expr);
     }
 }
