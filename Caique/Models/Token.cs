@@ -13,7 +13,8 @@ namespace Caique.Models
         [JsonIgnore]
         public Pos          Position    { get; }
         public object       Literal     { get; set; }
-        public DataType     DataType    { get; }
+        public DataType     DataType    { get; set; }
+        //public DataType     Cast        { get; set; }
 
         public Token(TokenType type, string lexeme, Pos? position = null, object literal = null, DataType? dataType = null)
         {

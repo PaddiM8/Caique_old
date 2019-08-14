@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Caique.Models;
 using Caique.Logging;
 
-namespace Caique.Scanner
+namespace Caique.Scanning
 {
     class Lexer
     {
@@ -123,7 +123,7 @@ namespace Caique.Scanner
 
                 // Literals
                 case '\"':
-                    AddToken(TokenType.String, GetStringLiteral());
+                    AddToken(TokenType.String, GetStringLiteral(), DataType.StringConst);
                     break;
 
                 default:

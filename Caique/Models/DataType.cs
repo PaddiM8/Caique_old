@@ -6,7 +6,7 @@ namespace Caique.Models
 {
     public enum DataType
     {
-        String, Int, Double, Boolean
+        Unknown, String, Int, Double, Boolean, StringConst, Void, Variadic
     }
 
     public static class DataTypeMethods

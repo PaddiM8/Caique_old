@@ -66,8 +66,8 @@ namespace Caique.Parsing
 
         public IStatement Assignment()
         {
-            Token identifier = Previous();
-            Consume(TokenType.Equal, "Expected '=' after identifier.");
+            Token identifier = Consume(TokenType.Identifier, ""); // It is an identifier since it made it through the if statement
+            Advance(); // Equal sign
             IExpression expr = Expression();
             Consume(TokenType.Semicolon, "Expected ';' after expression.");
 
@@ -325,7 +325,7 @@ namespace Caique.Parsing
             if (Peek().Type == type)
             {
                 Advance();
-                return Previous(); // Since it advanced
+                return Previous();
             }
             else
             {
@@ -336,9 +336,11 @@ namespace Caique.Parsing
         /// <summary>
         /// Go to the next token
         /// </summary>
-        private void Advance()
+        private Token Advance()
         {
             _current++;
+
+            return _tokens[_current];
         }
 
         /// <summary>

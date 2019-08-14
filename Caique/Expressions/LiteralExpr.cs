@@ -6,7 +6,8 @@ namespace Caique.Expressions
 {
     class LiteralExpr : IExpression
     {
-        public Token Value { get; }
+        public Token    Value { get; }
+        public DataType Cast  { get; set; }
 
         public LiteralExpr(Token value)
         {

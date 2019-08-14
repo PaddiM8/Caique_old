@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Caique.Models;
 
 namespace Caique.Expressions
 {
     class GroupExpr : IExpression
     {
         public IExpression Expression { get; }
+        public DataType    Cast       { get; set; }
 
         public GroupExpr(IExpression expression)
         {

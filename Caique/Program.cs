@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Caique.Scanner;
+using Caique.Scanning;
 using Caique.Parsing;
 using Caique.Logging;
 using Caique.Expressions;
@@ -13,10 +13,10 @@ namespace Caique
     {
         static void Main(string[] args)
         {
-            var tokens = new Lexer(string.Join(" ", args)).ScanTokens();
-            var statements = new Parser(tokens).Parse();
-            new CodeGenerator(statements);
-            //PrintJson(expr);
+            new Compiler(string.Join(" ", args)).Compile();
+            //var tokens = new Lexer(string.Join(" ", args)).ScanTokens();
+            //var statements = new Parser(tokens).Parse();
+            //new CodeGenerator(statements);
         }
 
         static void PrintJson(IExpression expr)
