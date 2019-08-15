@@ -23,8 +23,9 @@ namespace Caique
         public void Compile()
         {
             List<Token> tokens = new Lexer(File.ReadAllText(RootFileLocation)).ScanTokens();
-            List<IStatement> statements = new Parser(tokens).Parse();
-            new TypeChecker(statements).CheckTypes();
+            var parser = new Parser(tokens);
+            List<IStatement> statements = parser.Parse();
+            new TypeChecker(statements, parser.Functions).CheckTypes();
             var module = new CodeGenerator(statements).GenerateLLVM();
 
             string moduleError = "";

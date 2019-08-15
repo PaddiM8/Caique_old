@@ -10,9 +10,16 @@ namespace Caique.Parsing
 {
     class Parser
     {
+        public delegate IExpression ArithmeticFunction();
+        // functionName: returnType, parameterTypes...
+        public Dictionary<string, DataType[]> Functions =
+            new Dictionary<string, DataType[]>()
+        {
+            { "printf", new DataType[] { DataType.Void, DataType.String, DataType.Variadic } },
+        };
+
         private List<Token> _tokens { get; }
         private int _current = 0;
-        public delegate IExpression ArithmeticFunction();
 
         public Parser(List<Token> tokens)
         {
@@ -89,8 +96,15 @@ namespace Caique.Parsing
                 Consume(TokenType.Comma, "Expected ',' after argument name.");
             }
 
+            // Fill DataType array
+            var dataTypes = new DataType[arguments.Count + 1];
+            dataTypes[0] = returnType;
+            for (int i = 0; i < arguments.Count; i++) dataTypes[i+1] = arguments[i].Type;
+            Functions[name.Lexeme] = dataTypes;
+
             Consume(TokenType.LeftBrace, "Expected block after function declaration.");
             BlockStmt block = (BlockStmt)Block();
+
             return new FunctionStmt(returnType, name, arguments, block);
         }
 

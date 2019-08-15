@@ -17,9 +17,9 @@ namespace Caique.CodeGen
         private static readonly LLVMBool LLVMBoolFalse = new LLVMBool(0);
         private static readonly LLVMBool LLVMBoolTrue = new LLVMBool(1);
         private readonly Dictionary<string, LLVMValueRef> _namedValues = new Dictionary<string, LLVMValueRef>();
-        private readonly Stack<LLVMValueRef> _valueStack = new Stack<LLVMValueRef>();
+        private readonly Stack<Tuple<LLVMValueRef, BlockStmt>> _valueStack =
+            new Stack<Tuple<LLVMValueRef, BlockStmt>>();
         private List<IStatement> _statements { get; }
-        private TypeResolver _typeResolver { get; }
         //private readonly ScopeEnv _environment = new ScopeEnv();
 
         public CodeGenerator(List<IStatement> statements)
@@ -27,7 +27,6 @@ namespace Caique.CodeGen
             Console.WriteLine(JsonConvert.SerializeObject(statements));
             _module = LLVM.ModuleCreateWithName("main");
             _builder = LLVM.CreateBuilder();
-            _typeResolver = new TypeResolver(_builder);
             this._statements = statements;
         }
 
@@ -40,9 +39,16 @@ namespace Caique.CodeGen
             var printf = LLVM.AddFunction(_module, "printf", LLVM.FunctionType(LLVMTypeRef.Int32Type(), printfArguments, LLVMBoolTrue));
             LLVM.SetLinkage(printf, LLVMLinkage.LLVMExternalLinkage);
 
+            // Generate functions, globals, etc.
             for (int i = 0; i < _statements.Count; i++)
             {
                 _statements[i].Accept(this);
+            }
+
+            // Generate everything inside the functions
+            while (_valueStack.Count > 0)
+            {
+                _valueStack.Peek().Item2.Accept(this);
             }
 
             return _module;
@@ -105,15 +111,16 @@ namespace Caique.CodeGen
                 _namedValues[argumentName] = param;
             }
 
-            _valueStack.Push(function);
-            stmt.Block.Accept(this); // Code block after function
+            _valueStack.Push(new Tuple<LLVMValueRef, BlockStmt>(function, stmt.Block));
+            //stmt.Block.Accept(this); // Code block after function
 
             return null;
         }
 
         public object Visit(BlockStmt stmt)
         {
-            LLVM.PositionBuilderAtEnd(_builder, LLVM.AppendBasicBlock(_valueStack.Pop(), "entry"));
+            // Uh blocks aren't just for functions...
+            LLVM.PositionBuilderAtEnd(_builder, LLVM.AppendBasicBlock(_valueStack.Pop().Item1, "entry"));
             foreach (IStatement subStmt in stmt.Statements)
             {
                 subStmt.Accept(this);
@@ -229,11 +236,6 @@ namespace Caique.CodeGen
                 Reporter.Error(expr.Name.Position, "Unkown function.");
             }
 
-            if (LLVM.CountParams(callee) != paramCount)
-            {
-                Reporter.Error(expr.Name.Position, "Incorrect number of parameters passed.");
-            }
-
             var callParams = new LLVMValueRef[expr.Parameters.Count];
             for (int i = 0; i < paramCount; i++)
             {
@@ -253,6 +255,9 @@ namespace Caique.CodeGen
             return LLVM.BuildCall(_builder, callee, callParams, "calltmp");
         }
 
+        /// <summary>
+        /// Return LLVMValueRef with cast if it is supposed to get one, otherwise just return the original value.
+        /// </summary>
         private LLVMValueRef CastIfNeeded(LLVMValueRef value, DataType cast)
         {
             if (cast != DataType.Unknown)

@@ -18,21 +18,23 @@ namespace Caique.CodeGen
     {
         private List<IStatement> _statements { get; }
         private DataType _currentFunctionType;
+        private List<CallExpr> _callExpressions = new List<CallExpr>();
 
         // variableName/functionName, Tuple(DataType, IsArgumentVar)
         private Dictionary<string, Tuple<DataType, bool>> _types =
             new Dictionary<string, Tuple<DataType, bool>>();
 
         // First DataType is the return type, the rest are the arguments
-        private Dictionary<string, DataType[]> _functions =
-            new Dictionary<string, DataType[]>()
+        private Dictionary<string, DataType[]> _functions;
+            /*new Dictionary<string, DataType[]>()
         {
             { "printf", new DataType[] { DataType.Void, DataType.String, DataType.Variadic } },
-        };
+        };*/
 
-        public TypeChecker(List<IStatement> statements)
+        public TypeChecker(List<IStatement> statements, Dictionary<string, DataType[]> functions)
         {
             this._statements = statements;
+            this._functions = functions;
         }
 
         public void CheckTypes()
@@ -157,17 +159,17 @@ namespace Caique.CodeGen
         {
             _currentFunctionType = stmt.ReturnType;
 
-            DataType[] argumentTypes = new DataType[stmt.Arguments.Count+1];
-            argumentTypes[0] = stmt.ReturnType;
+            //DataType[] argumentTypes = new DataType[stmt.Arguments.Count+1];
+            //argumentTypes[0] = stmt.ReturnType;
 
             for (int i = 0; i < stmt.Arguments.Count; i++)
             {
                 Argument argument = stmt.Arguments[i];
                 _types[argument.Name.Lexeme] = new Tuple<DataType, bool>(argument.Type, true);
-                argumentTypes[i+1] = stmt.Arguments[i].Type;
+                //argumentTypes[i+1] = stmt.Arguments[i].Type;
             }
 
-            _functions[stmt.Name.Lexeme] = argumentTypes;
+            //_functions[stmt.Name.Lexeme] = argumentTypes;
             stmt.Block.Accept(this);
             return null;
         }
@@ -211,6 +213,14 @@ namespace Caique.CodeGen
         {
             DataType[] functionTypes = _functions[expr.Name.Lexeme];
             expr.Name.DataType = functionTypes[0];
+
+            // If the parameters passed aren't the same amount as arguments expected, and the last DataType isn't variadic(meaning any amount could be passed)
+            if (functionTypes.Length - 1 != expr.Parameters.Count &&
+                functionTypes[functionTypes.Length - 1] != DataType.Variadic)
+            {
+                Reporter.Error(expr.Name.Position, "Incorrect amount of parameters passed.");
+                return expr.Name.DataType;
+            }
 
             for (int i = 0; i < expr.Parameters.Count; i++)
             {
