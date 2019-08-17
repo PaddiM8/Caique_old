@@ -10,7 +10,7 @@ namespace Caique.Models
         String, StringConst,
         Int1, Int8, Int16, Int32, Int64, Int128,
         Float16, Float32, Float64, Float80, Float128,
-        Boolean,
+        Boolean, True, False,
         Void,
         Variadic
     }
@@ -33,7 +33,8 @@ namespace Caique.Models
                 case DataType.Float64:  return LLVM.DoubleType();
                 case DataType.Float80:  return LLVM.X86FP80Type();
                 case DataType.Float128: return LLVM.PPCFP128Type();
-                case DataType.Boolean:  return LLVM.Int1Type();
+                case DataType.True:     return LLVM.Int1Type();
+                case DataType.False:    return LLVM.Int1Type();
                 default:
                     throw new Exception("Variable type can't be converted to LLVM type.");
             }
@@ -72,6 +73,11 @@ namespace Caique.Models
                 default:
                     return false;
             }
+        }
+
+        public static bool IsBool(this DataType dataType)
+        {
+            return dataType == DataType.True || dataType == DataType.False;
         }
     }
 }

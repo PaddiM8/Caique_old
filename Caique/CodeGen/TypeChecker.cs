@@ -206,8 +206,17 @@ namespace Caique.CodeGen
                                                           type1,
                                                           expr.Right,
                                                           expr.Left);
-            expr.DataType = finalType;
-            return finalType;
+            // Comparison expressions are of type boolean
+            if (expr.Operator.Type.IsComparisonOperator())
+            {
+                expr.DataType = DataType.Boolean;
+            }
+            else // Arithmetic operators are of the operands' type.
+            {
+                expr.DataType = finalType;
+            }
+
+            return expr.DataType;
         }
 
         public DataType Visit(LiteralExpr expr)
@@ -224,6 +233,28 @@ namespace Caique.CodeGen
 
             expr.DataType = expr.Name.DataType;
             return expr.Name.DataType;
+        }
+
+        public DataType Visit(UnaryExpr expr)
+        {
+            DataType exprDataType = expr.Expression.Accept(this);
+
+            if (expr.Operator.Type == TokenType.Bang) // !expr
+            {
+                if (exprDataType != DataType.Int1 && exprDataType != DataType.Boolean)
+                {
+                    Reporter.Error(expr.Operator.Position, "Expected type 'bool' or 'i1' after '!'.");
+                }
+            }
+            else if (expr.Operator.Type == TokenType.Minus) // -expr
+            {
+                if (!exprDataType.IsNumber())
+                {
+                    Reporter.Error(expr.Operator.Position, "Expected number after '-'.");
+                }
+            }
+
+            return exprDataType;
         }
 
         public DataType Visit(CallExpr expr)

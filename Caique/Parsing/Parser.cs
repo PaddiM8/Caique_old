@@ -148,6 +148,36 @@ namespace Caique.Parsing
             return Equality();
         }
 
+        public IExpression LogicalOr()
+        {
+            IExpression expr = LogicalAnd();
+
+            while (Match(TokenType.Or))
+            {
+                Token op = Previous();
+                IExpression right = LogicalAnd();
+
+                return new BinaryExpr(expr, op, right);
+            }
+
+            return expr;
+        }
+
+        public IExpression LogicalAnd()
+        {
+            IExpression expr = Equality();
+
+            while (Match(TokenType.And))
+            {
+                Token op = Previous();
+                IExpression right = Equality();
+
+                return new BinaryExpr(expr, op, right);
+            }
+
+            return expr;
+        }
+
         public IExpression Equality()
         {
             IExpression expr = Comparison();
@@ -195,17 +225,27 @@ namespace Caique.Parsing
 
         public IExpression Multiplication()
         {
-            IExpression expr = Primary();
+            IExpression expr = Unary();
 
             while (Match(TokenType.Star, TokenType.Slash))
             {
                 Token op = Previous();
-                IExpression right = Primary();
+                IExpression right = Unary();
 
                 expr = new BinaryExpr(expr, op, right);
             }
 
             return expr;
+        }
+
+        public IExpression Unary()
+        {
+            if (Match(TokenType.Bang, TokenType.Minus))
+            {
+                return new UnaryExpr(Previous(), Primary());
+            }
+
+            return Primary();
         }
 
         public IExpression Primary()
@@ -233,7 +273,7 @@ namespace Caique.Parsing
                     {
                         parameters.Add(Expression());
                         if (Match(TokenType.RightParen)) break; // Don't expect comma if it's the last parameter
-                        Consume(TokenType.Comma, "Expected ',' after expression.");
+                        Consume(TokenType.Comma, "Expected ')' after expression.");
                     }
 
                     return new CallExpr(name, parameters);

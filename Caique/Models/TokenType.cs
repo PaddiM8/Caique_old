@@ -35,6 +35,8 @@ namespace Caique
         {
             switch (tokenType)
             {
+                case TokenType.EqualEqual:
+                case TokenType.NotEqual:
                 case TokenType.Greater:
                 case TokenType.GreaterEqual:
                 case TokenType.Less:

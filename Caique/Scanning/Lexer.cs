@@ -15,7 +15,7 @@ namespace Caique.Scanning
         private static Dictionary<string, TokenType> _keywords =
             new Dictionary<string, TokenType>()
         {
-            { "and",       TokenType.And          },
+            { "&&",        TokenType.And          },
             { "class",     TokenType.Class        },
             { "else",      TokenType.Else         },
             { "false",     TokenType.False        },
@@ -25,7 +25,7 @@ namespace Caique.Scanning
             { "continue",  TokenType.Continue     },
             { "if",        TokenType.If           },
             { "null",      TokenType.Null         },
-            { "or",        TokenType.Or           },
+            { "||",        TokenType.Or           },
             { "print",     TokenType.Print        },
             { "return",    TokenType.Return       },
             { "super",     TokenType.Super        },
@@ -151,7 +151,10 @@ namespace Caique.Scanning
                     }
                     else if (IsAlpha(c))
                     {
-                        AddToken(GetIdentifier());
+                        TokenType type = GetIdentifier();
+                        if (type == TokenType.True) AddToken(type, "1", DataType.True);
+                        else if (type == TokenType.False) AddToken(type, "0", DataType.True);
+                        else AddToken(type);
                     }
                     else
                     {
@@ -301,6 +304,7 @@ namespace Caique.Scanning
                 dataType = _dataTypes[text];
             }
 
+            if (type == TokenType.True && literal == null) throw new Exception("Börk.");
             _tokens.Add(new Token(type, text, _position, literal, dataType));
         }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 using LLVMSharp;
 using Caique.Models;
 using Caique.Scanning;

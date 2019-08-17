@@ -479,9 +479,10 @@
 99	Caique/obj/project.assets.json	/^        "ref\/netcoreapp2.2\/System.Linq.Queryable.dll",$/;"	s	array:libraries.Microsoft.NETCore.App/2.2.0.files
 Accept	Caique/Expressions/BinaryExpr.cs	/^        public T Accept<T>(IExpressionVisitor<T> expr)$/;"	m	class:Caique.Expressions.BinaryExpr
 Accept	Caique/Expressions/CallExpr.cs	/^        public T Accept<T>(IExpressionVisitor<T> expr)$/;"	m	class:Caique.Expressions.CallExpr
-Accept	Caique/Expressions/GroupExpression.cs	/^        public T Accept<T>(IExpressionVisitor<T> expr)$/;"	m	class:Caique.Expressions.GroupExpr
+Accept	Caique/Expressions/GroupExpr.cs	/^        public T Accept<T>(IExpressionVisitor<T> expr)$/;"	m	class:Caique.Expressions.GroupExpr
 Accept	Caique/Expressions/IExpression.cs	/^        T Accept<T>(IExpressionVisitor<T> expr);$/;"	m	interface:Caique.Expressions.IExpression
 Accept	Caique/Expressions/LiteralExpr.cs	/^        public T Accept<T>(IExpressionVisitor<T> expr)$/;"	m	class:Caique.Expressions.LiteralExpr
+Accept	Caique/Expressions/UnaryExpr.cs	/^        public T Accept<T>(IExpressionVisitor<T> expr)$/;"	m	class:Caique.Expressions.UnaryExpr
 Accept	Caique/Expressions/VariableExpr.cs	/^        public T Accept<T>(IExpressionVisitor<T> expr)$/;"	m	class:Caique.Expressions.VariableExpr
 Accept	Caique/Statements/AssignmentStmt.cs	/^        public T Accept<T>(IStatementVisitor<T> stmt)$/;"	m	class:Caique.Statements.AssignmentStmt
 Accept	Caique/Statements/BlockStmt.cs	/^        public T Accept<T>(IStatementVisitor<T> stmt)$/;"	m	class:Caique.Statements.BlockStmt
@@ -512,8 +513,10 @@ Block	Caique/Parsing/Parser.cs	/^        public IStatement Block()$/;"	m	class:C
 Block	Caique/Statements/FunctionStmt.cs	/^        public BlockStmt          Block      { get; }$/;"	p	class:Caique.Statements.FunctionStmt
 BlockStmt	Caique/Statements/BlockStmt.cs	/^        public BlockStmt(List<IStatement> statements)$/;"	m	class:Caique.Statements.BlockStmt
 BlockStmt	Caique/Statements/BlockStmt.cs	/^    class BlockStmt : IStatement$/;"	c	namespace:Caique.Statements
-Boolean	Caique/Models/DataType.cs	/^        Boolean,$/;"	e	enum:Caique.Models.DataType	file:
+Boolean	Caique/Models/DataType.cs	/^        Boolean, True, False,$/;"	e	enum:Caique.Models.DataType	file:
 Break	Caique/Models/TokenType.cs	/^        Break, Continue,$/;"	e	enum:Caique.TokenType	file:
+BuildBinary	Caique/CodeGen/CodeGenerator.cs	/^        private delegate LLVMValueRef BuildBinary(LLVMBuilderRef builder, LLVMValueRef left, LLV/;"	m	class:Caique.CodeGen.CodeGenerator	file:
+BuildBinaryOperation	Caique/CodeGen/CodeGenerator.cs	/^        private LLVMValueRef BuildBinaryOperation(TokenType operatorType, DataType dataType, LLV/;"	m	class:Caique.CodeGen.CodeGenerator	file:
 Caique	Caique/Compiler.cs	/^namespace Caique$/;"	n
 Caique	Caique/Models/TokenType.cs	/^namespace Caique$/;"	n
 Caique	Caique/Program.cs	/^namespace Caique$/;"	n
@@ -521,13 +524,13 @@ Caique	README.md	/^# Caique$/;"	c
 Caique.CodeGen	Caique/CodeGen/CodeGenerator.cs	/^namespace Caique.CodeGen$/;"	n
 Caique.CodeGen	Caique/CodeGen/ScopeEnv.cs	/^namespace Caique.CodeGen$/;"	n
 Caique.CodeGen	Caique/CodeGen/TypeChecker.cs	/^namespace Caique.CodeGen$/;"	n
-Caique.CodeGen	Caique/CodeGen/TypeResolver.cs	/^namespace Caique.CodeGen$/;"	n
 Caique.Expressions	Caique/Expressions/BinaryExpr.cs	/^namespace Caique.Expressions$/;"	n
 Caique.Expressions	Caique/Expressions/CallExpr.cs	/^namespace Caique.Expressions$/;"	n
-Caique.Expressions	Caique/Expressions/GroupExpression.cs	/^namespace Caique.Expressions$/;"	n
+Caique.Expressions	Caique/Expressions/GroupExpr.cs	/^namespace Caique.Expressions$/;"	n
 Caique.Expressions	Caique/Expressions/IExpression.cs	/^namespace Caique.Expressions$/;"	n
 Caique.Expressions	Caique/Expressions/IExpressionVisitor.cs	/^namespace Caique.Expressions$/;"	n
 Caique.Expressions	Caique/Expressions/LiteralExpr.cs	/^namespace Caique.Expressions$/;"	n
+Caique.Expressions	Caique/Expressions/UnaryExpr.cs	/^namespace Caique.Expressions$/;"	n
 Caique.Expressions	Caique/Expressions/VariableExpr.cs	/^namespace Caique.Expressions$/;"	n
 Caique.Logging	Caique/Logging/ParsingException.cs	/^namespace Caique.Logging$/;"	n
 Caique.Logging	Caique/Logging/Reporter.cs	/^namespace Caique.Logging$/;"	n
@@ -554,11 +557,11 @@ CallExpr	Caique/Expressions/CallExpr.cs	/^    class CallExpr : IExpression$/;"	c
 CanBeCast	Caique/CodeGen/TypeChecker.cs	/^        private bool CanBeCast(DataType type1, DataType type2)$/;"	m	class:Caique.CodeGen.TypeChecker	file:
 Cast	Caique/Expressions/BinaryExpr.cs	/^        public DataType    Cast      { get; set; }$/;"	p	class:Caique.Expressions.BinaryExpr
 Cast	Caique/Expressions/CallExpr.cs	/^        public DataType          Cast       { get; set; }$/;"	p	class:Caique.Expressions.CallExpr
-Cast	Caique/Expressions/GroupExpression.cs	/^        public DataType    Cast       { get; set; }$/;"	p	class:Caique.Expressions.GroupExpr
+Cast	Caique/Expressions/GroupExpr.cs	/^        public DataType    Cast       { get; set; }$/;"	p	class:Caique.Expressions.GroupExpr
 Cast	Caique/Expressions/IExpression.cs	/^        DataType Cast     { get; set; }$/;"	p	interface:Caique.Expressions.IExpression
 Cast	Caique/Expressions/LiteralExpr.cs	/^        public DataType Cast      { get; set; }$/;"	p	class:Caique.Expressions.LiteralExpr
+Cast	Caique/Expressions/UnaryExpr.cs	/^        public DataType    Cast       { get; set; }$/;"	p	class:Caique.Expressions.UnaryExpr
 Cast	Caique/Expressions/VariableExpr.cs	/^        public DataType Cast          { get; set; }$/;"	p	class:Caique.Expressions.VariableExpr
-CastIfNecessary	Caique/CodeGen/TypeResolver.cs	/^        public LLVMValueRef CastIfNecessary(LLVMTypeRef targetType, LLVMValueRef value, DataType/;"	m	class:Caique.CodeGen.TypeResolver
 CastIfNeeded	Caique/CodeGen/CodeGenerator.cs	/^        private LLVMValueRef CastIfNeeded(LLVMValueRef value, DataType cast)$/;"	m	class:Caique.CodeGen.CodeGenerator	file:
 Check	Caique/CodeGen/TypeChecker.cs	/^        private TypeCompatibility Check(DataType type1, DataType type2)$/;"	m	class:Caique.CodeGen.TypeChecker	file:
 Check	Caique/Parsing/Parser.cs	/^        private bool Check(TokenType type)$/;"	m	class:Caique.Parsing.Parser	file:
@@ -580,9 +583,10 @@ Count	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, Whi
 CreateCastingRule	Caique/CodeGen/TypeChecker.cs	/^        private Tuple<DataType, bool> CreateCastingRule(DataType type1, DataType type2)$/;"	m	class:Caique.CodeGen.TypeChecker	file:
 DataType	Caique/Expressions/BinaryExpr.cs	/^        public DataType    DataType  { get; set; }$/;"	p	class:Caique.Expressions.BinaryExpr
 DataType	Caique/Expressions/CallExpr.cs	/^        public DataType          DataType   { get; set; }$/;"	p	class:Caique.Expressions.CallExpr
-DataType	Caique/Expressions/GroupExpression.cs	/^        public DataType    DataType   { get; set; }$/;"	p	class:Caique.Expressions.GroupExpr
+DataType	Caique/Expressions/GroupExpr.cs	/^        public DataType    DataType   { get; set; }$/;"	p	class:Caique.Expressions.GroupExpr
 DataType	Caique/Expressions/IExpression.cs	/^        DataType DataType { get; set; }$/;"	p	interface:Caique.Expressions.IExpression
 DataType	Caique/Expressions/LiteralExpr.cs	/^        public DataType DataType  { get; set; }$/;"	p	class:Caique.Expressions.LiteralExpr
+DataType	Caique/Expressions/UnaryExpr.cs	/^        public DataType    DataType   { get; set; }$/;"	p	class:Caique.Expressions.UnaryExpr
 DataType	Caique/Expressions/VariableExpr.cs	/^        public DataType DataType      { get; set; }$/;"	p	class:Caique.Expressions.VariableExpr
 DataType	Caique/Models/DataType.cs	/^    public enum DataType$/;"	g	namespace:Caique.Models
 DataType	Caique/Models/Token.cs	/^        public DataType     DataType    { get; set; }$/;"	p	class:Caique.Models.Token
@@ -597,13 +601,15 @@ EqualEqual	Caique/Models/TokenType.cs	/^        Equal, EqualEqual,$/;"	e	enum:Ca
 Equality	Caique/Parsing/Parser.cs	/^        public IExpression Equality()$/;"	m	class:Caique.Parsing.Parser
 Error	Caique/Logging/Reporter.cs	/^        public static void Error(Pos pos, string message)$/;"	m	class:Caique.Logging.Reporter
 Error	Caique/Parsing/Parser.cs	/^        private ParsingException Error(string errorMessage)$/;"	m	class:Caique.Parsing.Parser	file:
-Expression	Caique/Expressions/GroupExpression.cs	/^        public IExpression Expression { get; }$/;"	p	class:Caique.Expressions.GroupExpr
+Expression	Caique/Expressions/GroupExpr.cs	/^        public IExpression Expression { get; }$/;"	p	class:Caique.Expressions.GroupExpr
+Expression	Caique/Expressions/UnaryExpr.cs	/^        public IExpression Expression { get; }$/;"	p	class:Caique.Expressions.UnaryExpr
 Expression	Caique/Parsing/Parser.cs	/^        public IExpression Expression()$/;"	m	class:Caique.Parsing.Parser
 Expression	Caique/Statements/ExpressionStmt.cs	/^        public IExpression Expression { get; }$/;"	p	class:Caique.Statements.ExpressionStmt
 Expression	Caique/Statements/ReturnStmt.cs	/^        public IExpression Expression { get; }$/;"	p	class:Caique.Statements.ReturnStmt
 ExpressionStatement	Caique/Parsing/Parser.cs	/^        public IStatement ExpressionStatement()$/;"	m	class:Caique.Parsing.Parser
 ExpressionStmt	Caique/Statements/ExpressionStmt.cs	/^        public ExpressionStmt(IExpression expr)$/;"	m	class:Caique.Statements.ExpressionStmt
 ExpressionStmt	Caique/Statements/ExpressionStmt.cs	/^    class ExpressionStmt : IStatement$/;"	c	namespace:Caique.Statements
+False	Caique/Models/DataType.cs	/^        Boolean, True, False,$/;"	e	enum:Caique.Models.DataType	file:
 False	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
 Float128	Caique/Models/DataType.cs	/^        Float16, Float32, Float64, Float80, Float128,$/;"	e	enum:Caique.Models.DataType	file:
 Float16	Caique/Models/DataType.cs	/^        Float16, Float32, Float64, Float80, Float128,$/;"	e	enum:Caique.Models.DataType	file:
@@ -624,8 +630,8 @@ GetNumberLiteral	Caique/Scanning/Lexer.cs	/^        private void GetNumberLitera
 GetStringLiteral	Caique/Scanning/Lexer.cs	/^        private string GetStringLiteral()$/;"	m	class:Caique.Scanning.Lexer	file:
 Greater	Caique/Models/TokenType.cs	/^        Greater, GreaterEqual,$/;"	e	enum:Caique.TokenType	file:
 GreaterEqual	Caique/Models/TokenType.cs	/^        Greater, GreaterEqual,$/;"	e	enum:Caique.TokenType	file:
-GroupExpr	Caique/Expressions/GroupExpression.cs	/^        public GroupExpr(IExpression expression)$/;"	m	class:Caique.Expressions.GroupExpr
-GroupExpr	Caique/Expressions/GroupExpression.cs	/^    class GroupExpr : IExpression$/;"	c	namespace:Caique.Expressions
+GroupExpr	Caique/Expressions/GroupExpr.cs	/^        public GroupExpr(IExpression expression)$/;"	m	class:Caique.Expressions.GroupExpr
+GroupExpr	Caique/Expressions/GroupExpr.cs	/^    class GroupExpr : IExpression$/;"	c	namespace:Caique.Expressions
 HasParent	Caique/CodeGen/ScopeEnv.cs	/^        public bool HasParent { get; }$/;"	p	class:Caique.CodeGen.ScopeEnv
 IExpression	Caique/Expressions/IExpression.cs	/^    interface IExpression$/;"	i	namespace:Caique.Expressions
 IExpressionVisitor	Caique/Expressions/IExpressionVisitor.cs	/^    interface IExpressionVisitor<T>$/;"	i	namespace:Caique.Expressions
@@ -648,12 +654,12 @@ IsArgumentVar	Caique/Expressions/VariableExpr.cs	/^        public bool     IsArg
 IsArithmeticOperator	Caique/Models/TokenType.cs	/^        public static bool IsArithmeticOperator(this TokenType tokenType)$/;"	m	class:Caique.TokenTypeMethods
 IsAtEnd	Caique/Parsing/Parser.cs	/^        private bool IsAtEnd()$/;"	m	class:Caique.Parsing.Parser	file:
 IsAtEnd	Caique/Scanning/Lexer.cs	/^        private bool IsAtEnd() => _current >= _source.Length;$/;"	m	class:Caique.Scanning.Lexer	file:
+IsBool	Caique/Models/DataType.cs	/^        public static bool IsBool(this DataType dataType)$/;"	m	class:Caique.Models.DataTypeMethods
 IsComparisonOperator	Caique/Models/TokenType.cs	/^        public static bool IsComparisonOperator(this TokenType tokenType)$/;"	m	class:Caique.TokenTypeMethods
 IsDigit	Caique/Scanning/Lexer.cs	/^        private bool IsDigit(char c) => c >= '0' && c <= '9';$/;"	m	class:Caique.Scanning.Lexer	file:
 IsFloat	Caique/Models/DataType.cs	/^        public static bool IsFloat(this DataType dataType)$/;"	m	class:Caique.Models.DataTypeMethods
 IsInt	Caique/Models/DataType.cs	/^        public static bool IsInt(this DataType dataType)$/;"	m	class:Caique.Models.DataTypeMethods
 IsNumber	Caique/Models/DataType.cs	/^        public static bool IsNumber(this DataType dataType)$/;"	m	class:Caique.Models.DataTypeMethods
-LCPI0_0	Caique/test.s	/^.LCPI0_0:$/;"	l
 LLVMBoolFalse	Caique/CodeGen/CodeGenerator.cs	/^        private static readonly LLVMBool LLVMBoolFalse = new LLVMBool(0);$/;"	f	class:Caique.CodeGen.CodeGenerator	file:
 LLVMBoolTrue	Caique/CodeGen/CodeGenerator.cs	/^        private static readonly LLVMBool LLVMBoolTrue = new LLVMBool(1);$/;"	f	class:Caique.CodeGen.CodeGenerator	file:
 LLVMSharp	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^          "LLVMSharp": "5.0.0",$/;"	s	object:targets..NETCoreApp,Version=v2.2.Caique/1.0.0.dependencies
@@ -671,11 +677,12 @@ Lexeme	Caique/Models/Token.cs	/^        public string       Lexeme      { get; }
 Lexer	Caique/Scanning/Lexer.cs	/^        public Lexer(string source)$/;"	m	class:Caique.Scanning.Lexer
 Lexer	Caique/Scanning/Lexer.cs	/^    class Lexer$/;"	c	namespace:Caique.Scanning
 Lfunc_end0	Caique/test.s	/^.Lfunc_end0:$/;"	l
-Lfunc_end1	Caique/test.s	/^.Lfunc_end1:$/;"	l
 Line	Caique/Models/Pos.cs	/^        public int Line { get; set; }$/;"	p	struct:Caique.Models.Pos
 Literal	Caique/Models/Token.cs	/^        public object       Literal     { get; set; }$/;"	p	class:Caique.Models.Token
 LiteralExpr	Caique/Expressions/LiteralExpr.cs	/^        public LiteralExpr(Token value)$/;"	m	class:Caique.Expressions.LiteralExpr
 LiteralExpr	Caique/Expressions/LiteralExpr.cs	/^    class LiteralExpr : IExpression$/;"	c	namespace:Caique.Expressions
+LogicalAnd	Caique/Parsing/Parser.cs	/^        public IExpression LogicalAnd()$/;"	m	class:Caique.Parsing.Parser
+LogicalOr	Caique/Parsing/Parser.cs	/^        public IExpression LogicalOr()$/;"	m	class:Caique.Parsing.Parser
 Main	Caique/Program.cs	/^        static void Main(string[] args)$/;"	m	class:Caique.Program	file:
 Match	Caique/Parsing/Parser.cs	/^        private bool Match(params TokenType[] tokenTypes)$/;"	m	class:Caique.Parsing.Parser	file:
 Match	Caique/Scanning/Lexer.cs	/^        private bool Match(char expected)$/;"	m	class:Caique.Scanning.Lexer	file:
@@ -720,6 +727,7 @@ NotEqual	Caique/Models/TokenType.cs	/^        Bang, NotEqual,$/;"	e	enum:Caique.
 Null	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
 Number	Caique/Models/TokenType.cs	/^        Identifier, String, Number,$/;"	e	enum:Caique.TokenType	file:
 Operator	Caique/Expressions/BinaryExpr.cs	/^        public Token       Operator  { get; }$/;"	p	class:Caique.Expressions.BinaryExpr
+Operator	Caique/Expressions/UnaryExpr.cs	/^        public Token       Operator   { get; }$/;"	p	class:Caique.Expressions.UnaryExpr
 Or	Caique/Models/TokenType.cs	/^        And, Class, Else, False, Fun, For, If, Null, Or,$/;"	e	enum:Caique.TokenType	file:
 Parameters	Caique/Expressions/CallExpr.cs	/^        public List<IExpression> Parameters { get; }$/;"	p	class:Caique.Expressions.CallExpr
 Parent	Caique/CodeGen/ScopeEnv.cs	/^        public ScopeEnv Parent { get; }$/;"	p	class:Caique.CodeGen.ScopeEnv
@@ -773,14 +781,16 @@ TokenType	Caique/Models/TokenType.cs	/^    public enum TokenType$/;"	g	namespace
 TokenTypeMethods	Caique/Models/TokenType.cs	/^    static class TokenTypeMethods$/;"	c	namespace:Caique
 TokenValue	Caique/Models/TokenValue.cs	/^        public TokenValue(T value)$/;"	m	struct:Caique.Models.TokenValue
 TokenValue	Caique/Models/TokenValue.cs	/^    struct TokenValue<T>$/;"	s	namespace:Caique.Models
+True	Caique/Models/DataType.cs	/^        Boolean, True, False,$/;"	e	enum:Caique.Models.DataType	file:
 True	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, While, Count,$/;"	e	enum:Caique.TokenType	file:
 Type	Caique/Models/Token.cs	/^        public TokenType    Type        { get; }$/;"	p	class:Caique.Models.Token
 Type	Caique/Statements/Argument.cs	/^        public DataType Type { get; }$/;"	p	struct:Caique.Statements.Argument
 TypeChecker	Caique/CodeGen/TypeChecker.cs	/^        public TypeChecker(List<IStatement> statements, Dictionary<string, DataType[]> functions/;"	m	class:Caique.CodeGen.TypeChecker
 TypeChecker	Caique/CodeGen/TypeChecker.cs	/^    class TypeChecker : IExpressionVisitor<DataType>, IStatementVisitor<object>$/;"	c	namespace:Caique.CodeGen
 TypeCompatibility	Caique/CodeGen/TypeChecker.cs	/^    enum TypeCompatibility$/;"	g	namespace:Caique.CodeGen
-TypeResolver	Caique/CodeGen/TypeResolver.cs	/^        public TypeResolver(LLVMBuilderRef builder)$/;"	m	class:Caique.CodeGen.TypeResolver
-TypeResolver	Caique/CodeGen/TypeResolver.cs	/^    class TypeResolver$/;"	c	namespace:Caique.CodeGen
+Unary	Caique/Parsing/Parser.cs	/^        public IExpression Unary()$/;"	m	class:Caique.Parsing.Parser
+UnaryExpr	Caique/Expressions/UnaryExpr.cs	/^        public UnaryExpr(Token op, IExpression expression)$/;"	m	class:Caique.Expressions.UnaryExpr
+UnaryExpr	Caique/Expressions/UnaryExpr.cs	/^    class UnaryExpr : IExpression$/;"	c	namespace:Caique.Expressions
 Unknown	Caique/Models/DataType.cs	/^        Unknown,$/;"	e	enum:Caique.Models.DataType	file:
 Value	Caique/Expressions/LiteralExpr.cs	/^        public Token    Value     { get; }$/;"	p	class:Caique.Expressions.LiteralExpr
 Value	Caique/Models/TokenValue.cs	/^        public T Value;$/;"	f	struct:Caique.Models.TokenValue
@@ -798,6 +808,7 @@ Visit	Caique/CodeGen/CodeGenerator.cs	/^        public LLVMValueRef Visit(Binary
 Visit	Caique/CodeGen/CodeGenerator.cs	/^        public LLVMValueRef Visit(CallExpr expr)$/;"	m	class:Caique.CodeGen.CodeGenerator
 Visit	Caique/CodeGen/CodeGenerator.cs	/^        public LLVMValueRef Visit(GroupExpr expr)$/;"	m	class:Caique.CodeGen.CodeGenerator
 Visit	Caique/CodeGen/CodeGenerator.cs	/^        public LLVMValueRef Visit(LiteralExpr expr)$/;"	m	class:Caique.CodeGen.CodeGenerator
+Visit	Caique/CodeGen/CodeGenerator.cs	/^        public LLVMValueRef Visit(UnaryExpr expr)$/;"	m	class:Caique.CodeGen.CodeGenerator
 Visit	Caique/CodeGen/CodeGenerator.cs	/^        public LLVMValueRef Visit(VariableExpr expr)$/;"	m	class:Caique.CodeGen.CodeGenerator
 Visit	Caique/CodeGen/CodeGenerator.cs	/^        public object Visit(AssignmentStmt stmt)$/;"	m	class:Caique.CodeGen.CodeGenerator
 Visit	Caique/CodeGen/CodeGenerator.cs	/^        public object Visit(BlockStmt stmt)$/;"	m	class:Caique.CodeGen.CodeGenerator
@@ -809,6 +820,7 @@ Visit	Caique/CodeGen/TypeChecker.cs	/^        public DataType Visit(BinaryExpr e
 Visit	Caique/CodeGen/TypeChecker.cs	/^        public DataType Visit(CallExpr expr)$/;"	m	class:Caique.CodeGen.TypeChecker
 Visit	Caique/CodeGen/TypeChecker.cs	/^        public DataType Visit(GroupExpr expr)$/;"	m	class:Caique.CodeGen.TypeChecker
 Visit	Caique/CodeGen/TypeChecker.cs	/^        public DataType Visit(LiteralExpr expr)$/;"	m	class:Caique.CodeGen.TypeChecker
+Visit	Caique/CodeGen/TypeChecker.cs	/^        public DataType Visit(UnaryExpr expr)$/;"	m	class:Caique.CodeGen.TypeChecker
 Visit	Caique/CodeGen/TypeChecker.cs	/^        public DataType Visit(VariableExpr expr)$/;"	m	class:Caique.CodeGen.TypeChecker
 Visit	Caique/CodeGen/TypeChecker.cs	/^        public object Visit(AssignmentStmt stmt)$/;"	m	class:Caique.CodeGen.TypeChecker
 Visit	Caique/CodeGen/TypeChecker.cs	/^        public object Visit(BlockStmt stmt)$/;"	m	class:Caique.CodeGen.TypeChecker
@@ -820,6 +832,7 @@ Visit	Caique/Expressions/IExpressionVisitor.cs	/^        T Visit(BinaryExpr expr
 Visit	Caique/Expressions/IExpressionVisitor.cs	/^        T Visit(CallExpr expr);$/;"	m	interface:Caique.Expressions.IExpressionVisitor
 Visit	Caique/Expressions/IExpressionVisitor.cs	/^        T Visit(GroupExpr expr);$/;"	m	interface:Caique.Expressions.IExpressionVisitor
 Visit	Caique/Expressions/IExpressionVisitor.cs	/^        T Visit(LiteralExpr expr);$/;"	m	interface:Caique.Expressions.IExpressionVisitor
+Visit	Caique/Expressions/IExpressionVisitor.cs	/^        T Visit(UnaryExpr expr);$/;"	m	interface:Caique.Expressions.IExpressionVisitor
 Visit	Caique/Expressions/IExpressionVisitor.cs	/^        T Visit(VariableExpr expr);$/;"	m	interface:Caique.Expressions.IExpressionVisitor
 Visit	Caique/Statements/IStatementVisitor.cs	/^        T Visit(AssignmentStmt stmt);$/;"	m	interface:Caique.Statements.IStatementVisitor
 Visit	Caique/Statements/IStatementVisitor.cs	/^        T Visit(BlockStmt stmt);$/;"	m	interface:Caique.Statements.IStatementVisitor
@@ -830,7 +843,6 @@ Visit	Caique/Statements/IStatementVisitor.cs	/^        T Visit(VarDeclarationStm
 Void	Caique/Models/DataType.cs	/^        Void,$/;"	e	enum:Caique.Models.DataType	file:
 While	Caique/Models/TokenType.cs	/^        Print, Return, Super, This, True, While, Count,$/;"	e	enum:Caique.TokenType	file:
 _builder	Caique/CodeGen/CodeGenerator.cs	/^        private readonly LLVMBuilderRef _builder;$/;"	f	class:Caique.CodeGen.CodeGenerator	file:
-_builder	Caique/CodeGen/TypeResolver.cs	/^        private LLVMBuilderRef _builder { get; }$/;"	p	class:Caique.CodeGen.TypeResolver
 _callExpressions	Caique/CodeGen/TypeChecker.cs	/^        private List<CallExpr> _callExpressions = new List<CallExpr>();$/;"	f	class:Caique.CodeGen.TypeChecker	file:
 _current	Caique/Parsing/Parser.cs	/^        private int _current = 0;$/;"	f	class:Caique.Parsing.Parser	file:
 _current	Caique/Scanning/Lexer.cs	/^        private int _current = 0;$/;"	f	class:Caique.Scanning.Lexer	file:
@@ -919,7 +931,6 @@ libLLVM/8.0.0	Caique/obj/project.assets.json	/^    "libLLVM\/8.0.0": {$/;"	o	obj
 libraries	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^  "libraries": {$/;"	o
 libraries	Caique/obj/project.assets.json	/^  "libraries": {$/;"	o
 main	Caique/test.s	/^main:                                   # @main$/;"	l
-multiply	Caique/test.s	/^multiply:                               # @multiply$/;"	l
 name	Caique/bin/Debug/netcoreapp2.2/Caique.deps.json	/^    "name": ".NETCoreApp,Version=v2.2",$/;"	s	object:runtimeTarget
 name	Caique/bin/Debug/netcoreapp2.2/Caique.runtimeconfig.json	/^      "name": "Microsoft.NETCore.App",$/;"	s	object:runtimeOptions.framework
 netcoreapp2.2	Caique/obj/project.assets.json	/^        "netcoreapp2.2": {$/;"	o	object:project.restore.frameworks
