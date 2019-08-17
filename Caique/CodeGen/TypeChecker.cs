@@ -26,10 +26,6 @@ namespace Caique.CodeGen
 
         // First DataType is the return type, the rest are the arguments
         private Dictionary<string, DataType[]> _functions;
-            /*new Dictionary<string, DataType[]>()
-        {
-            { "printf", new DataType[] { DataType.Void, DataType.String, DataType.Variadic } },
-        };*/
 
         public TypeChecker(List<IStatement> statements, Dictionary<string, DataType[]> functions)
         {
@@ -61,12 +57,13 @@ namespace Caique.CodeGen
         /// </summary>
         private bool CanBeCast(DataType type1, DataType type2)
         {
+            //  String, StringConst
             if (type1 == DataType.StringConst &&
                 type2 == DataType.String) return true;
             if (type1 == DataType.String &&
                 type2 == DataType.StringConst) return true;
-            if (type1 == DataType.Double &&
-                type2 == DataType.Int) return true;
+
+            if (type1.IsNumber() && type2.IsNumber()) return true;
 
             return false;
         }
@@ -77,10 +74,18 @@ namespace Caique.CodeGen
         /// <returns>Tuple with Item1 being a DataType of the cast, and Item2 being a bool that is true if the first type is supposed to get the cast</returns>
         private Tuple<DataType, bool> CreateCastingRule(DataType type1, DataType type2)
         {
+            // String, StringConst
             if (type1 == DataType.String && type2 == DataType.StringConst)
                 return new Tuple<DataType, bool>(type1, false);
-            if (type1 == DataType.Double && type2 == DataType.Int)
-                return new Tuple<DataType, bool>(type1, false);
+            if (type1 == DataType.StringConst && type2 == DataType.String)
+                return new Tuple<DataType, bool>(type2, true);
+
+            if (type1.IsNumber() && type2.IsNumber())
+            {
+                // Cast the lower worth one to the higher worth one. Any int is lower than float, double is higher than float, etc.
+                if (type1 > type2) return new Tuple<DataType, bool>(type1, false);
+                else               return new Tuple<DataType, bool>(type2, true);
+            }
 
             throw new Exception("Couldn't cast");
         }
@@ -107,8 +112,16 @@ namespace Caique.CodeGen
                 }
 
                 // If cast should be applied leftExpr
-                if (castInfo.Item2) leftExpr.Cast  = castInfo.Item1;
-                else                rightExpr.Cast = castInfo.Item1;
+                if (castInfo.Item2)
+                {
+                    if (leftExpr is LiteralExpr && leftType.IsNumber()) leftExpr.DataType = castInfo.Item1;
+                    else leftExpr.Cast = castInfo.Item1;
+                }
+                else
+                {
+                    if (rightExpr is LiteralExpr && leftType.IsNumber()) rightExpr.DataType = castInfo.Item1;
+                    else rightExpr.Cast = castInfo.Item1;
+                }
 
                 return castInfo.Item1;
             }
@@ -159,17 +172,12 @@ namespace Caique.CodeGen
         {
             _currentFunctionType = stmt.ReturnType;
 
-            //DataType[] argumentTypes = new DataType[stmt.Arguments.Count+1];
-            //argumentTypes[0] = stmt.ReturnType;
-
             for (int i = 0; i < stmt.Arguments.Count; i++)
             {
                 Argument argument = stmt.Arguments[i];
                 _types[argument.Name.Lexeme] = new Tuple<DataType, bool>(argument.Type, true);
-                //argumentTypes[i+1] = stmt.Arguments[i].Type;
             }
 
-            //_functions[stmt.Name.Lexeme] = argumentTypes;
             stmt.Block.Accept(this);
             return null;
         }
@@ -193,11 +201,18 @@ namespace Caique.CodeGen
             DataType type1 = expr.Left.Accept(this);
             DataType type2 = expr.Right.Accept(this);
 
-            return ApplyCastingRuleIfNeeded(expr.Operator.Position, type2, type1, expr.Right, expr.Left);
+            DataType finalType = ApplyCastingRuleIfNeeded(expr.Operator.Position,
+                                                          type2,
+                                                          type1,
+                                                          expr.Right,
+                                                          expr.Left);
+            expr.DataType = finalType;
+            return finalType;
         }
 
         public DataType Visit(LiteralExpr expr)
         {
+            expr.DataType = expr.Value.DataType;
             return expr.Value.DataType;
         }
 
@@ -206,6 +221,8 @@ namespace Caique.CodeGen
             Tuple<DataType, bool> info = _types[expr.Name.Lexeme];
             expr.Name.DataType = info.Item1;
             expr.IsArgumentVar = info.Item2;
+
+            expr.DataType = expr.Name.DataType;
             return expr.Name.DataType;
         }
 
@@ -219,6 +236,7 @@ namespace Caique.CodeGen
                 functionTypes[functionTypes.Length - 1] != DataType.Variadic)
             {
                 Reporter.Error(expr.Name.Position, "Incorrect amount of parameters passed.");
+                expr.DataType = expr.Name.DataType;
                 return expr.Name.DataType;
             }
 
@@ -229,12 +247,16 @@ namespace Caique.CodeGen
                                          functionTypes[i+1], expr.Parameters[i]);
             }
 
+            expr.DataType = expr.Name.DataType;
             return expr.Name.DataType;
         }
 
         public DataType Visit(GroupExpr expr)
         {
-            return expr.Expression.Accept(this);
+            DataType type = expr.Expression.Accept(this);
+
+            expr.DataType = type;
+            return type;
         }
     }
 }

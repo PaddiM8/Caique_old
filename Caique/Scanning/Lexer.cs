@@ -32,8 +32,17 @@ namespace Caique.Scanning
             { "this",      TokenType.This         },
             { "true",      TokenType.True         },
             { "string",    TokenType.VariableType },
-            { "int",       TokenType.VariableType },
-            { "double",    TokenType.VariableType },
+            { "i1",        TokenType.VariableType },
+            { "i8",        TokenType.VariableType },
+            { "i16",       TokenType.VariableType },
+            { "i32",       TokenType.VariableType },
+            { "i64",       TokenType.VariableType },
+            { "i128",      TokenType.VariableType },
+            { "f16",       TokenType.VariableType },
+            { "f32",       TokenType.VariableType },
+            { "f64",       TokenType.VariableType },
+            { "f80",       TokenType.VariableType },
+            { "f128",      TokenType.VariableType },
             { "bool",      TokenType.VariableType },
             { "while",     TokenType.While        },
             { "count",     TokenType.Count        },
@@ -42,10 +51,19 @@ namespace Caique.Scanning
         private static Dictionary<string, DataType> _dataTypes =
             new Dictionary<string, DataType>()
         {
-            { "string", DataType.String  },
-            { "int",    DataType.Int     },
-            { "double", DataType.Double  },
-            { "bool",   DataType.Boolean },
+            { "string", DataType.String   },
+            { "i1",     DataType.Int1     },
+            { "i8",     DataType.Int8     },
+            { "i16",    DataType.Int16    },
+            { "i32",    DataType.Int32    },
+            { "i64",    DataType.Int64    },
+            { "i128",   DataType.Int128   },
+            { "f16",    DataType.Float16  },
+            { "f32",    DataType.Float32  },
+            { "f64",    DataType.Float64  },
+            { "f80",    DataType.Float80  },
+            { "f128",   DataType.Float128 },
+            { "bool",   DataType.Boolean  },
         };
 
         public Lexer(string source)
@@ -191,15 +209,15 @@ namespace Caique.Scanning
             if (Peek() == 'f')
             {
                 Advance();
-                AddToken(TokenType.Number, double.Parse(numberString), DataType.Double); // Temporary, not floats yet
+                AddToken(TokenType.Number, numberString, DataType.Float32);
             }
             else if (hasDot)
             {
-                AddToken(TokenType.Number, double.Parse(numberString), DataType.Double);
+                AddToken(TokenType.Number, numberString, DataType.Float64);
             }
             else
             {
-                AddToken(TokenType.Number, int.Parse(numberString), DataType.Int);
+                AddToken(TokenType.Number, numberString, DataType.Int32); // Should be adjusted when code is generated.
             }
         }
 

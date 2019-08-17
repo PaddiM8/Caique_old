@@ -175,31 +175,43 @@ namespace Caique.CodeGen
             return result;
         }
 
+        // This is a bit messy at the moment, sighs. Trying to decide what to do with it.
         public LLVMValueRef Visit(LiteralExpr expr)
         {
             object literal = expr.Value.Literal;
+            var dataType = expr.DataType;
             LLVMValueRef llvmValue;
 
-            // Temporary structure
-            switch (expr.Value.DataType)
+            if (dataType.IsInt() || dataType == DataType.Boolean)
             {
-                case DataType.StringConst:
-                    string val = (string)literal;
-                    var stringConst = LLVM.ConstString(val, (uint)val.Length, LLVMBoolTrue);
-                    llvmValue = LLVM.BuildGlobalString(_builder, val, ".str");
-                    break;
-                case DataType.Double:
-                    llvmValue = LLVM.ConstReal(LLVM.DoubleType(), (double)literal);
-                    break;
-                case DataType.Int:
-                    llvmValue = LLVM.ConstInt(LLVM.Int32Type(), (ulong)(int)literal, LLVMBoolTrue); // Optimize this!
-                    break;
-                case DataType.Boolean:
-                    uint boolVal = (bool)literal ? 1u : 0u;
-                    llvmValue = LLVM.ConstInt(LLVM.Int1Type(), boolVal, LLVMBoolTrue);
-                    break;
-                default:
-                    throw new Exception("Unknown datatype.");
+                ulong longValue = ulong.Parse((string)literal);
+
+                /*if (dataType.IsInt()) longValue = (ulong)(int)literal;
+                else if (dataType.IsFloat() && dataType < DataType.Float64) longValue = (ulong)(float)literal;
+                else if (dataType == DataType.Float64) longValue = (ulong)(double)literal;
+                else if (dataType == DataType.Float128) longValue = (ulong)(decimal)literal;
+                else throw new Exception("Unexpected error.");*/
+
+                var isSigned = longValue < 0 ? LLVMBoolFalse : LLVMBoolTrue;
+                llvmValue = LLVM.ConstInt(dataType.ToLLVMType(), longValue, isSigned);
+            }
+            else if (dataType.IsFloat())
+            {
+                llvmValue = LLVM.ConstReal(dataType.ToLLVMType(), double.Parse((string)literal));
+            }
+            else
+            {
+                // Other datatypes, just string for now, but will probably become more? Hence the switch.
+                switch (dataType)
+                {
+                    case DataType.StringConst:
+                        string val = (string)literal;
+                        var stringConst = LLVM.ConstString(val, (uint)val.Length, LLVMBoolTrue);
+                        llvmValue = LLVM.BuildGlobalString(_builder, val, ".str");
+                        break;
+                    default:
+                        throw new Exception("Unknown datatype.");
+                }
             }
 
             llvmValue = CastIfNeeded(llvmValue, expr.Cast);
@@ -263,13 +275,13 @@ namespace Caique.CodeGen
             if (cast != DataType.Unknown)
             {
                 LLVMTypeRef castAsLLVM = cast.ToLLVMType();
-                switch (cast)
+                if (cast == DataType.String || cast.IsInt())
                 {
-                    case DataType.String:
-                    case DataType.Int:
-                        return LLVM.BuildIntCast(_builder, value, castAsLLVM, "intCast");
-                    case DataType.Double:
-                        return LLVM.BuildSIToFP(_builder, value, castAsLLVM, "sitofpCast");
+                    return LLVM.BuildIntCast(_builder, value, castAsLLVM, "intCast");
+                }
+                else if (cast.IsFloat())
+                {
+                    return LLVM.BuildSIToFP(_builder, value, castAsLLVM, "sitofpCast");
                 }
             }
 
