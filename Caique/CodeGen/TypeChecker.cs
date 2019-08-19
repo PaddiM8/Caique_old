@@ -20,6 +20,7 @@ namespace Caique.CodeGen
         private List<IStatement> _statements { get; }
         private DataType _currentFunctionType;
         private List<CallExpr> _callExpressions = new List<CallExpr>();
+        private Scope _scope = new Scope();
 
         // variableName/functionName, Tuple(DataType, IsArgumentVar)
         private Dictionary<string, Tuple<DataType, bool>> _types =
@@ -140,7 +141,7 @@ namespace Caique.CodeGen
         public object Visit(VarDeclarationStmt stmt)
         {
             // If not null or empty
-            if (stmt.ArraySizes?.Any() != true)
+            if (stmt.ArraySizes != null && stmt.ArraySizes.Count > 0)
             {
                 // Make sure each size specifier is of type int.
                 foreach (var size in stmt.ArraySizes)
@@ -158,13 +159,13 @@ namespace Caique.CodeGen
 
                 // Make sure the assignment value is compatible with the variable type.
                 DataType finalType = ApplyCastingRuleIfNeeded(stmt.Identifier.Position, type2, type1, stmt.Value);
-                _types[stmt.Identifier.Lexeme] =
-                    new Tuple<DataType, bool>(finalType, false);
+                //_types[stmt.Identifier.Lexeme] =
+                _scope.Define(stmt.Identifier.Lexeme, finalType, false);
             }
             else
             {
-                _types[stmt.Identifier.Lexeme] =
-                    new Tuple<DataType, bool>(stmt.DataType, false);
+                //_types[stmt.Identifier.Lexeme] =
+                _scope.Define(stmt.Identifier.Lexeme, stmt.DataType, false);
             }
 
             return null;
@@ -172,7 +173,7 @@ namespace Caique.CodeGen
 
         public object Visit(AssignmentStmt stmt)
         {
-            stmt.Identifier.DataType = _types[stmt.Identifier.Lexeme].Item1;
+            stmt.Identifier.DataType = _scope.Get(stmt.Identifier.Lexeme).Item1;
             DataType type1 = stmt.Identifier.DataType;
             DataType type2 = stmt.Value.Accept(this);
 
@@ -188,7 +189,7 @@ namespace Caique.CodeGen
             for (int i = 0; i < stmt.Arguments.Count; i++)
             {
                 Argument argument = stmt.Arguments[i];
-                _types[argument.Name.Lexeme] = new Tuple<DataType, bool>(argument.Type, true);
+                _scope.Define(argument.Name.Lexeme, argument.Type, true);
             }
 
             stmt.Block.Accept(this);
@@ -197,7 +198,10 @@ namespace Caique.CodeGen
 
         public object Visit(BlockStmt stmt)
         {
+            _scope = _scope.AddChildScope();
             foreach (var statement in stmt.Statements) statement.Accept(this);
+            _scope = _scope.Parent;
+
             return null;
         }
 
@@ -253,7 +257,9 @@ namespace Caique.CodeGen
 
         public DataType Visit(VariableExpr expr)
         {
-            Tuple<DataType, bool> info = _types[expr.Name.Lexeme];
+            //Tuple<DataType, bool> info = _types[expr.Name.Lexeme];
+
+            Tuple<DataType, bool> info = _scope.Get(expr.Name.Lexeme);
             expr.Name.DataType = info.Item1;
             expr.IsArgumentVar = info.Item2;
 

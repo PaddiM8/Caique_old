@@ -71,7 +71,7 @@ namespace Caique.CodeGen
             LLVMTypeRef type = stmt.DataType.ToLLVMType();
 
             // If not null or empty
-            if (stmt.ArraySizes?.Any() != true)
+            if (stmt.ArraySizes != null && stmt.ArraySizes.Count > 0)
             {
                 foreach (var size in stmt.ArraySizes)
                 {

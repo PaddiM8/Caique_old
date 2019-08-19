@@ -9,6 +9,7 @@ using Caique.Parsing;
 using Caique.Expressions;
 using Caique.Statements;
 using Caique.CodeGen;
+using Caique.Logging;
 
 namespace Caique
 {
@@ -28,6 +29,10 @@ namespace Caique
             var parser = new Parser(tokens);
             List<IStatement> statements = parser.Parse();
             new TypeChecker(statements, parser.Functions).CheckTypes();
+
+            // Don't continue if previous steps generated errors.
+            if (Reporter.ErrorList.Count > 0) return;
+
             var module = new CodeGenerator(statements).GenerateLLVM();
 
             string moduleError = "";
