@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using LLVMSharp;
 using Newtonsoft.Json;
 using Caique.Models;
@@ -12,23 +13,29 @@ namespace Caique.CodeGen
     class CodeGenerator : IExpressionVisitor<LLVMValueRef>, IStatementVisitor<object>
     {
 
-        private readonly LLVMModuleRef _module;
-        private readonly LLVMBuilderRef _builder;
+        // Classes
+        private LLVMModuleRef _module { get; }
+        private LLVMBuilderRef _builder { get; }
+        private LLVMHelper _llvmHelper { get; }
+
+        // LLVMBool
         private static readonly LLVMBool LLVMBoolFalse = new LLVMBool(0);
         private static readonly LLVMBool LLVMBoolTrue = new LLVMBool(1);
-        private readonly Dictionary<string, LLVMValueRef> _namedValues = new Dictionary<string, LLVMValueRef>();
-        private readonly Stack<Tuple<LLVMValueRef, BlockStmt>> _valueStack =
-            new Stack<Tuple<LLVMValueRef, BlockStmt>>();
+
+        // Data structures
+        private readonly Dictionary<string, LLVMValueRef> _namedValues
+            = new Dictionary<string, LLVMValueRef>();
+        private readonly Stack<Tuple<LLVMValueRef, BlockStmt>> _valueStack
+            = new Stack<Tuple<LLVMValueRef, BlockStmt>>();
         private List<IStatement> _statements { get; }
-        private delegate LLVMValueRef BuildBinary(LLVMBuilderRef builder, LLVMValueRef left, LLVMValueRef right, string name);
-        //private readonly ScopeEnv _environment = new ScopeEnv();
 
         public CodeGenerator(List<IStatement> statements)
         {
             Console.WriteLine(JsonConvert.SerializeObject(statements));
             _module = LLVM.ModuleCreateWithName("main");
             _builder = LLVM.CreateBuilder();
-            this._statements = statements;
+            _statements = statements;
+            _llvmHelper = new LLVMHelper(_builder);
         }
 
         public LLVMModuleRef GenerateLLVM()
@@ -39,6 +46,10 @@ namespace Caique.CodeGen
             var printfArguments = new LLVMTypeRef[] { stringType };
             var printf = LLVM.AddFunction(_module, "printf", LLVM.FunctionType(LLVMTypeRef.Int32Type(), printfArguments, LLVMBoolTrue));
             LLVM.SetLinkage(printf, LLVMLinkage.LLVMExternalLinkage);
+
+            var scanfArguments = new LLVMTypeRef[] { stringType };
+            var scanf = LLVM.AddFunction(_module, "scanf", LLVM.FunctionType(LLVMTypeRef.Int32Type(), scanfArguments, LLVMBoolTrue));
+            LLVM.SetLinkage(scanf, LLVMLinkage.LLVMExternalLinkage);
 
             // Generate functions, globals, etc.
             for (int i = 0; i < _statements.Count; i++)
@@ -58,8 +69,17 @@ namespace Caique.CodeGen
         public object Visit(VarDeclarationStmt stmt)
         {
             LLVMTypeRef type = stmt.DataType.ToLLVMType();
-            var alloca = LLVM.BuildAlloca(_builder, type, stmt.Identifier.Lexeme); // Allocate variable
 
+            // If not null or empty
+            if (stmt.ArraySizes?.Any() != true)
+            {
+                foreach (var size in stmt.ArraySizes)
+                {
+                    //type = LLVM.Array(type, size.Accept(this));
+                }
+            }
+
+            var alloca = LLVM.BuildAlloca(_builder, type, stmt.Identifier.Lexeme); // Allocate variable
             if (stmt.Value != null)
             {
                 LLVMValueRef initializer = stmt.Value.Accept(this);
@@ -120,8 +140,12 @@ namespace Caique.CodeGen
 
         public object Visit(BlockStmt stmt)
         {
-            // Uh blocks aren't just for functions...
-            LLVM.PositionBuilderAtEnd(_builder, LLVM.AppendBasicBlock(_valueStack.Pop().Item1, "entry"));
+            if (_valueStack.Count > 0)
+            {
+                LLVMBasicBlockRef block = LLVM.AppendBasicBlock(_valueStack.Pop().Item1, "entry");
+                LLVM.PositionBuilderAtEnd(_builder, block);
+            }
+
             foreach (IStatement subStmt in stmt.Statements)
             {
                 subStmt.Accept(this);
@@ -140,6 +164,34 @@ namespace Caique.CodeGen
             return null;
         }
 
+        public object Visit(IfStmt stmt)
+        {
+            LLVMValueRef condition = stmt.Condition.Accept(this);
+            LLVMValueRef func = LLVM.GetBasicBlockParent(LLVM.GetInsertBlock(_builder));
+
+            // Blocks
+            LLVMBasicBlockRef thenBB = LLVM.AppendBasicBlock(func, "then");
+            LLVMBasicBlockRef elseBB = LLVM.AppendBasicBlock(func, "else");
+            LLVMBasicBlockRef mergeBB = LLVM.AppendBasicBlock(func, "ifcont");
+
+            // Build condition
+            LLVM.BuildCondBr(_builder, condition, thenBB, elseBB);
+
+            // Then branch
+            LLVM.PositionBuilderAtEnd(_builder, thenBB); // Position builder at block
+            stmt.ThenBranch.Accept(this); // Generate branch code
+            LLVM.BuildBr(_builder, mergeBB); // Redirect to merge
+
+            // Else branch
+            LLVM.PositionBuilderAtEnd(_builder, elseBB); // Position builder at block
+            if (stmt.ElseBranch != null) stmt.ElseBranch.Accept(this); // Generate branch code if else statement is present
+            LLVM.BuildBr(_builder, mergeBB); // Redirect to merge
+
+            LLVM.PositionBuilderAtEnd(_builder, mergeBB);
+
+            return null;
+        }
+
         public object Visit(ExpressionStmt stmt)
         {
             stmt.Expression.Accept(this);
@@ -151,7 +203,7 @@ namespace Caique.CodeGen
         {
             LLVMValueRef left = expr.Left.Accept(this);
             LLVMValueRef right = expr.Right.Accept(this);
-            LLVMValueRef value = BuildBinaryOperation(expr.Operator.Type, expr.DataType, left, right);
+            LLVMValueRef value = _llvmHelper.BuildBinary(left, expr.Operator.Type, right, expr.DataType);
             value = CastIfNeeded(value, expr.Cast);
 
             return value;
@@ -276,77 +328,6 @@ namespace Caique.CodeGen
             }
 
             return value;
-        }
-
-        private LLVMValueRef BuildBinaryOperation(TokenType operatorType, DataType dataType, LLVMValueRef leftVal, LLVMValueRef rightVal)
-        {
-            if (dataType.IsInt() || dataType == DataType.Boolean)
-            {
-                if (operatorType.IsArithmeticOperator())
-                {
-                    BuildBinary buildBinary;
-                    switch (operatorType)
-                    {
-                        case TokenType.Plus:  buildBinary = LLVM.BuildAdd; break;
-                        case TokenType.Minus: buildBinary = LLVM.BuildSub; break;
-                        case TokenType.Star:  buildBinary = LLVM.BuildMul; break;
-                        default: throw new Exception("Invalid arithmetic token.");
-                    }
-
-                    return buildBinary(_builder, leftVal, rightVal, "bintmp");
-                }
-                else if (operatorType.IsComparisonOperator())
-                {
-                    LLVMIntPredicate predicate;
-                    switch (operatorType)
-                    {
-                        case TokenType.EqualEqual:   predicate = LLVMIntPredicate.LLVMIntEQ;  break;
-                        case TokenType.NotEqual:     predicate = LLVMIntPredicate.LLVMIntNE;  break;
-                        case TokenType.Greater:      predicate = LLVMIntPredicate.LLVMIntSGT; break;
-                        case TokenType.GreaterEqual: predicate = LLVMIntPredicate.LLVMIntSGE; break;
-                        case TokenType.Less:         predicate = LLVMIntPredicate.LLVMIntSLT; break;
-                        case TokenType.LessEqual:    predicate = LLVMIntPredicate.LLVMIntSLE; break;
-                        default: throw new Exception("Invalid comparison token. This is a compiler bug.");
-                    }
-
-                    return LLVM.BuildICmp(_builder, predicate, leftVal, rightVal, "cmptmp");
-                }
-            }
-            else if (dataType.IsFloat())
-            {
-                if (operatorType.IsArithmeticOperator())
-                {
-                    BuildBinary buildBinary;
-                    switch (operatorType)
-                    {
-                        case TokenType.Plus:  buildBinary = LLVM.BuildFAdd; break;
-                        case TokenType.Minus: buildBinary = LLVM.BuildFSub; break;
-                        case TokenType.Star:  buildBinary = LLVM.BuildFMul; break;
-                        case TokenType.Slash: buildBinary = LLVM.BuildFDiv; break;
-                        default: throw new Exception("Invalid arithmetic token. This is a compiler bug.");
-                    }
-
-                    return buildBinary(_builder, leftVal, leftVal, "bintmp");
-                }
-                else if (operatorType.IsComparisonOperator())
-                {
-                    LLVMRealPredicate predicate;
-                    switch (operatorType)
-                    {
-                        case TokenType.EqualEqual:   predicate = LLVMRealPredicate.LLVMRealOEQ; break;
-                        case TokenType.NotEqual:     predicate = LLVMRealPredicate.LLVMRealONE; break;
-                        case TokenType.Greater:      predicate = LLVMRealPredicate.LLVMRealOGT; break;
-                        case TokenType.GreaterEqual: predicate = LLVMRealPredicate.LLVMRealOGE; break;
-                        case TokenType.Less:         predicate = LLVMRealPredicate.LLVMRealOLT; break;
-                        case TokenType.LessEqual:    predicate = LLVMRealPredicate.LLVMRealOLE; break;
-                        default: throw new Exception("Invalid comparison token. This is a compiler bug.");
-                    }
-
-                    return LLVM.BuildFCmp(_builder, predicate, leftVal, rightVal, "cmptmp");
-                }
-            }
-
-            throw new Exception($"Unexpected token '{operatorType}'. This is a compiler bug.");
         }
     }
 }

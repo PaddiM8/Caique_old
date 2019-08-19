@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Caique.Models;
 using Caique.Expressions;
 using Caique.Statements;
@@ -136,14 +137,26 @@ namespace Caique.CodeGen
             return null;
         }
 
-        // TODO: Make sure both sides match
         public object Visit(VarDeclarationStmt stmt)
         {
+            // If not null or empty
+            if (stmt.ArraySizes?.Any() != true)
+            {
+                // Make sure each size specifier is of type int.
+                foreach (var size in stmt.ArraySizes)
+                {
+                    if (!size.Accept(this).IsInt())
+                        Reporter.Error(new Pos(0, 0), "Array size specifier should be of type 'int'.");
+                }
+            }
+
+            // If assignment is present
             if (stmt.Value != null)
             {
                 DataType type1 = stmt.DataType;
                 DataType type2 = stmt.Value.Accept(this);
 
+                // Make sure the assignment value is compatible with the variable type.
                 DataType finalType = ApplyCastingRuleIfNeeded(stmt.Identifier.Position, type2, type1, stmt.Value);
                 _types[stmt.Identifier.Lexeme] =
                     new Tuple<DataType, bool>(finalType, false);
@@ -192,6 +205,19 @@ namespace Caique.CodeGen
         {
             DataType type2 = stmt.Expression.Accept(this);
             ApplyCastingRuleIfNeeded(new Pos(0, 0), type2, _currentFunctionType, stmt.Expression);
+
+            return null;
+        }
+
+        public object Visit(IfStmt stmt)
+        {
+            if (stmt.Condition.Accept(this) != DataType.Boolean)
+            {
+                Reporter.Error(new Pos(0, 0), "Expected type 'bool' as conditional.");
+            }
+
+            stmt.ThenBranch.Accept(this);
+            if (stmt.ElseBranch != null) stmt.ElseBranch.Accept(this);
 
             return null;
         }

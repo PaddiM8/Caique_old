@@ -16,6 +16,7 @@ namespace Caique.Parsing
             new Dictionary<string, DataType[]>()
         {
             { "printf", new DataType[] { DataType.Void, DataType.String, DataType.Variadic } },
+            { "scanf", new DataType[] { DataType.Void, DataType.String, DataType.Variadic } },
         };
 
         private List<Token> _tokens { get; }
@@ -44,6 +45,7 @@ namespace Caique.Parsing
             if (Match(TokenType.Fun))          return Function();
             if (Match(TokenType.LeftBrace))    return Block();
             if (Match(TokenType.Return))       return Return();
+            if (Match(TokenType.If))           return If();
 
             if (Check(TokenType.Identifier) && CheckNext(TokenType.Equal))
             {
@@ -56,19 +58,35 @@ namespace Caique.Parsing
         public IStatement VarDeclaration()
         {
             DataType dataType = Previous().DataType;
-            Token identifier = Consume(TokenType.Identifier, "Expected identifier after variable type keyword.");
+
+            // If array
+            List<IExpression> arraySizes = null;
+            if (Match(TokenType.LeftAngle))
+            { 
+                arraySizes = new List<IExpression>();
+                while (true) // Will break if a RightAngle is matched.
+                {
+                    arraySizes.Add(Expression());
+                    if (Match(TokenType.RightAngle)) break;
+                    Consume(TokenType.Comma, "Expected comma.");
+                }
+
+                if (arraySizes.Count == 0) Reporter.Error(Previous().Position, "Expected array size specifier.");
+            }
+
+            Token identifier = Consume(TokenType.Identifier, "Expected identifier after variable type.");
 
             if (Match(TokenType.Equal))
             {
                 IExpression expr = Expression();
                 Consume(TokenType.Semicolon, "Expected ';' after expression.");
 
-                return new VarDeclarationStmt(dataType, identifier, expr);
+                return new VarDeclarationStmt(dataType, identifier, arraySizes, expr);
             }
 
             Consume(TokenType.Semicolon, "Expected ';' after expression.");
 
-            return new VarDeclarationStmt(dataType, identifier);
+            return new VarDeclarationStmt(dataType, identifier, arraySizes);
         }
 
         public IStatement Assignment()
@@ -135,6 +153,20 @@ namespace Caique.Parsing
             return new ReturnStmt(expr);
         }
 
+        public IStatement If()
+        {
+            IExpression condition = Expression();
+            IStatement thenBranch = Statement();
+            IStatement elseBranch = null;
+
+            if (Match(TokenType.Else))
+            {
+                elseBranch = Statement();
+            }
+
+            return new IfStmt(condition, thenBranch, elseBranch);
+        }
+
         public IStatement ExpressionStatement()
         {
             IExpression expr = Expression();
@@ -145,7 +177,7 @@ namespace Caique.Parsing
 
         public IExpression Expression()
         {
-            return Equality();
+            return LogicalOr();
         }
 
         public IExpression LogicalOr()

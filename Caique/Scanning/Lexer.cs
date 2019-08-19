@@ -15,7 +15,6 @@ namespace Caique.Scanning
         private static Dictionary<string, TokenType> _keywords =
             new Dictionary<string, TokenType>()
         {
-            { "&&",        TokenType.And          },
             { "class",     TokenType.Class        },
             { "else",      TokenType.Else         },
             { "false",     TokenType.False        },
@@ -25,7 +24,6 @@ namespace Caique.Scanning
             { "continue",  TokenType.Continue     },
             { "if",        TokenType.If           },
             { "null",      TokenType.Null         },
-            { "||",        TokenType.Or           },
             { "print",     TokenType.Print        },
             { "return",    TokenType.Return       },
             { "super",     TokenType.Super        },
@@ -110,6 +108,8 @@ namespace Caique.Scanning
                 case ')': AddToken(TokenType.RightParen); break;
                 case '{': AddToken(TokenType.LeftBrace);  break;
                 case '}': AddToken(TokenType.RightBrace); break;
+                case '[': AddToken(TokenType.LeftAngle);  break;
+                case ']': AddToken(TokenType.RightAngle); break;
                 case ',': AddToken(TokenType.Comma);      break;
                 case '.': AddToken(TokenType.Dot);        break;
                 case '-': AddToken(TokenType.Minus);      break;
@@ -123,6 +123,8 @@ namespace Caique.Scanning
                 case '=': AddToken(Match('=') ? TokenType.EqualEqual   : TokenType.Equal);   break;
                 case '<': AddToken(Match('=') ? TokenType.LessEqual    : TokenType.Less);    break;
                 case '>': AddToken(Match('=') ? TokenType.GreaterEqual : TokenType.Greater); break;
+                case '&': if (Match('&')) AddToken(TokenType.And); break;
+                case '|': if (Match('|')) AddToken(TokenType.Or); break;
                 case '/':
                     if (Match('/'))
                     {

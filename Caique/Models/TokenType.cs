@@ -6,7 +6,7 @@ namespace Caique
     public enum TokenType
     {
         // Single-character tokens
-        LeftParen, RightParen, LeftBrace, RightBrace,
+        LeftParen, RightParen, LeftBrace, RightBrace, LeftAngle, RightAngle,
         Comma, Dot, Minus, Plus, Semicolon, Slash, Star,
         Modulus,
 
@@ -60,6 +60,12 @@ namespace Caique
                 default:
                     return false;
             }
+        }
+
+        public static bool IsConjunctionOperator(this TokenType tokenType)
+        {
+            return tokenType == TokenType.Or ||
+                   tokenType == TokenType.And;
         }
     }
 }

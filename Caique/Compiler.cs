@@ -24,6 +24,7 @@ namespace Caique
         public void Compile()
         {
             List<Token> tokens = new Lexer(File.ReadAllText(RootFileLocation)).ScanTokens();
+            //Console.WriteLine(JsonConvert.SerializeObject(tokens));
             var parser = new Parser(tokens);
             List<IStatement> statements = parser.Parse();
             new TypeChecker(statements, parser.Functions).CheckTypes();
