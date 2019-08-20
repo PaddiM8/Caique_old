@@ -57,24 +57,7 @@ namespace Caique.Parsing
 
         public IStatement VarDeclaration()
         {
-            DataType dataType = new DataType(Keywords.BaseTypes[Previous().Lexeme], 0);
-
-            // If array
-            List<IExpression> arraySizes = null;
-            if (Match(TokenType.LeftAngle))
-            { 
-                arraySizes = new List<IExpression>();
-                while (true) // Will break if a RightAngle is matched.
-                {
-                    arraySizes.Add(Expression());
-                    if (Match(TokenType.RightAngle)) break;
-                    Consume(TokenType.Comma, "Expected comma.");
-                }
-
-                dataType.ArrayDepth = arraySizes.Count; // Set array depth(how many dimensions, if any) to the amount of specified array sizes.
-                if (arraySizes.Count == 0) Reporter.Error(Previous().Position, "Expected array size specifier.");
-            }
-
+            Tuple<DataType, List<IExpression>> declarationType = DeclarationType();
             Token identifier = Consume(TokenType.Identifier, "Expected identifier after variable type.");
 
             if (Match(TokenType.Equal))
@@ -82,12 +65,12 @@ namespace Caique.Parsing
                 IExpression expr = Expression();
                 Consume(TokenType.Semicolon, "Expected ';' after expression.");
 
-                return new VarDeclarationStmt(dataType, identifier, arraySizes, expr);
+                return new VarDeclarationStmt(declarationType.Item1, identifier, declarationType.Item2, expr);
             }
 
             Consume(TokenType.Semicolon, "Expected ';' after expression.");
 
-            return new VarDeclarationStmt(dataType, identifier, arraySizes);
+            return new VarDeclarationStmt(declarationType.Item1, identifier, declarationType.Item2);
         }
 
         public IStatement Assignment()
@@ -102,8 +85,7 @@ namespace Caique.Parsing
 
         public IStatement Function()
         {
-            string returnTypeString = Consume(TokenType.VariableType, "Expected type after 'fn'").Lexeme;
-            DataType returnType = new DataType(Keywords.BaseTypes[returnTypeString], 0); // TODO: Arrays..
+            DataType returnType = Type();
             Token name = Consume(TokenType.Identifier, "Expected function name.");
             Consume(TokenType.LeftParen, "Expected '(' after function name");
 
@@ -319,6 +301,50 @@ namespace Caique.Parsing
             }
 
             throw Error($"Unexpected token '{Peek().DataType}'.");
+        }
+
+        public Tuple<DataType, List<IExpression>> DeclarationType()
+        {
+            BaseType baseType = Keywords.BaseTypes[Previous().Lexeme];
+            DataType dataType = new DataType(baseType, 0);
+
+            // If array
+            List<IExpression> arraySizes = null;
+            if (Match(TokenType.LeftAngle))
+            { 
+                arraySizes = new List<IExpression>();
+                while (true) // Will break if a RightAngle is matched.
+                {
+                    arraySizes.Add(Expression());
+                    if (Match(TokenType.RightAngle)) break;
+                    Consume(TokenType.Comma, "Expected comma.");
+                }
+
+                dataType.ArrayDepth = arraySizes.Count; // Set array depth(how many dimensions, if any) to the amount of specified array sizes.
+                if (arraySizes.Count == 0) Reporter.Error(Previous().Position, "Expected array size specifier.");
+            }
+
+            return new Tuple<DataType, List<IExpression>>(dataType, arraySizes);
+        }
+
+        public DataType Type()
+        {
+            string typeString = Consume(TokenType.VariableType, $"Expected type.").Lexeme;
+            DataType dataType = new DataType(Keywords.BaseTypes[typeString], 0);
+
+            // Is array
+            if (Match(TokenType.LeftAngle))
+            {
+                while (!Match(TokenType.RightAngle))
+                {
+                    Consume(TokenType.Comma, "Expected comma.");
+                    dataType.ArrayDepth++;
+                }
+
+                dataType.ArrayDepth++; // One comma means two dimensions, so +1
+            }
+
+            return dataType;
         }
 
         /// <summary>

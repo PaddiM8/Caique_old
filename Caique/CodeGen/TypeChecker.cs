@@ -48,7 +48,8 @@ namespace Caique.CodeGen
         /// </summary>
         private TypeCompatibility Check(DataType type1, DataType type2)
         {
-            if (type1.BaseType == type2.BaseType || type1.BaseType == BaseType.Variadic) return TypeCompatibility.Compatible;
+            if (type1.BaseType == type2.BaseType && type1.ArrayDepth == type2.ArrayDepth) return TypeCompatibility.Compatible;
+            if (type1.BaseType == BaseType.Variadic) return TypeCompatibility.Compatible;
             if (CanBeCast(type1, type2)) return TypeCompatibility.NeedsCast;
 
             return TypeCompatibility.Incompatible;
@@ -211,6 +212,7 @@ namespace Caique.CodeGen
         public object Visit(ReturnStmt stmt)
         {
             DataType type2 = stmt.Expression.Accept(this);
+            Console.WriteLine(_currentFunctionType);
             ApplyCastingRuleIfNeeded(new Pos(0, 0), type2, _currentFunctionType, stmt.Expression);
 
             return null;
