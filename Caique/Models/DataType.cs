@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Caique.Models
@@ -12,6 +13,18 @@ namespace Caique.Models
         {
             this.BaseType = baseType;
             this.ArrayDepth = arrayDepth;
+        }
+
+        public override string ToString()
+        {
+            if (ArrayDepth > 0)
+            {
+                return BaseType.ToString() + "[" + string.Concat(Enumerable.Repeat(",", ArrayDepth - 1)) + "]";
+            }
+            else
+            {
+                return BaseType.ToString();
+            }
         }
     }
 }

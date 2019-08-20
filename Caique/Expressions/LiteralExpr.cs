@@ -8,7 +8,7 @@ namespace Caique.Expressions
     {
         public Token    Value     { get; }
         public BaseType Cast      { get; set; }
-        public BaseType BaseType  { get; set; }
+        public DataType DataType  { get; set; }
 
         public LiteralExpr(Token value)
         {

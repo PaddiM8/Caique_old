@@ -8,7 +8,7 @@ namespace Caique.Expressions
     {
         public IExpression Expression { get; }
         public BaseType    Cast       { get; set; }
-        public BaseType    BaseType   { get; set; }
+        public DataType    DataType   { get; set; }
 
         public GroupExpr(IExpression expression)
         {

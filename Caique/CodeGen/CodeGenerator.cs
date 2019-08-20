@@ -68,7 +68,7 @@ namespace Caique.CodeGen
 
         public object Visit(VarDeclarationStmt stmt)
         {
-            LLVMTypeRef type = stmt.BaseType.ToLLVMType();
+            LLVMTypeRef type = stmt.DataType.BaseType.ToLLVMType();
             LLVMValueRef alloca;
 
             // If not null or empty
@@ -129,10 +129,10 @@ namespace Caique.CodeGen
             // Add argument types
             for (int i = 0; i < stmt.Arguments.Count; i++)
             {
-                arguments[i] = stmt.Arguments[i].Type.ToLLVMType();
+                arguments[i] = stmt.Arguments[i].DataType.BaseType.ToLLVMType();
             }
 
-            LLVMTypeRef functionType = LLVM.FunctionType(stmt.ReturnType.ToLLVMType(), arguments, LLVMBoolFalse);
+            LLVMTypeRef functionType = LLVM.FunctionType(stmt.ReturnType.BaseType.ToLLVMType(), arguments, LLVMBoolFalse);
             LLVMValueRef function = LLVM.AddFunction(_module, stmt.Name.Lexeme, functionType);
 
             // Add names to arguments and allocate memory
@@ -216,7 +216,7 @@ namespace Caique.CodeGen
         {
             LLVMValueRef left = expr.Left.Accept(this);
             LLVMValueRef right = expr.Right.Accept(this);
-            LLVMValueRef value = _llvmHelper.BuildBinary(left, expr.Operator.Type, right, expr.BaseType);
+            LLVMValueRef value = _llvmHelper.BuildBinary(left, expr.Operator.Type, right, expr.DataType);
             value = CastIfNeeded(value, expr.Cast);
 
             return value;
@@ -226,7 +226,7 @@ namespace Caique.CodeGen
         public LLVMValueRef Visit(LiteralExpr expr)
         {
             string literal = (string)expr.Value.Literal;
-            var baseType = expr.BaseType;
+            var baseType = expr.DataType.BaseType;
             LLVMValueRef llvmValue;
 
             if (baseType.IsInt() || baseType.IsBool())

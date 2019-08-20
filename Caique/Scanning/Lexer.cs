@@ -12,58 +12,6 @@ namespace Caique.Scanning
         private int _start = 0;
         private int _current = 0;
         private Pos _position = new Pos(1, 1);
-        private static Dictionary<string, TokenType> _keywords =
-            new Dictionary<string, TokenType>()
-        {
-            { "class",     TokenType.Class        },
-            { "else",      TokenType.Else         },
-            { "false",     TokenType.False        },
-            { "for",       TokenType.For          },
-            { "fn",        TokenType.Fun          },
-            { "break",     TokenType.Break        },
-            { "continue",  TokenType.Continue     },
-            { "if",        TokenType.If           },
-            { "null",      TokenType.Null         },
-            { "print",     TokenType.Print        },
-            { "return",    TokenType.Return       },
-            { "super",     TokenType.Super        },
-            { "this",      TokenType.This         },
-            { "true",      TokenType.True         },
-            { "string",    TokenType.VariableType },
-            { "i1",        TokenType.VariableType },
-            { "i8",        TokenType.VariableType },
-            { "i16",       TokenType.VariableType },
-            { "i32",       TokenType.VariableType },
-            { "i64",       TokenType.VariableType },
-            { "i128",      TokenType.VariableType },
-            { "f16",       TokenType.VariableType },
-            { "f32",       TokenType.VariableType },
-            { "f64",       TokenType.VariableType },
-            { "f80",       TokenType.VariableType },
-            { "f128",      TokenType.VariableType },
-            { "bool",      TokenType.VariableType },
-            { "while",     TokenType.While        },
-            { "count",     TokenType.Count        },
-        };
-
-        private static Dictionary<string, BaseType> _baseTypes =
-            new Dictionary<string, BaseType>()
-        {
-            { "string", BaseType.String   },
-            { "i1",     BaseType.Int1     },
-            { "i8",     BaseType.Int8     },
-            { "i16",    BaseType.Int16    },
-            { "i32",    BaseType.Int32    },
-            { "i64",    BaseType.Int64    },
-            { "i128",   BaseType.Int128   },
-            { "f16",    BaseType.Float16  },
-            { "f32",    BaseType.Float32  },
-            { "f64",    BaseType.Float64  },
-            { "f80",    BaseType.Float80  },
-            { "f128",   BaseType.Float128 },
-            { "bool",   BaseType.Boolean  },
-        };
-
         public Lexer(string source)
         {
             this._source = source;
@@ -236,7 +184,7 @@ namespace Caique.Scanning
 
             string text = _source.Substring(_start, _current - _start);
             TokenType type;
-            bool isKeyWord = _keywords.TryGetValue(text, out type);
+            bool isKeyWord = Keywords.TokenTypes.TryGetValue(text, out type);
             if (!isKeyWord) type = TokenType.Identifier;
 
             return type;
@@ -295,19 +243,26 @@ namespace Caique.Scanning
             AddToken(type, null);
         }
 
+        public void AddToken(TokenType type, dynamic literal)
+        {
+            string text = _source.Substring(_start, _current - _start);
+            _tokens.Add(new Token(type, text, _position, literal, null));
+        }
+
         /// <summary>
         /// Add a new token to the token list (with value)
         /// </summary>
-        private void AddToken(TokenType type, dynamic literal, BaseType? baseType = null)
+        private void AddToken(TokenType type, dynamic literal, BaseType baseType)
         {
+
             string text = _source.Substring(_start, _current - _start);
+            DataType dataType = new DataType(baseType, 0);
             if (type == TokenType.VariableType)
             {
-                baseType = _baseTypes[text];
+                dataType.BaseType = Keywords.BaseTypes[text];
             }
 
-            if (type == TokenType.True && literal == null) throw new Exception("Börk.");
-            _tokens.Add(new Token(type, text, _position, literal, baseType));
+            _tokens.Add(new Token(type, text, _position, literal, dataType));
         }
 
         /// <summary>
@@ -323,8 +278,8 @@ namespace Caique.Scanning
         /// <param name="char">Character to check</param>
         /// <returns>Whether or not the character is A-z or _</returns>
         private bool IsAlpha(char c) => (c >= 'a' && c <= 'z') ||
-                                        (c >= 'A' && c <= 'Z') ||
-                                         c == '_';
+            (c >= 'A' && c <= 'Z') ||
+            c == '_';
 
         /// <param name="c">Character to check</param>
         /// <returns>Whether or not the character is A-z or 0-9 or _</returns>

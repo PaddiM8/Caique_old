@@ -10,7 +10,7 @@ namespace Caique.Expressions
         public Token       Operator  { get; }
         public IExpression Right     { get; }
         public BaseType    Cast      { get; set; }
-        public BaseType    BaseType  { get; set; }
+        public DataType    DataType  { get; set; }
 
         public BinaryExpr(IExpression left, Token op, IExpression right)
         {

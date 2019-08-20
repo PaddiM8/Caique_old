@@ -7,12 +7,12 @@ namespace Caique.Statements
 {
     class FunctionStmt : IStatement
     {
-        public BaseType           ReturnType { get; }
+        public DataType           ReturnType { get; }
         public Token              Name       { get; }
         public List<Argument>     Arguments  { get; }
         public BlockStmt          Block      { get; }
 
-        public FunctionStmt(BaseType returnType, Token name, List<Argument> arguments, BlockStmt block)
+        public FunctionStmt(DataType returnType, Token name, List<Argument> arguments, BlockStmt block)
         {
             this.ReturnType = returnType;
             this.Name = name;

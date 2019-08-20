@@ -6,12 +6,12 @@ namespace Caique.Statements
 {
     struct Argument
     {
-        public BaseType Type { get; }
+        public DataType DataType { get; }
         public Token    Name { get; }
 
-        public Argument(BaseType type, Token name)
+        public Argument(DataType dataType, Token name)
         {
-            this.Type = type;
+            this.DataType = dataType;
             this.Name = name;
         }
     }

@@ -7,7 +7,7 @@ namespace Caique.Expressions
     interface IExpression
     {
         BaseType Cast     { get; set; }
-        BaseType BaseType { get; set; }
+        DataType DataType { get; set; }
         T Accept<T>(IExpressionVisitor<T> expr);
     }
 }
