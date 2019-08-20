@@ -68,25 +68,38 @@ namespace Caique.CodeGen
 
         public object Visit(VarDeclarationStmt stmt)
         {
-            LLVMTypeRef type = stmt.DataType.ToLLVMType();
+            LLVMTypeRef type = stmt.BaseType.ToLLVMType();
+            LLVMValueRef alloca;
 
             // If not null or empty
             if (stmt.ArraySizes != null && stmt.ArraySizes.Count > 0)
             {
-                foreach (var size in stmt.ArraySizes)
-                {
+                //foreach (var size in stmt.ArraySizes)
+                //{
                     //type = LLVM.Array(type, size.Accept(this));
+                    alloca = LLVM.BuildArrayAlloca(_builder, type, stmt.ArraySizes[0].Accept(this), stmt.Identifier.Lexeme);
+                //}
+
+                if (stmt.Value != null)
+                {
+                    LLVMValueRef initializer = stmt.Value.Accept(this);
+                    LLVM.BuildStore(_builder, initializer, alloca);
                 }
-            }
 
-            var alloca = LLVM.BuildAlloca(_builder, type, stmt.Identifier.Lexeme); // Allocate variable
-            if (stmt.Value != null)
+                _namedValues.Add(stmt.Identifier.Lexeme, alloca); // Add to dictionary
+            }
+            else
             {
-                LLVMValueRef initializer = stmt.Value.Accept(this);
-                LLVM.BuildStore(_builder, initializer, alloca);
-            }
+                alloca = LLVM.BuildAlloca(_builder, type, stmt.Identifier.Lexeme); // Allocate variable
 
-            _namedValues.Add(stmt.Identifier.Lexeme, alloca); // Add to dictionary
+                if (stmt.Value != null)
+                {
+                    LLVMValueRef initializer = stmt.Value.Accept(this);
+                    LLVM.BuildStore(_builder, initializer, alloca);
+                }
+
+                _namedValues.Add(stmt.Identifier.Lexeme, alloca); // Add to dictionary
+            }
 
             return null;
         }
@@ -203,7 +216,7 @@ namespace Caique.CodeGen
         {
             LLVMValueRef left = expr.Left.Accept(this);
             LLVMValueRef right = expr.Right.Accept(this);
-            LLVMValueRef value = _llvmHelper.BuildBinary(left, expr.Operator.Type, right, expr.DataType);
+            LLVMValueRef value = _llvmHelper.BuildBinary(left, expr.Operator.Type, right, expr.BaseType);
             value = CastIfNeeded(value, expr.Cast);
 
             return value;
@@ -213,30 +226,30 @@ namespace Caique.CodeGen
         public LLVMValueRef Visit(LiteralExpr expr)
         {
             string literal = (string)expr.Value.Literal;
-            var dataType = expr.DataType;
+            var baseType = expr.BaseType;
             LLVMValueRef llvmValue;
 
-            if (dataType.IsInt() || dataType.IsBool())
+            if (baseType.IsInt() || baseType.IsBool())
             {
                 ulong longValue = ulong.Parse(literal);
                 var isSigned = longValue < 0 ? LLVMBoolFalse : LLVMBoolTrue;
-                llvmValue = LLVM.ConstInt(dataType.ToLLVMType(), longValue, isSigned);
+                llvmValue = LLVM.ConstInt(baseType.ToLLVMType(), longValue, isSigned);
             }
-            else if (dataType.IsFloat())
+            else if (baseType.IsFloat())
             {
-                llvmValue = LLVM.ConstReal(dataType.ToLLVMType(), double.Parse(literal));
+                llvmValue = LLVM.ConstReal(baseType.ToLLVMType(), double.Parse(literal));
             }
             else
             {
                 // Other datatypes, just string for now, but will probably become more? Hence the switch.
-                switch (dataType)
+                switch (baseType)
                 {
-                    case DataType.StringConst:
+                    case BaseType.StringConst:
                         var stringConst = LLVM.ConstString(literal, (uint)literal.Length, LLVMBoolTrue);
                         llvmValue = LLVM.BuildGlobalString(_builder, literal, ".str");
                         break;
                     default:
-                        throw new Exception($"Unknown datatype '{dataType.ToString()}'.");
+                        throw new Exception($"Unknown datatype '{baseType.ToString()}'.");
                 }
             }
 
@@ -297,7 +310,7 @@ namespace Caique.CodeGen
                 LLVMValueRef paramValue = paramExpr.Accept(this);
                 callParams[i] = paramValue;
 
-                if (expr.Parameters[i].Cast != DataType.Unknown)
+                if (expr.Parameters[i].Cast != BaseType.Unknown)
                 {
                     var cast = LLVM.BuildIntCast(_builder, paramValue,
                             expr.Parameters[i].Cast.ToLLVMType(), "callcasttmp");
@@ -312,12 +325,12 @@ namespace Caique.CodeGen
         /// <summary>
         /// Return LLVMValueRef with cast if it is supposed to get one, otherwise just return the original value.
         /// </summary>
-        private LLVMValueRef CastIfNeeded(LLVMValueRef value, DataType cast)
+        private LLVMValueRef CastIfNeeded(LLVMValueRef value, BaseType cast)
         {
-            if (cast != DataType.Unknown)
+            if (cast != BaseType.Unknown)
             {
                 LLVMTypeRef castAsLLVM = cast.ToLLVMType();
-                if (cast == DataType.String || cast.IsInt())
+                if (cast == BaseType.String || cast.IsInt())
                 {
                     return LLVM.BuildIntCast(_builder, value, castAsLLVM, "intCast");
                 }

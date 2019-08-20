@@ -12,11 +12,11 @@ namespace Caique.Parsing
     {
         public delegate IExpression ArithmeticFunction();
         // functionName: returnType, parameterTypes...
-        public Dictionary<string, DataType[]> Functions =
-            new Dictionary<string, DataType[]>()
+        public Dictionary<string, BaseType[]> Functions =
+            new Dictionary<string, BaseType[]>()
         {
-            { "printf", new DataType[] { DataType.Void, DataType.String, DataType.Variadic } },
-            { "scanf", new DataType[] { DataType.Void, DataType.String, DataType.Variadic } },
+            { "printf", new BaseType[] { BaseType.Void, BaseType.String, BaseType.Variadic } },
+            { "scanf", new BaseType[] { BaseType.Void, BaseType.String, BaseType.Variadic } },
         };
 
         private List<Token> _tokens { get; }
@@ -57,7 +57,7 @@ namespace Caique.Parsing
 
         public IStatement VarDeclaration()
         {
-            DataType dataType = Previous().DataType;
+            BaseType baseType = Previous().BaseType;
 
             // If array
             List<IExpression> arraySizes = null;
@@ -81,12 +81,12 @@ namespace Caique.Parsing
                 IExpression expr = Expression();
                 Consume(TokenType.Semicolon, "Expected ';' after expression.");
 
-                return new VarDeclarationStmt(dataType, identifier, arraySizes, expr);
+                return new VarDeclarationStmt(baseType, identifier, arraySizes, expr);
             }
 
             Consume(TokenType.Semicolon, "Expected ';' after expression.");
 
-            return new VarDeclarationStmt(dataType, identifier, arraySizes);
+            return new VarDeclarationStmt(baseType, identifier, arraySizes);
         }
 
         public IStatement Assignment()
@@ -101,7 +101,7 @@ namespace Caique.Parsing
 
         public IStatement Function()
         {
-            DataType returnType = Consume(TokenType.VariableType, "Expected type after 'fn'").DataType;
+            BaseType returnType = Consume(TokenType.VariableType, "Expected type after 'fn'").BaseType;
             Token name = Consume(TokenType.Identifier, "Expected function name.");
             Consume(TokenType.LeftParen, "Expected '(' after function name");
 
@@ -114,11 +114,11 @@ namespace Caique.Parsing
                 Consume(TokenType.Comma, "Expected ',' after argument name.");
             }
 
-            // Fill DataType array
-            var dataTypes = new DataType[arguments.Count + 1];
-            dataTypes[0] = returnType;
-            for (int i = 0; i < arguments.Count; i++) dataTypes[i+1] = arguments[i].Type;
-            Functions[name.Lexeme] = dataTypes;
+            // Fill BaseType array
+            var baseTypes = new BaseType[arguments.Count + 1];
+            baseTypes[0] = returnType;
+            for (int i = 0; i < arguments.Count; i++) baseTypes[i+1] = arguments[i].Type;
+            Functions[name.Lexeme] = baseTypes;
 
             Consume(TokenType.LeftBrace, "Expected block after function declaration.");
             BlockStmt block = (BlockStmt)Block();
@@ -128,7 +128,7 @@ namespace Caique.Parsing
 
         public Argument Argument()
         {
-            DataType type = Consume(TokenType.VariableType, "Expected type.").DataType;
+            BaseType type = Consume(TokenType.VariableType, "Expected type.").BaseType;
             Token name = Consume(TokenType.Identifier, "Expected argument name.");
 
             return new Argument(type, name);

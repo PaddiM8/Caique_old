@@ -46,22 +46,22 @@ namespace Caique.Scanning
             { "count",     TokenType.Count        },
         };
 
-        private static Dictionary<string, DataType> _dataTypes =
-            new Dictionary<string, DataType>()
+        private static Dictionary<string, BaseType> _baseTypes =
+            new Dictionary<string, BaseType>()
         {
-            { "string", DataType.String   },
-            { "i1",     DataType.Int1     },
-            { "i8",     DataType.Int8     },
-            { "i16",    DataType.Int16    },
-            { "i32",    DataType.Int32    },
-            { "i64",    DataType.Int64    },
-            { "i128",   DataType.Int128   },
-            { "f16",    DataType.Float16  },
-            { "f32",    DataType.Float32  },
-            { "f64",    DataType.Float64  },
-            { "f80",    DataType.Float80  },
-            { "f128",   DataType.Float128 },
-            { "bool",   DataType.Boolean  },
+            { "string", BaseType.String   },
+            { "i1",     BaseType.Int1     },
+            { "i8",     BaseType.Int8     },
+            { "i16",    BaseType.Int16    },
+            { "i32",    BaseType.Int32    },
+            { "i64",    BaseType.Int64    },
+            { "i128",   BaseType.Int128   },
+            { "f16",    BaseType.Float16  },
+            { "f32",    BaseType.Float32  },
+            { "f64",    BaseType.Float64  },
+            { "f80",    BaseType.Float80  },
+            { "f128",   BaseType.Float128 },
+            { "bool",   BaseType.Boolean  },
         };
 
         public Lexer(string source)
@@ -143,7 +143,7 @@ namespace Caique.Scanning
 
                 // Literals
                 case '\"':
-                    AddToken(TokenType.String, GetStringLiteral(), DataType.StringConst);
+                    AddToken(TokenType.String, GetStringLiteral(), BaseType.StringConst);
                     break;
 
                 default:
@@ -154,8 +154,8 @@ namespace Caique.Scanning
                     else if (IsAlpha(c))
                     {
                         TokenType type = GetIdentifier();
-                        if (type == TokenType.True) AddToken(type, "1", DataType.True);
-                        else if (type == TokenType.False) AddToken(type, "0", DataType.True);
+                        if (type == TokenType.True) AddToken(type, "1", BaseType.True);
+                        else if (type == TokenType.False) AddToken(type, "0", BaseType.True);
                         else AddToken(type);
                     }
                     else
@@ -214,15 +214,15 @@ namespace Caique.Scanning
             if (Peek() == 'f')
             {
                 Advance();
-                AddToken(TokenType.Number, numberString, DataType.Float32);
+                AddToken(TokenType.Number, numberString, BaseType.Float32);
             }
             else if (hasDot)
             {
-                AddToken(TokenType.Number, numberString, DataType.Float64);
+                AddToken(TokenType.Number, numberString, BaseType.Float64);
             }
             else
             {
-                AddToken(TokenType.Number, numberString, DataType.Int32); // Should be adjusted when code is generated.
+                AddToken(TokenType.Number, numberString, BaseType.Int32); // Should be adjusted when code is generated.
             }
         }
 
@@ -298,16 +298,16 @@ namespace Caique.Scanning
         /// <summary>
         /// Add a new token to the token list (with value)
         /// </summary>
-        private void AddToken(TokenType type, dynamic literal, DataType? dataType = null)
+        private void AddToken(TokenType type, dynamic literal, BaseType? baseType = null)
         {
             string text = _source.Substring(_start, _current - _start);
             if (type == TokenType.VariableType)
             {
-                dataType = _dataTypes[text];
+                baseType = _baseTypes[text];
             }
 
             if (type == TokenType.True && literal == null) throw new Exception("Börk.");
-            _tokens.Add(new Token(type, text, _position, literal, dataType));
+            _tokens.Add(new Token(type, text, _position, literal, baseType));
         }
 
         /// <summary>

@@ -7,8 +7,8 @@ namespace Caique.Expressions
     class VariableExpr : IExpression
     {
         public Token    Name          { get; }
-        public DataType Cast          { get; set; }
-        public DataType DataType      { get; set; }
+        public BaseType Cast          { get; set; }
+        public BaseType BaseType      { get; set; }
         public bool     IsArgumentVar { get; set; }
 
         public VariableExpr(Token name)

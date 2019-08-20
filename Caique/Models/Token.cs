@@ -13,16 +13,16 @@ namespace Caique.Models
         [JsonIgnore]
         public Pos          Position    { get; }
         public object       Literal     { get; set; }
-        public DataType     DataType    { get; set; }
-        //public DataType     Cast        { get; set; }
+        public BaseType     BaseType    { get; set; }
+        //public BaseType     Cast        { get; set; }
 
-        public Token(TokenType type, string lexeme, Pos? position = null, object literal = null, DataType? dataType = null)
+        public Token(TokenType type, string lexeme, Pos? position = null, object literal = null, BaseType? baseType = null)
         {
             this.Type = type;
             this.Lexeme = lexeme;
             if (position != null) this.Position = (Pos)position;
             this.Literal = literal;
-            if (dataType != null) this.DataType = (DataType)dataType;
+            if (baseType != null) this.BaseType = (BaseType)baseType;
         }
     }
 }

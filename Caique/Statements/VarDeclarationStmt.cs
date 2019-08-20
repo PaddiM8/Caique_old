@@ -7,14 +7,14 @@ namespace Caique.Statements
 {
     class VarDeclarationStmt : IStatement
     {
-        public DataType          DataType   { get; }
+        public BaseType          BaseType   { get; }
         public Token             Identifier { get; }
         public List<IExpression> ArraySizes { get; }
         public IExpression       Value      { get; }
 
-        public VarDeclarationStmt(DataType dataType, Token identifier, List<IExpression> arraySizes, IExpression value = null)
+        public VarDeclarationStmt(BaseType baseType, Token identifier, List<IExpression> arraySizes, IExpression value = null)
         {
-            this.DataType = dataType;
+            this.BaseType = baseType;
             this.Identifier = identifier;
             this.ArraySizes = arraySizes;
             if (value != null) this.Value = value;

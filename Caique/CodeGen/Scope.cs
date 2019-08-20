@@ -10,8 +10,8 @@ namespace Caique.CodeGen
     {
         public Scope Parent { get; set; }
         public bool HasParent { get; }
-        private readonly Dictionary<string, Tuple<DataType, bool>> Values
-            = new Dictionary<string, Tuple<DataType, bool>>();
+        private readonly Dictionary<string, Tuple<BaseType, bool>> Values
+            = new Dictionary<string, Tuple<BaseType, bool>>();
 
         /*public Scope(Scope parent)
         {
@@ -31,14 +31,14 @@ namespace Caique.CodeGen
             return newScope;
         }
 
-        public void Define(string name, DataType dataType, bool isArgumentVar)
+        public void Define(string name, BaseType baseType, bool isArgumentVar)
         {
-            Values.Add(name, new Tuple<DataType, bool>(dataType, isArgumentVar));
+            Values.Add(name, new Tuple<BaseType, bool>(baseType, isArgumentVar));
         }
 
-        public Tuple<DataType, bool> Get(string name)
+        public Tuple<BaseType, bool> Get(string name)
         {
-            Tuple<DataType, bool> value;
+            Tuple<BaseType, bool> value;
             if (!Values.TryGetValue(name, out value))
             {
                 if (HasParent)
@@ -48,7 +48,7 @@ namespace Caique.CodeGen
                 else
                 {
                     Reporter.Error(new Pos(0, 0), $"Variable '{name}' is not defined.");
-                    value = new Tuple<DataType, bool>(DataType.Unknown, false);
+                    value = new Tuple<BaseType, bool>(BaseType.Unknown, false);
                 }
             }
 

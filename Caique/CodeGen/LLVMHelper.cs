@@ -16,25 +16,25 @@ namespace Caique.CodeGen
             this._builder = builder;
         }
 
-        public LLVMValueRef BuildBinary(LLVMValueRef leftVal, TokenType operatorType, LLVMValueRef rightVal, DataType dataType)
+        public LLVMValueRef BuildBinary(LLVMValueRef leftVal, TokenType operatorType, LLVMValueRef rightVal, BaseType baseType)
         {
             BuildFunc buildFunc;
-            if (dataType.IsInt() || dataType == DataType.Boolean)
+            if (baseType.IsInt() || baseType == BaseType.Boolean)
             {
                 if      (operatorType.IsArithmeticOperator())  buildFunc = BuildArithmetic;
                 else if (operatorType.IsComparisonOperator())  buildFunc = BuildComparison;
                 else if (operatorType.IsConjunctionOperator()) buildFunc = BuildConjunction;
-                else throw new Exception($"Unexpected data type {dataType}.");
+                else throw new Exception($"Unexpected data type {baseType}.");
             }
-            else if (dataType.IsFloat())
+            else if (baseType.IsFloat())
             {
                 if      (operatorType.IsArithmeticOperator()) buildFunc = BuildFArithmetic;
                 else if (operatorType.IsComparisonOperator()) buildFunc = BuildFComparison;
-                else throw new Exception($"Unexpected data type {dataType}.");
+                else throw new Exception($"Unexpected data type {baseType}.");
             }
             else
             {
-                throw new Exception($"Unexpected data type {dataType}.");
+                throw new Exception($"Unexpected data type {baseType}.");
             }
 
             return buildFunc(leftVal, operatorType, rightVal);

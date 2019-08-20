@@ -8,8 +8,8 @@ namespace Caique.Expressions
     {
         public Token       Operator   { get; }
         public IExpression Expression { get; }
-        public DataType    DataType   { get; set; }
-        public DataType    Cast       { get; set; }
+        public BaseType    BaseType   { get; set; }
+        public BaseType    Cast       { get; set; }
 
         public UnaryExpr(Token op, IExpression expression)
         {

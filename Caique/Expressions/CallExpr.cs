@@ -8,8 +8,8 @@ namespace Caique.Expressions
     {
         public Token             Name       { get; }
         public List<IExpression> Parameters { get; }
-        public DataType          Cast       { get; set; }
-        public DataType          DataType   { get; set; }
+        public BaseType          Cast       { get; set; }
+        public BaseType          BaseType   { get; set; }
 
         public CallExpr(Token name, List<IExpression> parameters)
         {
