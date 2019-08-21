@@ -47,9 +47,15 @@ namespace Caique.Parsing
             if (Match(TokenType.Return))       return Return();
             if (Match(TokenType.If))           return If();
 
-            if (Check(TokenType.Identifier) && CheckNext(TokenType.Equal))
+            if (Check(TokenType.Identifier))
             {
-                return Assignment();
+                // If the current statement has '=', it's an AssignmentStmt
+                for (int i = _current; i < _tokens.Count; i++)
+                {
+                    TokenType type = _tokens[i].Type;
+                    if (type == TokenType.Equal) return Assignment();
+                    else if (type == TokenType.Semicolon) break;
+                }
             }
 
             return ExpressionStatement();
@@ -76,11 +82,18 @@ namespace Caique.Parsing
         public IStatement Assignment()
         {
             Token identifier = Consume(TokenType.Identifier, ""); // It is an identifier since it made it through the if statement
-            Advance(); // Equal sign
+
+            List<IExpression> arrayIndexes = null;
+            if (Match(TokenType.LeftAngle))
+            {
+                arrayIndexes = Indexes();
+            }
+
+            Consume(TokenType.Equal, "Expected equal sign.");
             IExpression expr = Expression();
             Consume(TokenType.Semicolon, "Expected ';' after expression.");
 
-            return new AssignmentStmt(identifier, expr);
+            return new AssignmentStmt(identifier, expr, arrayIndexes);
         }
 
         public IStatement Function()
@@ -296,11 +309,32 @@ namespace Caique.Parsing
                 }
                 else // Variable expression
                 {
-                    return new VariableExpr(identifier);
+                    List<IExpression> arrayIndexes = null;
+                    if (Match(TokenType.LeftAngle))
+                    {
+                        arrayIndexes = Indexes();
+                    }
+
+                    return new VariableExpr(identifier, arrayIndexes);
                 }
             }
 
-            throw Error($"Unexpected token '{Peek().DataType}'.");
+            throw Error($"Unexpected token '{Peek().Type}'.");
+        }
+
+        public List<IExpression> Indexes()
+        {
+            var arraySizes = new List<IExpression>();
+            while (true) // Will break if a RightAngle is matched.
+            {
+                arraySizes.Add(Expression());
+                if (Match(TokenType.RightAngle)) break;
+                Consume(TokenType.Comma, "Expected comma.");
+            }
+
+            if (arraySizes.Count == 0) Reporter.Error(Previous().Position, "Expected array size specifier.");
+
+            return arraySizes;
         }
 
         public Tuple<DataType, List<IExpression>> DeclarationType()
@@ -310,18 +344,11 @@ namespace Caique.Parsing
 
             // If array
             List<IExpression> arraySizes = null;
-            if (Match(TokenType.LeftAngle))
-            { 
-                arraySizes = new List<IExpression>();
-                while (true) // Will break if a RightAngle is matched.
-                {
-                    arraySizes.Add(Expression());
-                    if (Match(TokenType.RightAngle)) break;
-                    Consume(TokenType.Comma, "Expected comma.");
-                }
 
+            if (Match(TokenType.LeftAngle))
+            {
+                arraySizes = Indexes();
                 dataType.ArrayDepth = arraySizes.Count; // Set array depth(how many dimensions, if any) to the amount of specified array sizes.
-                if (arraySizes.Count == 0) Reporter.Error(Previous().Position, "Expected array size specifier.");
             }
 
             return new Tuple<DataType, List<IExpression>>(dataType, arraySizes);

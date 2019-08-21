@@ -6,8 +6,8 @@ namespace Caique.Models
 {
     struct DataType
     {
-        public BaseType BaseType;
-        public int      ArrayDepth; // How many dimensions an array has, 0 means it isn't an array
+        public BaseType BaseType   { get; set; }
+        public int      ArrayDepth { get; set; } // How many dimensions an array has, 0 means it isn't an array
 
         public DataType(BaseType baseType, int arrayDepth = 0)
         {

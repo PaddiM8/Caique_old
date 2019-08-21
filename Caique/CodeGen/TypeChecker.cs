@@ -181,6 +181,8 @@ namespace Caique.CodeGen
             DataType type1 = stmt.Identifier.DataType;
             DataType type2 = stmt.Value.Accept(this);
 
+            type1.ArrayDepth = type1.ArrayDepth - stmt.ArrayIndexes.Count; // Adjust depth after accounting for indexing.
+
             ApplyCastingRuleIfNeeded(stmt.Identifier.Position, type2, type1, stmt.Value);
 
             return null;
@@ -212,7 +214,6 @@ namespace Caique.CodeGen
         public object Visit(ReturnStmt stmt)
         {
             DataType type2 = stmt.Expression.Accept(this);
-            Console.WriteLine(_currentFunctionType);
             ApplyCastingRuleIfNeeded(new Pos(0, 0), type2, _currentFunctionType, stmt.Expression);
 
             return null;
@@ -263,13 +264,15 @@ namespace Caique.CodeGen
 
         public DataType Visit(VariableExpr expr)
         {
-            //Tuple<BaseType, bool> info = _types[expr.Name.Lexeme];
-
             Tuple<DataType, bool> info = _scope.Get(expr.Name.Lexeme);
-            expr.Name.DataType = info.Item1;
+            DataType dataType = info.Item1;
+
+            dataType.ArrayDepth = dataType.ArrayDepth - expr.ArrayIndexes.Count; // Adjust depth after accounting for indexing.
+            expr.Name.DataType = dataType;
             expr.IsArgumentVar = info.Item2;
 
             expr.DataType = expr.Name.DataType;
+
             return expr.Name.DataType;
         }
 
