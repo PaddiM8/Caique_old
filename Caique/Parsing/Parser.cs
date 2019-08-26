@@ -83,11 +83,7 @@ namespace Caique.Parsing
         {
             Token identifier = Consume(TokenType.Identifier, ""); // It is an identifier since it made it through the if statement
 
-            List<IExpression> arrayIndexes = null;
-            if (Match(TokenType.LeftAngle))
-            {
-                arrayIndexes = Indexes();
-            }
+            List<IExpression> arrayIndexes = Indexes();
 
             Consume(TokenType.Equal, "Expected equal sign.");
             IExpression expr = Expression();
@@ -125,7 +121,7 @@ namespace Caique.Parsing
 
         public Argument Argument()
         {
-            DataType type = Consume(TokenType.VariableType, "Expected type.").DataType;
+            DataType type = Type();
             Token name = Consume(TokenType.Identifier, "Expected argument name.");
 
             return new Argument(type, name);
@@ -281,15 +277,17 @@ namespace Caique.Parsing
         {
             if (Match(TokenType.Number, TokenType.True, TokenType.False, TokenType.String)) // Literal
             {
-                return new LiteralExpr(Previous());
+                return new LiteralExpr(Previous(), Indexes());
             }
-            else if (Match(TokenType.LeftParen)) // Group
+
+            if (Match(TokenType.LeftParen)) // Group
             {
                 IExpression expr = Expression();
                 Consume(TokenType.RightParen, "Expected ')' after expression.");
-                return new GroupExpr(expr);
+                return new GroupExpr(expr, Indexes());
             }
-            else if (Match(TokenType.Identifier))
+
+            if (Match(TokenType.Identifier))
             {
                 Token identifier = Previous();
 
@@ -305,18 +303,11 @@ namespace Caique.Parsing
                         Consume(TokenType.Comma, "Expected ')' after expression.");
                     }
 
-                    return new CallExpr(name, parameters);
+                    return new CallExpr(name, parameters, Indexes());
                 }
-                else // Variable expression
-                {
-                    List<IExpression> arrayIndexes = null;
-                    if (Match(TokenType.LeftAngle))
-                    {
-                        arrayIndexes = Indexes();
-                    }
 
-                    return new VariableExpr(identifier, arrayIndexes);
-                }
+                // Variable expression
+                return new VariableExpr(identifier, Indexes());
             }
 
             throw Error($"Unexpected token '{Peek().Type}'.");
@@ -324,6 +315,8 @@ namespace Caique.Parsing
 
         public List<IExpression> Indexes()
         {
+            if (!Match(TokenType.LeftAngle)) return null;
+
             var arraySizes = new List<IExpression>();
             while (true) // Will break if a RightAngle is matched.
             {
@@ -342,16 +335,11 @@ namespace Caique.Parsing
             BaseType baseType = Keywords.BaseTypes[Previous().Lexeme];
             DataType dataType = new DataType(baseType, 0);
 
-            // If array
-            List<IExpression> arraySizes = null;
+            // Arrays
+            List<IExpression> sizes = Indexes();
+            dataType.ArrayDepth = sizes.Count; // Set array depth(how many dimensions, if any) to the amount of specified array sizes.
 
-            if (Match(TokenType.LeftAngle))
-            {
-                arraySizes = Indexes();
-                dataType.ArrayDepth = arraySizes.Count; // Set array depth(how many dimensions, if any) to the amount of specified array sizes.
-            }
-
-            return new Tuple<DataType, List<IExpression>>(dataType, arraySizes);
+            return new Tuple<DataType, List<IExpression>>(dataType, sizes);
         }
 
         public DataType Type()

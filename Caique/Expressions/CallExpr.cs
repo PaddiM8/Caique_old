@@ -6,15 +6,17 @@ namespace Caique.Expressions
 {
     class CallExpr : IExpression
     {
-        public Token             Name       { get; }
-        public List<IExpression> Parameters { get; }
-        public BaseType          Cast       { get; set; }
-        public DataType          DataType   { get; set; }
+        public Token             Name         { get; }
+        public List<IExpression> Parameters   { get; }
+        public BaseType          Cast         { get; set; }
+        public DataType          DataType     { get; set; }
+        public List<IExpression> ArrayIndexes { get; }
 
-        public CallExpr(Token name, List<IExpression> parameters)
+        public CallExpr(Token name, List<IExpression> parameters, List<IExpression> arrayIndexes)
         {
             this.Name = name;
             this.Parameters = parameters;
+            this.ArrayIndexes = arrayIndexes;
         }
 
         public T Accept<T>(IExpressionVisitor<T> expr)

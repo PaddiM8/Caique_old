@@ -5,18 +5,20 @@ statement      -> expressionStmt
                 | assignmentStmt
                 | functionStmt
                 | blockStmt
-                | returnStmt ;
+                | returnStmt
+                | ifStmt ;
 
-varDeclarationStmt -> TYPE IDENTIFIER ( "=" expression )? ";" ;
+varDeclarationStmt -> decl_type IDENTIFIER ( "=" expression )? ";" ;
 expressionStmt     -> expression ";" ;
-assignmentStmt     -> IDENTIFIER "=" expression ";" ;
+assignmentStmt     -> IDENTIFIER array_index? "=" expression ";" ;
 functionStmt       -> "fn" TYPE IDENTIFIER "(" ( ( argument "," )* argument )* ")" blockStmt ;
 blockStmt          -> "{" statement* "}" ;
 returnStmt         -> "return" expression ";" ;
+ifStmt             -> "if" expression statement ( "else" statement )* ;
 
-argumentStmt -> TYPE IDENTIFIER ;
+argumentStmt -> type IDENTIFIER ;
 
-expression -> equality
+expression -> logical_or ;
 
 logical_or     -> logical_and ( "||" logical_and )* ;
 logical_and    -> equality ( "&&" equality )* ;
@@ -25,14 +27,32 @@ comparison     -> addition ( ">" | ">=" | "<" | "<=") addition )* ;
 addition       -> multiplication ( ( "+" | "-" ) multiplication )* ;
 multiplication -> primary ( ( "*" | "/" ) primary )* ;
 unary          -> ( "!" | "-" )?  primary;
-primary        -> NUMBER | STRING | "true" | "false"
+primary        -> ( NUMBER | STRING | "true" | "false"
                 | "(" expression ")"
-                | variableExpr | callExpr ;
+                | variableExpr | callExpr ) array_index ;
 
-variableExpr -> IDENTIFIER;
+variableExpr -> IDENTIFIER ;
 callExpr     -> IDENTIFIER "(" ( ( expression "," )* expression )* ")" ;
 
 NUMBER
 STRING
 IDENTIFIER
-TYPE -> ( "string" | "int" | "double" | "bool" ) ;
+type      -> base_type array_specifier? ;
+decl_type -> base_type array_decl? ;
+base_type -> "string"
+           | "i1"
+           | "i8"
+           | "i16"
+           | "i32"
+           | "i64"
+           | "i128"
+           | "f16"
+           | "f32"
+           | "f64"
+           | "f80"
+           | "f128"
+           | "bool"
+           | "void" ;
+array_specifier -> "[" ","* "]" ;
+array_decl      -> "[" ( ( expression "," )* expression )? "]";
+array_index     -> "[" ( ( expression "," )* expression )? "]";

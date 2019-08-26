@@ -1,0 +1,3 @@
+STATUS:
+"Primary" expressions now all have an 'ArrayIndexes' field,
+these need to be type-checked and codegenerated.

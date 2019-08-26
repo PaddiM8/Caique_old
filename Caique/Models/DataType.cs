@@ -19,7 +19,8 @@ namespace Caique.Models
         {
             if (ArrayDepth > 0)
             {
-                return BaseType.ToString() + "[" + string.Concat(Enumerable.Repeat(",", ArrayDepth - 1)) + "]";
+                return BaseType.ToString() + "[" +
+                    string.Concat(Enumerable.Repeat(",", ArrayDepth - 1)) + "]";
             }
             else
             {

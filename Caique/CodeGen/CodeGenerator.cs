@@ -14,17 +14,17 @@ namespace Caique.CodeGen
     {
 
         // Classes
-        private LLVMModuleRef _module { get; }
-        private LLVMBuilderRef _builder { get; }
-        private LLVMHelper _llvmHelper { get; }
+        private LLVMModuleRef  _module     { get; }
+        private LLVMBuilderRef _builder    { get; }
+        private LLVMHelper     _llvmHelper { get; }
 
         // LLVMBool
         private static readonly LLVMBool LLVMBoolFalse = new LLVMBool(0);
-        private static readonly LLVMBool LLVMBoolTrue = new LLVMBool(1);
+        private static readonly LLVMBool LLVMBoolTrue  = new LLVMBool(1);
 
         // Data structures
-        private readonly Dictionary<string, LLVMValueRef> _namedValues
-            = new Dictionary<string, LLVMValueRef>();
+        private readonly Dictionary<string, NamedValue> _namedValues
+            = new Dictionary<string, NamedValue>();
         private readonly Stack<Tuple<LLVMValueRef, BlockStmt>> _valueStack
             = new Stack<Tuple<LLVMValueRef, BlockStmt>>();
         private List<IStatement> _statements { get; }
@@ -71,34 +71,51 @@ namespace Caique.CodeGen
             LLVMTypeRef type = stmt.DataType.BaseType.ToLLVMType();
             LLVMValueRef alloca;
 
-            // If not null or empty
+            // If not null or empty, meaning it is an array
             if (stmt.ArraySizes != null && stmt.ArraySizes.Count > 0)
             {
-                //foreach (var size in stmt.ArraySizes)
-                //{
-                    //type = LLVM.Array(type, size.Accept(this));
-                    alloca = LLVM.BuildArrayAlloca(_builder, type, stmt.ArraySizes[0].Accept(this), stmt.Identifier.Lexeme);
-                //}
-
-                if (stmt.Value != null)
+                // Generate code for each size expression
+                LLVMValueRef[] sizeValueRefs = new LLVMValueRef[stmt.ArraySizes.Count];
+                for (int k = 0; k < sizeValueRefs.Length; k++)
                 {
-                    LLVMValueRef initializer = stmt.Value.Accept(this);
-                    LLVM.BuildStore(_builder, initializer, alloca);
+                    sizeValueRefs[k] = stmt.ArraySizes[k].Accept(this);
                 }
 
-                _namedValues.Add(stmt.Identifier.Lexeme, alloca); // Add to dictionary
+                LLVMValueRef size = sizeValueRefs[0];
+                for (int i = 1; i < stmt.ArraySizes.Count; i++)
+                {
+                    size = LLVM.BuildMul(_builder, size, sizeValueRefs[i], "multmp");
+                }
+
+                // Allocate some extra space to specify the array length(s).
+                size = LLVM.BuildAdd(_builder, size,
+                                     LLVM.ConstInt(LLVM.Int32Type(), (ulong)stmt.ArraySizes.Count,
+                                     LLVMBoolFalse), "addtmp");
+                alloca = LLVM.BuildArrayAlloca(_builder, type, size, stmt.Identifier.Lexeme);
+
+                // Store array length(s) at the start of the array.
+                for (int j = 0; j < sizeValueRefs.Length; j++)
+                {
+                    var indices = new LLVMValueRef[]
+                    {
+                        LLVM.ConstInt(LLVM.Int32Type(), (ulong)j, LLVMBoolFalse)
+                    };
+                    LLVMValueRef gep = LLVM.BuildGEP(_builder, alloca, indices, "geptmp");
+                    LLVM.BuildStore(_builder, sizeValueRefs[j], gep);
+                }
             }
             else
             {
                 alloca = LLVM.BuildAlloca(_builder, type, stmt.Identifier.Lexeme); // Allocate variable
+            }
 
-                if (stmt.Value != null)
-                {
-                    LLVMValueRef initializer = stmt.Value.Accept(this);
-                    LLVM.BuildStore(_builder, initializer, alloca);
-                }
+            _namedValues.Add(stmt.Identifier.Lexeme,
+                    new NamedValue(alloca, stmt.ArraySizes.Count)); // Add to dictionary
 
-                _namedValues.Add(stmt.Identifier.Lexeme, alloca); // Add to dictionary
+            if (stmt.Value != null)
+            {
+                LLVMValueRef initializer = stmt.Value.Accept(this);
+                LLVM.BuildStore(_builder, initializer, alloca);
             }
 
             return null;
@@ -108,10 +125,20 @@ namespace Caique.CodeGen
         {
             LLVMValueRef value = stmt.Value.Accept(this); // Get value after '='
 
-            LLVMValueRef varRef;
-            if (_namedValues.TryGetValue(stmt.Identifier.Lexeme, out varRef)) // Get variable reference
+            NamedValue namedValue;
+            if (_namedValues.TryGetValue(stmt.Identifier.Lexeme, out namedValue)) // Get variable reference
             {
-                LLVM.BuildStore(_builder, value, varRef); // Build assignment
+                LLVMValueRef varRef = namedValue.ValueRef;
+                if (stmt.ArrayIndexes.Count > 0) // If array
+                {
+                    //var indices = new LLVMValueRef[]
+                    //{
+                    varRef = GetArrayItem(varRef, namedValue.ArrayDepth, stmt.ArrayIndexes);
+                    //};
+                    //varRef = LLVM.BuildGEP(_builder, varRef, indices, "geptmp");
+                }
+
+                LLVM.BuildStore(_builder, value, varRef);
             }
             else
             {
@@ -142,11 +169,10 @@ namespace Caique.CodeGen
                 LLVMValueRef param = LLVM.GetParam(function, (uint)k);
                 LLVM.SetValueName(param, argumentName);
 
-                _namedValues[argumentName] = param;
+                _namedValues[argumentName] = new NamedValue(param);
             }
 
             _valueStack.Push(new Tuple<LLVMValueRef, BlockStmt>(function, stmt.Block));
-            //stmt.Block.Accept(this); // Code block after function
 
             return null;
         }
@@ -260,16 +286,25 @@ namespace Caique.CodeGen
 
         public LLVMValueRef Visit(VariableExpr expr)
         {
-            LLVMValueRef value = _namedValues[expr.Name.Lexeme];
+            NamedValue namedValue = _namedValues[expr.Name.Lexeme];
+            LLVMValueRef valueRef = namedValue.ValueRef;
+
+            if (expr.ArrayIndexes != null && expr.ArrayIndexes.Count > 0)
+            {
+                //var indices = new LLVMValueRef[] {
+                valueRef = GetArrayItem(valueRef, namedValue.ArrayDepth, expr.ArrayIndexes);
+                //};
+                //valueRef = LLVM.BuildGEP(_builder, valueRef, indices, "geptmp");
+            }
 
             if (!expr.IsArgumentVar)
             {
-                value = LLVM.BuildLoad(_builder, value, "l" + expr.Name.Lexeme);
+                valueRef = LLVM.BuildLoad(_builder, valueRef, "l" + expr.Name.Lexeme);
             }
 
-            value = CastIfNeeded(value, expr.Cast);
+            valueRef = CastIfNeeded(valueRef, expr.Cast);
 
-            return value;
+            return valueRef;
         }
 
         public LLVMValueRef Visit(GroupExpr expr)
@@ -319,7 +354,48 @@ namespace Caique.CodeGen
                 }
             }
 
-            return LLVM.BuildCall(_builder, callee, callParams, "calltmp");
+            LLVMValueRef call = LLVM.BuildCall(_builder, callee, callParams, "calltmp");
+            if (expr.ArrayIndexes != null)
+            {
+                call = GetArrayItem(call, expr.DataType.ArrayDepth, expr.ArrayIndexes);
+            }
+
+            return call;
+        }
+
+        /// <summary>
+        /// Get array item from indexes.
+        /// </summary>
+        private LLVMValueRef GetArrayItem(LLVMValueRef array, int arrayDepth, List<IExpression> arrayIndexes)
+        {
+            Stack<LLVMValueRef> arrayLengths = new Stack<LLVMValueRef>();
+            for (int i = 0; i < arrayDepth; i++)
+            {
+                var indices = new LLVMValueRef[]
+                {
+                    LLVM.ConstInt(LLVM.Int32Type(), (ulong)i, LLVMBoolFalse)
+                };
+                LLVMValueRef gep = LLVM.BuildGEP(_builder, array, indices, "geptmp");
+                LLVMValueRef length = LLVM.BuildLoad(_builder, gep, "loadtmp");
+                arrayLengths.Push(length);
+            }
+
+            LLVMValueRef index = arrayIndexes[0].Accept(this);
+            for (int i = 0; i <= arrayIndexes.Count - 1; i++)
+            {
+                LLVMValueRef currentIndex = arrayIndexes[i].Accept(this);
+                LLVMValueRef size = arrayLengths.Pop();
+                var mul = LLVM.BuildMul(_builder, currentIndex, size, "multmp"); // Multiply index with declared size on the opposite end
+
+                index = LLVM.BuildAdd(_builder, index, mul, "addtmp");
+            }
+
+            LLVMValueRef arrayDepthConst = LLVM.ConstInt(LLVM.Int32Type(),
+                                                         (ulong)arrayDepth,
+                                                         LLVMBoolFalse);
+            index = LLVM.BuildAdd(_builder, index, arrayDepthConst, "offsettmp"); // Offset by array depth, since array lengths are loaded in front of the other items
+
+            return LLVM.BuildGEP(_builder, array, new LLVMValueRef[] { index }, "geptmp");
         }
 
         /// <summary>
