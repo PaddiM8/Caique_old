@@ -33,7 +33,8 @@ else                           currentValue = 0;
 **Examples:**  
 ```csharp
 // Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-// sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.```
+// sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+```
 
 9. Properties are sorted it groups of visibility, with a new line separating each group.
 Groups are sorted by their visibility level, eg. public goes first.
