@@ -11,8 +11,8 @@ namespace Caique.Statements
 
         public Argument(DataType dataType, Token name)
         {
-            this.DataType = dataType;
-            this.Name = name;
+            DataType = dataType;
+            Name = name;
         }
     }
 }

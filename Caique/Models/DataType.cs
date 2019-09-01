@@ -11,8 +11,8 @@ namespace Caique.Models
 
         public DataType(BaseType baseType, int arrayDepth = 0)
         {
-            this.BaseType = baseType;
-            this.ArrayDepth = arrayDepth;
+            BaseType = baseType;
+            ArrayDepth = arrayDepth;
         }
 
         public override string ToString()

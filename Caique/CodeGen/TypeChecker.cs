@@ -31,8 +31,8 @@ namespace Caique.CodeGen
 
         public TypeChecker(List<IStatement> statements, Dictionary<string, DataType[]> functions)
         {
-            this._statements = statements;
-            this._functions = functions;
+            _statements = statements;
+            _functions = functions;
         }
 
         public void CheckTypes()
@@ -46,6 +46,7 @@ namespace Caique.CodeGen
         public object Visit(ExpressionStmt stmt)
         {
             stmt.Expression.Accept(this);
+
             return null;
         }
 
@@ -88,12 +89,15 @@ namespace Caique.CodeGen
             DataType type1 = stmt.Identifier.DataType;
             DataType type2 = stmt.Value.Accept(this);
 
-            foreach (IExpression arrIndex in stmt.ArrayIndexes)
+            if (stmt.ArrayIndexes != null)
             {
-                arrIndex.Accept(this);
-            }
+                foreach (IExpression arrIndex in stmt.ArrayIndexes)
+                {
+                    arrIndex.Accept(this);
+                }
 
-            type1.ArrayDepth = type1.ArrayDepth - stmt.ArrayIndexes.Count; // Adjust depth after accounting for indexing.
+                type1.ArrayDepth = type1.ArrayDepth - stmt.ArrayIndexes.Count; // Adjust depth after accounting for indexing.
+            }
 
             ApplyCastingRuleIfNeeded(stmt.Identifier.Position, type2, type1, stmt.Value);
 
@@ -111,6 +115,7 @@ namespace Caique.CodeGen
             }
 
             stmt.Block.Accept(this);
+
             return null;
         }
 
@@ -141,6 +146,40 @@ namespace Caique.CodeGen
 
             stmt.ThenBranch.Accept(this);
             if (stmt.ElseBranch != null) stmt.ElseBranch.Accept(this);
+
+            return null;
+        }
+
+        public object Visit(WhileStmt stmt)
+        {
+            DataType conditionType = stmt.Condition.Accept(this);
+            if (conditionType.BaseType != BaseType.Boolean || conditionType.ArrayDepth > 0)
+            {
+                Reporter.Error(new Pos(0, 0), "Expected type 'bool' as conditional.");
+            }
+
+            stmt.Branch.Accept(this);
+
+            return null;
+        }
+
+        public object Visit(ForStmt stmt)
+        {
+            DataType startValType = stmt.StartVal.Accept(this);
+            DataType maxValType = stmt.MaxVal.Accept(this);
+            DataType incrType = stmt.Increment == null
+                                ? startValType
+                                : stmt.Increment.Accept(this);
+
+            if (!startValType.BaseType.IsNumber()
+                || !maxValType.BaseType.IsNumber()
+                || !incrType.BaseType.IsNumber())
+            {
+                Reporter.Error(new Pos(0, 0), "Expected number.");
+            }
+
+            _scope.Define(stmt.VarName.Lexeme, startValType, false);
+            stmt.Branch.Accept(this);
 
             return null;
         }
@@ -343,12 +382,12 @@ namespace Caique.CodeGen
                 if (castInfo.Item2)
                 {
                     if (leftExpr is LiteralExpr && leftType.BaseType.IsNumber()) leftExpr.DataType = castInfo.Item1;
-                    else leftExpr.Cast = castInfo.Item1.BaseType;
+                    else                                                         leftExpr.Cast = castInfo.Item1.BaseType;
                 }
                 else
                 {
                     if (rightExpr is LiteralExpr && leftType.BaseType.IsNumber()) rightExpr.DataType = castInfo.Item1;
-                    else rightExpr.Cast = castInfo.Item1.BaseType;
+                    else                                                          rightExpr.Cast = castInfo.Item1.BaseType;
                 }
 
                 return castInfo.Item1;

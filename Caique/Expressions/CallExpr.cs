@@ -14,9 +14,9 @@ namespace Caique.Expressions
 
         public CallExpr(Token name, List<IExpression> parameters, List<IExpression> arrayIndexes)
         {
-            this.Name = name;
-            this.Parameters = parameters;
-            this.ArrayIndexes = arrayIndexes;
+            Name = name;
+            Parameters = parameters;
+            ArrayIndexes = arrayIndexes;
         }
 
         public T Accept<T>(IExpressionVisitor<T> expr)

@@ -7,7 +7,7 @@ namespace Caique
     {
         // Single-character tokens
         LeftParen, RightParen, LeftBrace, RightBrace, LeftAngle, RightAngle,
-        Comma, Dot, Minus, Plus, Semicolon, Slash, Star,
+        Comma, Dot, Minus, Plus, Semicolon, Colon, Slash, Star,
         Modulus,
 
         // One or two character tokens

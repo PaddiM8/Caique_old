@@ -13,19 +13,19 @@ namespace Caique.Models
 
         public NamedValue(LLVMValueRef valueRef, int arrayDepth = 0)
         {
-            this.ValueRef = valueRef;
-            this.ArrayDepth = arrayDepth;
+            ValueRef = valueRef;
+            ArrayDepth = arrayDepth;
         }
 
         public NamedValue(LLVMValueRef valueRef, List<IExpression> arraySizes)
         {
-            this.ValueRef = valueRef;
-            this.ArraySizes = arraySizes;
+            ValueRef = valueRef;
+            ArraySizes = arraySizes;
         }
 
         public NamedValue(LLVMValueRef valueRef)
         {
-            this.ValueRef = valueRef;
+            ValueRef = valueRef;
         }
     }
 }

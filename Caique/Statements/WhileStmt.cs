@@ -5,13 +5,15 @@ using Caique.Expressions;
 
 namespace Caique.Statements
 {
-    class ExpressionStmt : IStatement
+    class WhileStmt : IStatement
     {
-        public IExpression Expression { get; }
+        public IExpression Condition { get; }
+        public IStatement  Branch    { get; }
 
-        public ExpressionStmt(IExpression expr)
+        public WhileStmt(IExpression condition, IStatement branch)
         {
-            Expression = expr;
+            Condition  = condition;
+            Branch = branch;
         }
 
         public T Accept<T>(IStatementVisitor<T> stmt)

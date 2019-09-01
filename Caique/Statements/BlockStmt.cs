@@ -11,7 +11,7 @@ namespace Caique.Statements
 
         public BlockStmt(List<IStatement> statements)
         {
-            this.Statements = statements;
+            Statements = statements;
         }
 
         public T Accept<T>(IStatementVisitor<T> stmt)

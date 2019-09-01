@@ -109,8 +109,10 @@ namespace Caique.CodeGen
                 alloca = LLVM.BuildAlloca(_builder, type, stmt.Identifier.Lexeme); // Allocate variable
             }
 
-            _namedValues.Add(stmt.Identifier.Lexeme,
-                    new NamedValue(alloca, stmt.ArraySizes.Count)); // Add to dictionary
+            var namedValue = stmt.ArraySizes == null
+                             ? new NamedValue(alloca, 0)
+                             : new NamedValue(alloca, stmt.ArraySizes.Count);
+            _namedValues.Add(stmt.Identifier.Lexeme, namedValue); // Add to dictionary
 
             if (stmt.Value != null)
             {
@@ -129,13 +131,9 @@ namespace Caique.CodeGen
             if (_namedValues.TryGetValue(stmt.Identifier.Lexeme, out namedValue)) // Get variable reference
             {
                 LLVMValueRef varRef = namedValue.ValueRef;
-                if (stmt.ArrayIndexes.Count > 0) // If array
+                if (stmt.ArrayIndexes != null && stmt.ArrayIndexes.Count > 0) // If array
                 {
-                    //var indices = new LLVMValueRef[]
-                    //{
                     varRef = GetArrayItem(varRef, namedValue.ArrayDepth, stmt.ArrayIndexes);
-                    //};
-                    //varRef = LLVM.BuildGEP(_builder, varRef, indices, "geptmp");
                 }
 
                 LLVM.BuildStore(_builder, value, varRef);
@@ -225,6 +223,68 @@ namespace Caique.CodeGen
             LLVM.PositionBuilderAtEnd(_builder, elseBB); // Position builder at block
             if (stmt.ElseBranch != null) stmt.ElseBranch.Accept(this); // Generate branch code if else statement is present
             LLVM.BuildBr(_builder, mergeBB); // Redirect to merge
+
+            LLVM.PositionBuilderAtEnd(_builder, mergeBB);
+
+            return null;
+        }
+
+        public object Visit(WhileStmt stmt)
+        {
+            LLVMValueRef func = LLVM.GetBasicBlockParent(LLVM.GetInsertBlock(_builder));
+
+            // Blocks
+            LLVMBasicBlockRef condBB = LLVM.AppendBasicBlock(func, "cond");
+            LLVMBasicBlockRef branchBB = LLVM.AppendBasicBlock(func, "branch");
+            LLVMBasicBlockRef mergeBB = LLVM.AppendBasicBlock(func, "forcont");
+
+            // Build condition
+            LLVM.BuildBr(_builder, condBB);
+            LLVM.PositionBuilderAtEnd(_builder, condBB);
+            LLVMValueRef condition = stmt.Condition.Accept(this);
+            LLVM.BuildCondBr(_builder, condition, branchBB, mergeBB);
+
+            // branch
+            LLVM.PositionBuilderAtEnd(_builder, branchBB); // Position builder at block
+            stmt.Branch.Accept(this); // Generate branch code
+            LLVM.BuildBr(_builder, condBB);
+
+            LLVM.PositionBuilderAtEnd(_builder, mergeBB);
+
+            return null;
+        }
+
+        public object Visit(ForStmt stmt)
+        {
+            LLVMValueRef func = LLVM.GetBasicBlockParent(LLVM.GetInsertBlock(_builder));
+            new VarDeclarationStmt(stmt.StartVal.DataType, stmt.VarName, new List<IExpression>() {}).Accept(this);
+
+            // Blocks
+            LLVMBasicBlockRef condBB = LLVM.AppendBasicBlock(func, "cond");
+            LLVMBasicBlockRef branchBB = LLVM.AppendBasicBlock(func, "branch");
+            LLVMBasicBlockRef mergeBB = LLVM.AppendBasicBlock(func, "forcont");
+
+            // Build condition
+            LLVM.BuildBr(_builder, condBB);
+            LLVM.PositionBuilderAtEnd(_builder, condBB);
+            LLVMValueRef counter = new VariableExpr(stmt.VarName).Accept(this);
+            LLVMValueRef maxVal = stmt.MaxVal.Accept(this);
+            LLVMValueRef incr = stmt.Increment == null
+                                ? LLVM.ConstInt(stmt.StartVal.DataType.BaseType.ToLLVMType(), 1, LLVMBoolTrue)
+                                : stmt.Increment.Accept(this);
+            LLVMValueRef condition = LLVM.BuildICmp(_builder, LLVMIntPredicate.LLVMIntSLT, counter, maxVal, "tmpcmp");
+
+            LLVM.BuildCondBr(_builder, condition, branchBB, mergeBB);
+
+            // branch
+            LLVM.PositionBuilderAtEnd(_builder, branchBB); // Position builder at block
+            stmt.Branch.Accept(this); // Generate branch code
+
+            // Increment counter
+            LLVMValueRef newVal = LLVM.BuildAdd(_builder, counter, incr, "tmpadd");
+            LLVM.BuildStore(_builder, newVal, _namedValues[stmt.VarName.Lexeme].ValueRef);
+
+            LLVM.BuildBr(_builder, condBB);
 
             LLVM.PositionBuilderAtEnd(_builder, mergeBB);
 

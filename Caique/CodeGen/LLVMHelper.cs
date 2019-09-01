@@ -13,7 +13,7 @@ namespace Caique.CodeGen
 
         public LLVMHelper(LLVMBuilderRef builder)
         {
-            this._builder = builder;
+            _builder = builder;
         }
 
         public LLVMValueRef BuildBinary(LLVMValueRef leftVal, TokenType operatorType, LLVMValueRef rightVal, DataType dataType)
@@ -24,13 +24,13 @@ namespace Caique.CodeGen
                 if      (operatorType.IsArithmeticOperator())  buildFunc = BuildArithmetic;
                 else if (operatorType.IsComparisonOperator())  buildFunc = BuildComparison;
                 else if (operatorType.IsConjunctionOperator()) buildFunc = BuildConjunction;
-                else throw new Exception($"Unexpected data type {dataType}.");
+                else                                           throw new Exception($"Unexpected data type {dataType}.");
             }
             else if (dataType.BaseType.IsFloat())
             {
                 if      (operatorType.IsArithmeticOperator()) buildFunc = BuildFArithmetic;
                 else if (operatorType.IsComparisonOperator()) buildFunc = BuildFComparison;
-                else throw new Exception($"Unexpected data type {dataType}.");
+                else                                          throw new Exception($"Unexpected data type {dataType}.");
             }
             else
             {

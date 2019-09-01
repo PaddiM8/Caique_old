@@ -14,10 +14,10 @@ namespace Caique.Statements
 
         public VarDeclarationStmt(DataType dataType, Token identifier, List<IExpression> arraySizes, IExpression value = null)
         {
-            this.DataType = dataType;
-            this.Identifier = identifier;
-            this.ArraySizes = arraySizes;
-            if (value != null) this.Value = value;
+            DataType = dataType;
+            Identifier = identifier;
+            ArraySizes = arraySizes;
+            if (value != null) Value = value;
         }
 
         public T Accept<T>(IStatementVisitor<T> stmt)

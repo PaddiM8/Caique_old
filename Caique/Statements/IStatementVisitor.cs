@@ -12,5 +12,7 @@ namespace Caique.Statements
         T Visit(BlockStmt stmt);
         T Visit(ReturnStmt stmt);
         T Visit(IfStmt stmt);
+        T Visit(ForStmt stmt);
+        T Visit(WhileStmt stmt);
     }
 }

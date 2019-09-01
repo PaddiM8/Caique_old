@@ -13,9 +13,9 @@ namespace Caique.Statements
 
         public IfStmt(IExpression condition, IStatement thenBranch, IStatement elseBranch = null)
         {
-            this.Condition  = condition;
-            this.ThenBranch = thenBranch;
-            this.ElseBranch = elseBranch;
+            Condition  = condition;
+            ThenBranch = thenBranch;
+            ElseBranch = elseBranch;
         }
 
         public T Accept<T>(IStatementVisitor<T> stmt)

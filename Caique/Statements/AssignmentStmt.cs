@@ -7,15 +7,15 @@ namespace Caique.Statements
 {
     class AssignmentStmt : IStatement
     {
-        public Token             Identifier { get; }
-        public IExpression       Value      { get; }
+        public Token             Identifier   { get; }
+        public IExpression       Value        { get; }
         public List<IExpression> ArrayIndexes { get; }
 
         public AssignmentStmt(Token identifier, IExpression value, List<IExpression> arrayIndexes)
         {
-            this.Identifier = identifier;
-            this.Value = value;
-            this.ArrayIndexes = arrayIndexes;
+            Identifier = identifier;
+            Value = value;
+            ArrayIndexes = arrayIndexes;
         }
 
         public T Accept<T>(IStatementVisitor<T> stmt)

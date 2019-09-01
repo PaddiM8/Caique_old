@@ -57,6 +57,5 @@ namespace Caique
                 { "f128",   BaseType.Float128 },
                 { "bool",   BaseType.Boolean  },
             };
-
     }
 }

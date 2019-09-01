@@ -13,8 +13,8 @@ namespace Caique.Expressions
 
         public GroupExpr(IExpression expression, List<IExpression> arrayIndexes)
         {
-            this.Expression = expression;
-            this.ArrayIndexes = arrayIndexes;
+            Expression = expression;
+            ArrayIndexes = arrayIndexes;
         }
 
         public T Accept<T>(IExpressionVisitor<T> expr)

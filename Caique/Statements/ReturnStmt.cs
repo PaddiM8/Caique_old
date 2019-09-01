@@ -11,7 +11,7 @@ namespace Caique.Statements
 
         public ReturnStmt(IExpression expr)
         {
-            this.Expression = expr;
+            Expression = expr;
         }
 
         public T Accept<T>(IStatementVisitor<T> stmt)

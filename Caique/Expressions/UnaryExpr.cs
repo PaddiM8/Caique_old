@@ -13,8 +13,8 @@ namespace Caique.Expressions
 
         public UnaryExpr(Token op, IExpression expression)
         {
-            this.Operator = op;
-            this.Expression = expression;
+            Operator = op;
+            Expression = expression;
         }
 
         public T Accept<T>(IExpressionVisitor<T> expr)

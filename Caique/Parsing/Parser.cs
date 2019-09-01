@@ -24,7 +24,7 @@ namespace Caique.Parsing
 
         public Parser(List<Token> tokens)
         {
-            this._tokens = tokens;
+            _tokens = tokens;
         }
 
         public List<IStatement> Parse()
@@ -36,7 +36,6 @@ namespace Caique.Parsing
             }
 
             return statements;
-            //return Expression();
         }
 
         public IStatement Statement()
@@ -46,6 +45,8 @@ namespace Caique.Parsing
             if (Match(TokenType.LeftBrace))    return Block();
             if (Match(TokenType.Return))       return Return();
             if (Match(TokenType.If))           return If();
+            if (Match(TokenType.While))        return While();
+            if (Match(TokenType.For))          return For();
 
             if (Check(TokenType.Identifier))
             {
@@ -53,7 +54,7 @@ namespace Caique.Parsing
                 for (int i = _current; i < _tokens.Count; i++)
                 {
                     TokenType type = _tokens[i].Type;
-                    if (type == TokenType.Equal) return Assignment();
+                    if      (type == TokenType.Equal)     return Assignment();
                     else if (type == TokenType.Semicolon) break;
                 }
             }
@@ -81,7 +82,8 @@ namespace Caique.Parsing
 
         public IStatement Assignment()
         {
-            Token identifier = Consume(TokenType.Identifier, ""); // It is an identifier since it made it through the if statement
+            // It is an identifier since it made it through the if statement
+            Token identifier = Consume(TokenType.Identifier, "");
 
             List<IExpression> arrayIndexes = Indexes();
 
@@ -149,6 +151,7 @@ namespace Caique.Parsing
         public IStatement If()
         {
             IExpression condition = Expression();
+            Consume(TokenType.Colon, "Expected ':' after expression.");
             IStatement thenBranch = Statement();
             IStatement elseBranch = null;
 
@@ -158,6 +161,40 @@ namespace Caique.Parsing
             }
 
             return new IfStmt(condition, thenBranch, elseBranch);
+        }
+
+        public IStatement While()
+        {
+            IExpression condition = Expression();
+            Consume(TokenType.Colon, "Expected ':' after expression.");
+            IStatement branch = Statement();
+
+            return new WhileStmt(condition, branch);
+        }
+
+        public IStatement For()
+        {
+            Token varName = Peek();
+            Advance();
+            Consume(TokenType.Comma, "Expected ',' after identifier.");
+            IExpression startVal = Expression();
+            Consume(TokenType.Comma, "Expected ',' after expression.");
+            IExpression maxVal = Expression();
+
+            // If increment specified
+            if (Match(TokenType.Comma))
+            {
+                IExpression incr = Expression();
+                Consume(TokenType.Colon, "Expected ':' after expression.");
+                IStatement branch = Statement();
+                return new ForStmt(varName, startVal, maxVal, incr, branch);
+            }
+            else
+            {
+                Consume(TokenType.Colon, "Expected ':' after expression.");
+                IStatement branch = Statement();
+                return new ForStmt(varName, startVal, maxVal, branch);
+            }
         }
 
         public IStatement ExpressionStatement()
@@ -275,12 +312,14 @@ namespace Caique.Parsing
 
         public IExpression Primary()
         {
-            if (Match(TokenType.Number, TokenType.True, TokenType.False, TokenType.String)) // Literal
+            // Literal
+            if (Match(TokenType.Number, TokenType.True, TokenType.False, TokenType.String))
             {
                 return new LiteralExpr(Previous(), Indexes());
             }
 
-            if (Match(TokenType.LeftParen)) // Group
+            // Group
+            if (Match(TokenType.LeftParen))
             {
                 IExpression expr = Expression();
                 Consume(TokenType.RightParen, "Expected ')' after expression.");
@@ -291,7 +330,8 @@ namespace Caique.Parsing
             {
                 Token identifier = Previous();
 
-                if (Match(TokenType.LeftParen)) // Function call
+                // Function call
+                if (Match(TokenType.LeftParen))
                 {
                     Token name = identifier;
                     var parameters = new List<IExpression>();
@@ -299,7 +339,9 @@ namespace Caique.Parsing
                     while (!Match(TokenType.RightParen))
                     {
                         parameters.Add(Expression());
-                        if (Match(TokenType.RightParen)) break; // Don't expect comma if it's the last parameter
+
+                        // Don't expect comma if it's the last parameter
+                        if (Match(TokenType.RightParen)) break;
                         Consume(TokenType.Comma, "Expected ')' after expression.");
                     }
 
@@ -316,9 +358,10 @@ namespace Caique.Parsing
         public List<IExpression> Indexes()
         {
             if (!Match(TokenType.LeftAngle)) return null;
-
             var arraySizes = new List<IExpression>();
-            while (true) // Will break if a RightAngle is matched.
+
+            // Will break if a RightAngle is matched.
+            while (true)
             {
                 arraySizes.Add(Expression());
                 if (Match(TokenType.RightAngle)) break;
@@ -337,7 +380,8 @@ namespace Caique.Parsing
 
             // Arrays
             List<IExpression> sizes = Indexes();
-            dataType.ArrayDepth = sizes.Count; // Set array depth(how many dimensions, if any) to the amount of specified array sizes.
+            // Set array depth(how many dimensions, if any) to the amount of specified array sizes.
+            if (sizes != null) dataType.ArrayDepth = sizes.Count;
 
             return new Tuple<DataType, List<IExpression>>(dataType, sizes);
         }
@@ -356,7 +400,8 @@ namespace Caique.Parsing
                     dataType.ArrayDepth++;
                 }
 
-                dataType.ArrayDepth++; // One comma means two dimensions, so +1
+                // One comma means two dimensions, so +1
+                dataType.ArrayDepth++;
             }
 
             return dataType;
@@ -400,6 +445,7 @@ namespace Caique.Parsing
                 if (Check(tokenType))
                 {
                     Advance();
+
                     return true;
                 }
             }
@@ -440,7 +486,9 @@ namespace Caique.Parsing
         /// </summary>
         private ParsingException Error(string errorMessage)
         {
-            Reporter.Error(Peek().Position, errorMessage); // Show error separately, since the exception will be caught
+            // Show error separately, since the exception will be caught
+            Reporter.Error(Peek().Position, errorMessage);
+
             throw new ParsingException();
         }
 
@@ -454,6 +502,7 @@ namespace Caique.Parsing
             if (Peek().Type == type)
             {
                 Advance();
+
                 return Previous();
             }
             else

@@ -10,7 +10,7 @@ namespace Caique.Models
 
         public TokenValue(T value)
         {
-            this.Value = value;
+            Value = value;
         }
     }
 }

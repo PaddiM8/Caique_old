@@ -8,20 +8,22 @@ namespace Caique.CodeGen
 {
     class Scope
     {
-        public Scope Parent { get; set; }
-        public bool HasParent { get; }
+        public Scope Parent    { get; set; }
+        public bool  HasParent { get; }
+
         private readonly Dictionary<string, Tuple<DataType, bool>> Values
             = new Dictionary<string, Tuple<DataType, bool>>();
 
         public Scope(bool hasParent = false)
         {
-            this.HasParent = hasParent;
+            HasParent = hasParent;
         }
 
         public Scope AddChildScope()
         {
             var newScope = new Scope(true);
             newScope.Parent = this;
+
             return newScope;
         }
 

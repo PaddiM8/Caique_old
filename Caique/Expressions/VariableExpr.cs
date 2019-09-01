@@ -14,8 +14,8 @@ namespace Caique.Expressions
 
         public VariableExpr(Token name, List<IExpression> arrayIndexes = null)
         {
-            this.Name = name;
-            this.ArrayIndexes = arrayIndexes;
+            Name = name;
+            ArrayIndexes = arrayIndexes;
         }
 
         public T Accept<T>(IExpressionVisitor<T> expr)

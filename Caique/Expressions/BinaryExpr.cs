@@ -14,9 +14,9 @@ namespace Caique.Expressions
 
         public BinaryExpr(IExpression left, Token op, IExpression right)
         {
-            this.Left = left;
-            this.Operator = op;
-            this.Right = right;
+            Left = left;
+            Operator = op;
+            Right = right;
         }
 
         public T Accept<T>(IExpressionVisitor<T> expr)

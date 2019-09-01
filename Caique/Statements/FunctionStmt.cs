@@ -14,10 +14,10 @@ namespace Caique.Statements
 
         public FunctionStmt(DataType returnType, Token name, List<Argument> arguments, BlockStmt block)
         {
-            this.ReturnType = returnType;
-            this.Name = name;
-            this.Arguments = arguments;
-            this.Block = block;
+            ReturnType = returnType;
+            Name = name;
+            Arguments = arguments;
+            Block = block;
         }
 
         public T Accept<T>(IStatementVisitor<T> stmt)

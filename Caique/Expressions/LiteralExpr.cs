@@ -13,8 +13,8 @@ namespace Caique.Expressions
 
         public LiteralExpr(Token value, List<IExpression> arrayIndexes = null)
         {
-            this.Value = value;
-            this.ArrayIndexes = arrayIndexes;
+            Value = value;
+            ArrayIndexes = arrayIndexes;
         }
 
         public T Accept<T>(IExpressionVisitor<T> expr)

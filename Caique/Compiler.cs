@@ -15,16 +15,16 @@ namespace Caique
 {
     class Compiler
     {
+        private string _rootFileLocation { get; }
 
-        private string RootFileLocation { get; }
         public Compiler(string fileLocation)
         {
-            this.RootFileLocation = fileLocation;
+            _rootFileLocation = fileLocation;
         }
 
         public void Compile()
         {
-            List<Token> tokens = new Lexer(File.ReadAllText(RootFileLocation)).ScanTokens();
+            List<Token> tokens = new Lexer(File.ReadAllText(_rootFileLocation)).ScanTokens();
             //Console.WriteLine(JsonConvert.SerializeObject(tokens));
             var parser = new Parser(tokens);
             List<IStatement> statements = parser.Parse();

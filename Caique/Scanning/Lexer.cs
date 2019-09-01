@@ -12,6 +12,7 @@ namespace Caique.Scanning
         private int _start = 0;
         private int _current = 0;
         private Pos _position = new Pos(1, 1);
+
         public Lexer(string source)
         {
             this._source = source;
@@ -30,6 +31,7 @@ namespace Caique.Scanning
             }
 
             _tokens.Add(new Token(TokenType.EOF, "", _position));
+
             return _tokens;
         }
 
@@ -63,6 +65,7 @@ namespace Caique.Scanning
                 case '-': AddToken(TokenType.Minus);      break;
                 case '+': AddToken(TokenType.Plus);       break;
                 case ';': AddToken(TokenType.Semicolon);  break;
+                case ':': AddToken(TokenType.Colon);      break;
                 case '*': AddToken(TokenType.Star);       break;
                 case '%': AddToken(TokenType.Modulus);    break;
 
@@ -72,15 +75,17 @@ namespace Caique.Scanning
                 case '<': AddToken(Match('=') ? TokenType.LessEqual    : TokenType.Less);    break;
                 case '>': AddToken(Match('=') ? TokenType.GreaterEqual : TokenType.Greater); break;
                 case '&': if (Match('&')) AddToken(TokenType.And); break;
-                case '|': if (Match('|')) AddToken(TokenType.Or); break;
+                case '|': if (Match('|')) AddToken(TokenType.Or);  break;
                 case '/':
                     if (Match('/'))
                     {
-                         while (Peek() != '\n' && !IsAtEnd()) Advance(); // Advance until at end of line (ignoring the comment)
+                         // Advance until at end of line (ignoring the comment)
+                         while (Peek() != '\n' && !IsAtEnd()) Advance();
                     }
                     else if (Match('*'))
                     {
-                        while (Peek() != '*' && PeekNext() != '/' && !IsAtEnd()) Advance(); // Advance until '*/', ending multi-line comment
+                        // Advance until '*/', ending multi-line comment
+                        while (Peek() != '*' && PeekNext() != '/' && !IsAtEnd()) Advance();
                         _current += 2;
                     }
                     else
@@ -102,9 +107,9 @@ namespace Caique.Scanning
                     else if (IsAlpha(c))
                     {
                         TokenType type = GetIdentifier();
-                        if (type == TokenType.True) AddToken(type, "1", BaseType.True);
+                        if      (type == TokenType.True)  AddToken(type, "1", BaseType.True);
                         else if (type == TokenType.False) AddToken(type, "0", BaseType.True);
-                        else AddToken(type);
+                        else                              AddToken(type);
                     }
                     else
                     {
@@ -122,7 +127,8 @@ namespace Caique.Scanning
             // While the next character isn't " and it isn't the last character
             while (Peek() != '"' && !IsAtEnd())
             {
-                if (Peek() == '\n') _position.Line++; // Allow multi-line strings
+                // Allow multi-line strings
+                if (Peek() == '\n') _position.Line++;
                 Advance();
             }
 
@@ -130,13 +136,15 @@ namespace Caique.Scanning
             if (IsAtEnd())
             {
                 Reporter.Error(_position, "Unterminated string.");
+
                 return "";
             }
 
             // The closing ".
             Advance();
 
-            return _source.Substring(_start + 1, _current - _start - 2); // Grab from the source, excluding the double quotes
+            // Grab from the source, excluding the double quotes
+            return _source.Substring(_start + 1, _current - _start - 2);
         }
 
         /// <summary>
@@ -170,7 +178,8 @@ namespace Caique.Scanning
             }
             else
             {
-                AddToken(TokenType.Number, numberString, BaseType.Int32); // Should be adjusted when code is generated.
+                // Should be adjusted when code is generated.
+                AddToken(TokenType.Number, numberString, BaseType.Int32);
             }
         }
 
@@ -197,6 +206,7 @@ namespace Caique.Scanning
         {
             _current++;
             _position.Column++;
+
             return _source[_current - 1];
         }
 
@@ -212,6 +222,7 @@ namespace Caique.Scanning
             if (_source[_current] != expected) return false;
 
             Advance();
+
             return true;
         }
 
@@ -222,6 +233,7 @@ namespace Caique.Scanning
         private char Peek()
         {
             if (IsAtEnd()) return '\0'; // Return null character if at end
+
             return _source[_current];
         }
         ///
@@ -232,6 +244,7 @@ namespace Caique.Scanning
         private char PeekNext()
         {
             if (_current + 1 >= _source.Length) return '\0'; // Return null character if at end
+
             return _source[_current + 1];
         }
 

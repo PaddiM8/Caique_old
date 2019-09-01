@@ -14,14 +14,13 @@ namespace Caique.Models
         public Pos          Position    { get; }
         public object       Literal     { get; set; }
         public DataType     DataType    { get; set; }
-        //public BaseType     Cast        { get; set; }
 
         public Token(TokenType type, string lexeme, Pos? position = null, object literal = null, DataType? dataType = null)
         {
-            this.Type = type;
-            this.Lexeme = lexeme;
+            Type = type;
+            Lexeme = lexeme;
             if (position != null) this.Position = (Pos)position;
-            this.Literal = literal;
+            Literal = literal;
             if (dataType != null) this.DataType = (DataType)dataType;
         }
     }
