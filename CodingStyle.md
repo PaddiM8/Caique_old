@@ -4,7 +4,7 @@
 but should only be used when it can all fit on the same line. An exception to this is
 when the following statement has a statement following itself.
 
-***Examples:**  
+**Examples:**  
 ```csharp
 if (count > 5) count = 0;
 ```
@@ -26,13 +26,15 @@ unless it's a part of a variable declaration. `return` statements should always 
 a new line. The child statements of "one"-liner if/else statements should be aligned, eg.
 ```csharp
 if (partValue != currentValue) currentValue++;
-else                           currentValue = 0;```
+else                           currentValue = 0;
+```
 8. Comments start with a space and an upper case letter, and end with a period. Comments may be split up over several lines.
 
 **Examples:**  
 ```csharp
 // Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-// sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.```
+// sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+```
 
 9. Properties are sorted it groups of visibility, with a new line separating each group.
 Groups are sorted by their visibility level, eg. public goes first.
